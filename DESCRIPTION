@@ -19,6 +19,7 @@ Imports: dplyr,
     idbr,
     rappdirs,
     here,
+    usethis,
     settings
 URL: https://github.com/Nenuial/geographer.git
 Remotes: ropensci/rrricanes
