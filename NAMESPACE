@@ -3,6 +3,7 @@
 export("!!")
 export("%<>%")
 export("%>%")
+export(carto_ne_get_boundbox)
 export(chop_relabel_dash)
 export(country_list_noaa)
 export(country_list_wb)

@@ -10,7 +10,7 @@ geo_wb_data(indicator)
 \item{indicator}{A list of parameters}
 }
 \value{
-A datafram
+A dataframe
 }
 \description{
 Fetch World Bank data

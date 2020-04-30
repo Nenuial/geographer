@@ -9,7 +9,8 @@ Description: Provide data through different packages
 License: CC0
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr,
+Imports: 
+    dplyr,
     stringr,
     readr,
     magrittr,
@@ -20,7 +21,15 @@ Imports: dplyr,
     rappdirs,
     here,
     usethis,
-    settings
+    settings,
+    santoku,
+    forcats,
+    ggeo,
+    patchwork,
+    purrr,
+    sf
 URL: https://github.com/Nenuial/geographer.git
-Remotes: ropensci/rrricanes
-RoxygenNote: 6.1.1
+Remotes: 
+    ropensci/rrricanes
+    nenuial/ggeo
+RoxygenNote: 7.0.2
