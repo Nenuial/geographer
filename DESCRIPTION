@@ -30,6 +30,6 @@ Imports:
     sf
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
-    ropensci/rrricanes
+    ropensci/rrricanes,
     nenuial/ggeo
 RoxygenNote: 7.0.2
