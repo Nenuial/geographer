@@ -27,7 +27,8 @@ Imports:
     ggeo,
     patchwork,
     purrr,
-    sf
+    sf,
+    tidygeocoder
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
