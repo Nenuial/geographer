@@ -24,7 +24,8 @@ get_noaa_climate_data <- function(station_id, data_type = "temperature") {
     dplyr::mutate(month = lubridate::month(lubridate::ymd_hms(date))) %>%
     dplyr::select(month, value) %>%
     dplyr::group_by(month) %>%
-    dplyr::summarise(value = mean(value)) -> clean_data
+    dplyr::summarise(value = mean(value)) %>%
+    dplyr::mutate(value = round(value / 10, digits = 1))-> clean_data
 
   return(clean_data)
 }
