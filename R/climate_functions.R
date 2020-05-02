@@ -1,7 +1,10 @@
-# Function: retrieve climate data from the rnoaa::ncdc NOAA API and compute averages over the
-# time period 1990-2019.
-#' @importFrom magrittr %>%
-#' @importFrom magrittr %<>%
+#' Function: retrieve climate data from the rnoaa::ncdc NOAA API and compute averages over the
+#' time period 1990-2019.
+#'
+#' @param station_id The string for the station ID
+#' @param data_type The type of data needed. Can be "temperature" or "precipitation".
+#'
+#' @return A vectore with climate data (precipitation or temperature)
 #' @export
 get_noaa_climate_data <- function(station_id, data_type = "temperature") {
   data_id <- dplyr::case_when(data_type == "temperature" ~ "MNTM",
@@ -14,16 +17,16 @@ get_noaa_climate_data <- function(station_id, data_type = "temperature") {
               startdate = "2000-01-01", enddate = "2009-12-31", limit = 500)
   dat <- rbind(dat, out$data)
   out <- rnoaa::ncdc(datasetid = "GHCNDMS", stationid = station_id, datatypeid = data_id,
-              startdate = "2010-01-01", enddate = "2019-12-31", limit = 500)
+              startdate = "2010-01-01", enddate = "2014-12-31", limit = 500)
   dat <- rbind(dat, out$data)
 
-  dat %<>%
+  dat %>%
     dplyr::mutate(month = lubridate::month(lubridate::ymd_hms(date))) %>%
     dplyr::select(month, value) %>%
     dplyr::group_by(month) %>%
-    dplyr::summarise(value = mean(value))
+    dplyr::summarise(value = mean(value)) -> clean_data
 
-  return(dat)
+  return(clean_data)
 }
 
 #' Read NCDC city list from cachedir
@@ -38,9 +41,9 @@ get_ncdc_city_list <- function() {
   return(readRDS(filename))
 }
 
-# Function: update the list of cities available for climate data, compute the
-# corresponding country column and store the data locally.
-#' @importFrom magrittr %>%
+#' Function: update the list of cities available for climate data, compute the
+#' corresponding country column and store the data locally.
+#'
 #' @export
 update_ncdc_city_list <- function() {
   cachedir <- rappdirs::user_cache_dir("geographer")
@@ -64,7 +67,7 @@ update_ncdc_city_list <- function() {
     dplyr::mutate(address = glue::glue("{city}, {country}")) %>%
     stats::na.omit() %>%
     dplyr::filter(mindate < lubridate::ymd("1990-01-01"),
-                  maxdate > lubridate::ymd("2014-12-31"),
+                  maxdate > lubridate::ymd("2019-12-31"),
                   datacoverage == 1) %>%
     tidygeocoder::geocode(address = address, method = "osm") -> cities
 

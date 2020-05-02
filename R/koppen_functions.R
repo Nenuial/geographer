@@ -1,5 +1,11 @@
-# Function: Determine the koppen climate based on temperature,
-# precipitation and the latitude.
+#' Function: Determine the Köppen climate based on temperature,
+#' precipitation and the latitude.
+#'
+#' @param temp A vector with temperatures for each month
+#' @param prec A vector with precipitations for each month
+#' @param lat The latitude
+#'
+#' @return A string with the Köppen climate determination
 #' @export
 determine_koppen_climate <- function(temp, prec, lat) {
   clim <- ""
@@ -87,18 +93,37 @@ determine_koppen_climate <- function(temp, prec, lat) {
   return(clim)
 }
 
+#' Internal function to determine the summer precipitation months
+#'
+#' @param prec A vector with precipitation for each month
+#' @param lat The latitude
+#'
+#' @return A vector with the precipitation in the "summer" month as defined for Köppen climate classification
 calculate_psummer <- function(prec, lat) {
   dplyr::case_when(lat >= 0 ~ prec[4:9],
                    TRUE ~ prec[c(1:3,10:12)])
 }
 
-# Return the winter precipitation depending on latitude.
+#' Internal function to determine the summer precipitation months
+#'
+#' @param prec A vector with precipitation for each month
+#' @param lat The latitude
+#'
+#' @return A vector with the precipitation in the "summer" month as defined for Köppen climate classification
 calculate_pwinter <- function(prec, lat) {
   dplyr::case_when(lat >= 0 ~ prec[c(1:3,10:12)],
                    TRUE ~ prec[4:9])
 }
 
-# Determine the "evaporation" threshold necessary for the B climate.
+
+#' Internal function to determine the Köppen threshold number
+#'
+#' @param tavg The annual average temperature
+#' @param ptot The annual total precipitation
+#' @param psummer A vector with the precipitation in summer months
+#' @param pwinter A vector with the precipitation in winter months
+#'
+#' @return The threshold number for Köppen evaporation (for B climates)
 calculate_threshold <- function(tavg, ptot, psummer, pwinter) {
   pth <- (2/3)*ptot
   dplyr::case_when(sum(pwinter) > pth ~ 20*tavg,
