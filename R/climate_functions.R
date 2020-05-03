@@ -6,17 +6,17 @@
 #'
 #' @return A vectore with climate data (precipitation or temperature)
 #' @export
-get_noaa_climate_data <- function(station_id, data_type = "temperature") {
+get_noaa_climate_data <- function(location_id, data_type = "temperature") {
   data_id <- dplyr::case_when(data_type == "temperature" ~ "MNTM",
                               data_type == "precipitation" ~ "TPCP")
 
-  out <- rnoaa::ncdc(datasetid = "GHCNDMS", stationid = station_id, datatypeid = data_id,
+  out <- rnoaa::ncdc(datasetid = "GHCNDMS", locationid = location_id, datatypeid = data_id,
               startdate = "1990-01-01", enddate = "1999-12-31", limit = 500)
   dat <- out$data
-  out <- rnoaa::ncdc(datasetid = "GHCNDMS", stationid = station_id, datatypeid = data_id,
+  out <- rnoaa::ncdc(datasetid = "GHCNDMS", locationid = location_id, datatypeid = data_id,
               startdate = "2000-01-01", enddate = "2009-12-31", limit = 500)
   dat <- rbind(dat, out$data)
-  out <- rnoaa::ncdc(datasetid = "GHCNDMS", stationid = station_id, datatypeid = data_id,
+  out <- rnoaa::ncdc(datasetid = "GHCNDMS", locationid = location_id, datatypeid = data_id,
               startdate = "2010-01-01", enddate = "2014-12-31", limit = 500)
   dat <- rbind(dat, out$data)
 
