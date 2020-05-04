@@ -69,7 +69,7 @@ update_ncdc_city_list <- function() {
     stats::na.omit() %>%
     dplyr::filter(mindate < lubridate::ymd("1990-01-01"),
                   maxdate > lubridate::ymd("2019-12-31"),
-                  datacoverage == 1) %>%
+                  datacoverage > .9) %>%
     tidygeocoder::geocode(address = address, method = "osm") -> cities
 
   saveRDS(cities, file = filename)
