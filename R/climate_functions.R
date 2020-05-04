@@ -39,6 +39,10 @@ get_ncdc_city_list <- function() {
   filename <- file.path(cachedir, "ncdc_cities.RData")
   if (!file.exists(filename)) update_ncdc_city_list()
 
+  fileage <- lubridate::interval(start = fs::file_info(filename)$change_time,
+                                  end = lubridate::now())
+  if (lubridate::day(lubridate::as.period(fileage)) > 200) update_ncdc_city_list()
+
   return(readRDS(filename))
 }
 
@@ -68,8 +72,8 @@ update_ncdc_city_list <- function() {
     dplyr::mutate(address = glue::glue("{city}, {country}")) %>%
     stats::na.omit() %>%
     dplyr::filter(mindate < lubridate::ymd("1990-01-01"),
-                  maxdate > lubridate::ymd("2019-12-31"),
-                  datacoverage > .9) %>%
+                  maxdate > lubridate::ymd("2014-12-31"),
+                  datacoverage >= .9) %>%
     tidygeocoder::geocode(address = address, method = "osm") -> cities
 
   saveRDS(cities, file = filename)
