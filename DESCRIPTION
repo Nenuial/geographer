@@ -32,6 +32,7 @@ Imports:
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
+    nset-ornl/wbstats,
     nenuial/ggeo
 RoxygenNote: 7.1.0
 Depends: 
