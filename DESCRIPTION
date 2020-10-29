@@ -17,6 +17,7 @@ Imports:
     glue,
     ggplot2,
     wbstats,
+    wbgdata,
     idbr,
     rappdirs,
     here,
@@ -33,6 +34,7 @@ URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
     nset-ornl/wbstats,
+    worldbank/wbgviz/wbgdata,
     nenuial/ggeo
 RoxygenNote: 7.1.0
 Depends: 
