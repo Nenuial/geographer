@@ -31,10 +31,9 @@ geo_wb_world_map <- function(indicator) {
 #' @return A dataframe
 #' @export
 geo_wb_data <- function(indicator) {
-  wbgdata::wbgdata(indicator = indicator$code,
-                   years = as.numeric(indicator$years),
-                   removeNA = T, cache = wbgdata::get_wbcache(),
-                   rename.indicators = T) %>%
+  wbstats::wb_data(indicator = indicator$code,
+                   start_date = min(as.numeric(indicator$years)),
+                   end_date = max(as.numeric(indicator$years))) %>%
     dplyr::mutate(data = !!indicator$operation) %>%
     dplyr::mutate(data = !!indicator$operation,
                   cut = santoku::chop(data, breaks = indicator$breaks,
