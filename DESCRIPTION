@@ -1,39 +1,40 @@
 Package: geographer
 Type: Package
-Title: Provide Tools for Shiny Geography App
+Title: Provide Geography Tools
 Version: 0.1.0
 Author: Pascal Burkhard
 Maintainer: Pascal Burkhard <pascal.burkhard@gmail.com>
-Description: Provide data through different packages
-    for shiny apps.
+Description: Provides functions for multiple projects.
 License: CC0
 Encoding: UTF-8
 LazyData: true
 Imports: 
     dplyr,
-    stringr,
-    readr,
-    magrittr,
     glue,
-    ggplot2,
-    wbstats,
-    idbr,
-    rappdirs,
     here,
-    usethis,
-    settings,
-    santoku,
+    idbr,
     forcats,
     ggeo,
+    ggplot2,
+    magrittr,
     patchwork,
     purrr,
+    rappdirs,
+    readr,
+    santoku,
+    settings,
     sf,
-    tidygeocoder
+    stringr,
+    themakart,
+    tidygeocoder,
+    usethis,
+    wbstats,
+    withr
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
-    nset-ornl/wbstats,
-    Nenuial/ggeo
-RoxygenNote: 7.1.0
+    Nenuial/ggeo,
+    Nenuial/themakart
+RoxygenNote: 7.1.1
 Depends: 
     R (>= 4.0)

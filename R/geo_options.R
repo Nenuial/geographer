@@ -5,7 +5,9 @@ geo_pkg_options <-
     language = "en",
     theme = "pomological_red",
     mode = "light",
-    opacity = 1
+    opacity = 1,
+    plot_full_width = 67.73,
+    plot_full_height = 38.1
   )
 
 # User function that gets exported:

@@ -13,8 +13,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{magrittr}{\code{\link[magrittr]{\%<>\%}}, \code{\link[magrittr]{\%>\%}}}
+  \item{magrittr}{\code{\link[magrittr:compound]{\%<>\%}}, \code{\link[magrittr:pipe]{\%>\%}}}
 
-  \item{rlang}{\code{\link[rlang]{!!}}}
+  \item{rlang}{\code{\link[rlang:nse-force]{!!}}}
 }}
 
