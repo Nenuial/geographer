@@ -5,6 +5,7 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{\%<>\%}
+\alias{\%+\%}
 \alias{!!}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -13,6 +14,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{ggplot2}{\code{\link[ggplot2:gg-add]{\%+\%}}}
+
   \item{magrittr}{\code{\link[magrittr:compound]{\%<>\%}}, \code{\link[magrittr:pipe]{\%>\%}}}
 
   \item{rlang}{\code{\link[rlang:nse-force]{!!}}}

@@ -1,10 +1,11 @@
 Package: geographer
 Type: Package
-Title: Provide Geography Tools
+Title: Provide Geography Vizualisations
 Version: 0.1.0
 Author: Pascal Burkhard
 Maintainer: Pascal Burkhard <pascal.burkhard@gmail.com>
-Description: Provides functions for multiple projects.
+Description: Provides function and objects to establish vizualisations for my 
+  Geography lessons.
 License: CC0
 Encoding: UTF-8
 LazyData: true
@@ -14,7 +15,9 @@ Imports:
     here,
     idbr,
     forcats,
+    geodata,
     ggeo,
+    geotools,
     ggplot2,
     magrittr,
     patchwork,
@@ -29,11 +32,16 @@ Imports:
     tidygeocoder,
     usethis,
     wbstats,
-    withr
+    withr,
+    wesanderson,
+    ggtext,
+    gghighlight
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
+    Nenuial/geodata,
     Nenuial/ggeo,
+    Nenuial/geotools,
     Nenuial/themakart
 RoxygenNote: 7.1.1
 Depends: 

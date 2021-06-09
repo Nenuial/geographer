@@ -6,18 +6,13 @@ magrittr::`%>%`
 #' @export
 magrittr::`%<>%`
 
+#' @importFrom ggplot2 %+%
+#' @export
+ggplot2::`%+%`
+
 #' @importFrom rlang !!
 #' @export
 rlang::`!!`
-
-# Function: check if the IBD API has been specified.
-idb_api_check <- function(api_key = NULL) {
-  if (Sys.getenv('IDB_API') != '') {
-    api_key <- Sys.getenv('IDB_API')
-  } else if (is.null(api_key)) {
-    stop('A Census API key is required for this function to work. Supply one through idbr::idb_api_key.')
-  }
-}
 
 country_list_idb <- function() {
 
