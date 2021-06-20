@@ -35,9 +35,15 @@ Imports:
     withr,
     wesanderson,
     ggtext,
-    gghighlight
+    gghighlight,
+    colorblindr,
+    dviz.supp,
+    rworldmap,
+    lwgeom
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
+    clauswilke/colorblindr,
+    clauswilke/dviz.supp,
     ropensci/rrricanes,
     Nenuial/geodata,
     Nenuial/ggeo,
