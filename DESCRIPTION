@@ -24,6 +24,7 @@ Imports:
     purrr,
     rappdirs,
     readr,
+    rgeos,
     santoku,
     settings,
     sf,
