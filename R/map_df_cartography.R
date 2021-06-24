@@ -5,7 +5,7 @@
 #' @return A ggplot2 object
 #' @export
 df_cartography_project_equirectangular <- function() {
-  geographer::geo_project_world(geotools::gtl_crs_proj("equirec"))
+  geo_project_world(geotools::gtl_crs_proj("equirec"))
 }
 
 #' DF Cartography: Gall-Peters projection
@@ -15,7 +15,7 @@ df_cartography_project_equirectangular <- function() {
 #' @return A ggplot2 object
 #' @export
 df_cartography_project_gallpeters <- function() {
-  geographer::geo_project_world(geotools::gtl_crs_proj("gallpeters"))
+  geo_project_world(geotools::gtl_crs_proj("gallpeters"))
 }
 
 #' DF Cartography: Hobo-Dyer projection
@@ -25,7 +25,7 @@ df_cartography_project_gallpeters <- function() {
 #' @return A ggplot2 object
 #' @export
 df_cartography_project_hobodyer <- function() {
-  geographer::geo_project_world(geotools::gtl_crs_proj("hobodyer"))
+  geo_project_world(geotools::gtl_crs_proj("hobodyer"))
 }
 
 #' DF Cartography: Mercator projection
@@ -35,7 +35,7 @@ df_cartography_project_hobodyer <- function() {
 #' @return A ggplot2 object
 #' @export
 df_cartography_project_mercator <- function() {
-  geographer::geo_project_world("+proj=longlat") +
+  geo_project_world("+proj=longlat") +
     ggplot2::coord_sf(
       expand = FALSE,
       crs = geotools::gtl_crs_proj("mercator"),
