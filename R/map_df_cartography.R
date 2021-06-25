@@ -93,6 +93,7 @@ df_cartography_project_goodehomolosine <- function() {
   ggplot2::ggplot(sf::st_as_sf(rworldmap::getMap(resolution = "low"))) +
     ggplot2::geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/ggplot2::.pt) +
     ggplot2::geom_sf(data = df_cartography_goodehomolosine_cutout(), fill = "white", color = "NA") +
+    ggplot2::geom_sf(data = df_cartography_goodehomolosine_outline(), fill = NA, color = "gray30", size = 0.5/.pt) +
     ggplot2::coord_sf(
       crs = geotools::gtl_crs_proj("goode"),
       xlim = 0.95 * sf::st_bbox(df_cartography_goodehomolosine_outline())[c("xmin", "xmax")] * 1.1,
