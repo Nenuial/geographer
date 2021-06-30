@@ -40,7 +40,9 @@ Imports:
     colorblindr,
     dviz.supp,
     rworldmap,
-    lwgeom
+    lwgeom,
+    highcharter,
+    shinyjqui
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     clauswilke/colorblindr,
