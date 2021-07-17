@@ -14,5 +14,5 @@ A ggplot2 graph
 }
 \description{
 Graphique de l'immigration en Russie avec les 5 pays
-les plus représentés et une catégorie `autres`.
+les plus représentés et une catégorie \code{autres}.
 }

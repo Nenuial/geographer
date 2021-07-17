@@ -42,7 +42,8 @@ Imports:
     rworldmap,
     lwgeom,
     highcharter,
-    shinyjqui
+    shinyjqui,
+    lifecycle
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     clauswilke/colorblindr,
@@ -55,3 +56,4 @@ Remotes:
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 4.0)
+Roxygen: list(markdown = TRUE)

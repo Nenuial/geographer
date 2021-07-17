@@ -11,5 +11,5 @@
 #'   \item{year}{The year for the value}
 #'   \item{value}{The value of the indicator}
 #' }
-#' @source \url{http://hdr.undp.org/en/content/human-development-report-office-statistical-data-api}
+#' @source <http://hdr.undp.org/en/content/human-development-report-office-statistical-data-api>
 "undp_indicators"

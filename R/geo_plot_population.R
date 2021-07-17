@@ -52,6 +52,23 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
     )
 }
 
+#' Create demogram for country
+#'
+#' Provides basic ggplot2 graph with the following data on it :
+#' \describe{
+#'   \item{population}{the population curve (blue)}
+#'   \item{birth_rate}{the birth rate curve (grey)}
+#'   \item{death_rate}{the death_rate curve (black)}
+#' }
+#'
+#' @param country A string with the country name
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+gph_highcharter_demogram <-  function(country, theme = ggplot2::theme_minimal()) {
+}
+
 #' Create lexgram for country
 #'
 #' Provides basic ggplot2 graph with the following data on it :
@@ -64,7 +81,7 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
 #' @param country A string with the country name
 #' @param theme A ggplot2 theme
 #'
-#' @return A ggplot2 graph
+#' @return A highcharter graph
 #' @export
 gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
   geodata::gdt_wb_lex(country) |>
