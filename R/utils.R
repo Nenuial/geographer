@@ -14,10 +14,6 @@ ggplot2::`%+%`
 #' @export
 rlang::`!!`
 
-country_list_idb <- function() {
-
-}
-
 # Function: return WB country list for Shiny choice selector
 #' @export
 country_list_wb <- function() {
