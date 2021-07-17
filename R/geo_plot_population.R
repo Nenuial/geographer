@@ -107,6 +107,51 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
     )
 }
 
+#' Create relative population pyramid (5 year cohorts)
+#'
+#' @param country A string with the country name
+#' @param year An integer for the year
+#'
+#' @return A ggplot graph
+#' @export
+gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()) {
+  geodata::gdt_idb_pyramid_5y(country, year) |>
+    dplyr::mutate(population = ifelse(gender == "male", population * -1, population)) |>
+    dplyr::mutate(cohort = forcats::fct_inorder(cohort)) -> data
+
+  total_population <- sum(abs(data$population))
+
+  data |>
+    dplyr::mutate(percent = population / total_population) |>
+    dplyr::mutate(align = ifelse(sign(population) == 1, -0.2, 1.2)) -> data_plot
+
+  data_plot %>%
+    ggplot2::ggplot(ggplot2::aes(x = cohort, y = percent, fill = gender)) +
+    ggplot2::geom_col(show.legend = F) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = scales::percent(abs(percent), accuracy = 0.1),
+                   hjust = align),
+      family = "Fira Sans Light", size = 3) +
+    ggplot2::annotate(
+      "text",
+      label = paste0("Population:\n", total_population),
+      family = "Fira Sans Light",
+      hjust = 0, vjust = .8,
+      x = "100+", y = min(data_plot$percent)
+    ) +
+    ggplot2::coord_flip() +
+    ggplot2::scale_y_continuous(
+      labels = ggeo::ggeo_label_abs_percent,
+      expand = c(.01,.01)
+    ) +
+    ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
+    theme +
+    ggplot2::labs(
+      x = "", y = "",
+      caption = geotools::translate_enfr("Data: US Census Bureau", "Données: US Census Bureau")
+    )
+}
+
 #' Create highcharter population pyramid
 #'
 #' @param country A string with the country name
