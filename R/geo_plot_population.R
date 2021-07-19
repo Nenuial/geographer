@@ -62,11 +62,54 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
 #' }
 #'
 #' @param country A string with the country name
-#' @param theme A ggplot2 theme
 #'
-#' @return A ggplot2 graph
+#' @return A highcharter graph
 #' @export
-gph_highcharter_demogram <-  function(country, theme = ggplot2::theme_minimal()) {
+gph_highcharter_demogram <-  function(country) {
+  data <- geodata::gdt_wb_demo(country)
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = glue::glue("Demograph for {country}")) |>
+    highcharter::hc_xAxis(title = list(text = "Year")) -> hc
+
+  list(
+    list(min = 0, title = list(text = "Rates")),
+    list(min= 0, title = list(text = "Population", style = list(color = "blue")), opposite = TRUE)
+  ) -> hc$x$hc_opts$yAxis
+
+  hc |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
+    highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      yAxis = 1,
+      name = "population",
+      color = "blue",
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = date, y = population)
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      yAxis = 0,
+      name = "crude birth rate",
+      color = "grey",
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = " ‰"),
+      highcharter::hcaes(x = date, y = birth_rate)
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      yAxis = 0,
+      name = "crude death rate",
+      color = "black",
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = " ‰"),
+      highcharter::hcaes(x = date, y = death_rate)
+    )
 }
 
 #' Create lexgram for country
@@ -81,7 +124,7 @@ gph_highcharter_demogram <-  function(country, theme = ggplot2::theme_minimal())
 #' @param country A string with the country name
 #' @param theme A ggplot2 theme
 #'
-#' @return A highcharter graph
+#' @return A ggplot2 graph
 #' @export
 gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
   geodata::gdt_wb_lex(country) |>
