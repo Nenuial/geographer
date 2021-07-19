@@ -12,7 +12,7 @@ gph_lexgram(country, theme = ggplot2::theme_minimal())
 \item{theme}{A ggplot2 theme}
 }
 \value{
-A highcharter graph
+A ggplot2 graph
 }
 \description{
 Provides basic ggplot2 graph with the following data on it :

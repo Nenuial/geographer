@@ -4,15 +4,13 @@
 \alias{gph_highcharter_demogram}
 \title{Create demogram for country}
 \usage{
-gph_highcharter_demogram(country, theme = ggplot2::theme_minimal())
+gph_highcharter_demogram(country)
 }
 \arguments{
 \item{country}{A string with the country name}
-
-\item{theme}{A ggplot2 theme}
 }
 \value{
-A ggplot2 graph
+A highcharter graph
 }
 \description{
 Provides basic ggplot2 graph with the following data on it :
