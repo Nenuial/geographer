@@ -7,7 +7,7 @@
 carto_ne_get_boundbox()
 }
 \value{
-An sf class boundbox
+An sf class map
 }
 \description{
 Return NaturalEarth Bound box

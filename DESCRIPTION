@@ -37,17 +37,16 @@ Imports:
     wesanderson,
     ggtext,
     gghighlight,
-    colorblindr,
-    dviz.supp,
     rworldmap,
     lwgeom,
     highcharter,
     shinyjqui,
-    lifecycle
+    lifecycle,
+    cshapes,
+    wpp2012,
+    wpp2019
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
-    clauswilke/colorblindr,
-    clauswilke/dviz.supp,
     ropensci/rrricanes,
     Nenuial/geodata,
     Nenuial/ggeo,

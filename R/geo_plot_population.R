@@ -267,3 +267,9 @@ gph_highcharter_pyramid <- function(country, year) {
     highcharter::hc_title(text = glue::glue("{countrycode::countrycode(country, 'country.name', geotools::translate_enfr('un.name.en', 'un.name.fr'))}")) |>
     highcharter::hc_subtitle(text = glue::glue("{year}"))
 }
+
+gph_ploty_pyramid <- function(country, year) {
+  gph_pyramid(country, year) |>
+    plotly::ggplotly() |>
+    plotly::config(displayModeBar = FALSE)
+}
