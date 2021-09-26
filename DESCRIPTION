@@ -44,7 +44,8 @@ Imports:
     lifecycle,
     cshapes,
     wpp2012,
-    wpp2019
+    wpp2019,
+    swissdd
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
     ropensci/rrricanes,
@@ -52,7 +53,7 @@ Remotes:
     Nenuial/ggeo,
     Nenuial/geotools,
     Nenuial/themakart
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Depends: 
     R (>= 4.0)
 Roxygen: list(markdown = TRUE)

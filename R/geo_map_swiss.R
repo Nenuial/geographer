@@ -1,3 +1,74 @@
+#' Plot latest
+#'
+#' @param geolevel One of "canton", "district" or "municipality"
+#' @param votedates The date of the vote
+#' @param language One of "DE", "FR", "IT" or "RM"
+#' @param id The vote id
+#'
+#' @return A ggplot2 map
+#' @export
+geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, language = "FR", id) {
+  # Check input
+  geolevel <- match.arg(geolevel)
+
+  vote_data <- swissdd::get_nationalvotes(geolevel = geolevel, votedates = votedates, language = language) |>
+    dplyr::filter(id == {{ id }})
+
+  geo_data <- geodata::gdt_opendata_swiss_geodata(geolevel)
+
+  pretty_date <- withr::with_locale(new = c("LC_TIME" = "fr_CH"), format(as.Date(votedates), "%d %B %Y"))
+  pretty_subtitle <- vote_data[[1, "name"]]
+
+  join_id <- dplyr::case_when(
+    geolevel == "canton"       ~ "canton_id",
+    geolevel == "district"     ~ "district_id",
+    geolevel == "municipality" ~ "mun_id"
+  )
+
+  geo_data |>
+    dplyr::left_join(vote_data, by = join_id) |>
+    dplyr::mutate(value = santoku::chop(jaStimmenInProzent, c(0,10,20,30,40,50,60,70,80,90,100))) |>
+    ggplot2::ggplot() +
+    ggplot2::geom_raster(data = themakart::thema_relief() |> dplyr::mutate(x = x - 2000000, y = y - 1000000),
+                         ggplot2::aes_string(x = "x", y = "y",
+                                             fill = NULL,
+                                             alpha = "value")) +
+    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = F )+
+    ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", size = .1) +
+    geo_map_swiss_lakes_json() +
+    ggplot2::coord_sf(datum = NA) +
+    ggplot2::scale_fill_manual(
+      values = prismatic::clr_alpha(
+        paletteer::paletteer_c("pals::ocean.curl", direction = -1, 10),
+        alpha = .8
+      ),
+      breaks = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
+                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"),
+      limits = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
+                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)")
+    ) +
+    ggplot2::guides(
+      fill = ggplot2::guide_coloursteps(
+        even.steps = TRUE,
+        barwidth = ggplot2::unit(150, units = "mm"),
+        keyheight = ggplot2::unit(5, units = "mm")
+      )
+    ) +
+    ggplot2::labs(
+      title = glue::glue('Votation du {pretty_date}'),
+      subtitle = pretty_subtitle,
+      fill = "", x = "", y = ""
+    ) +
+    ggeo::ggeotheme(
+      theme = geotools::gtl_options("theme"),
+      mode = geotools::gtl_options("mode"),
+      plot.title = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
+      plot.title.position = "plot", legend.position = "bottom",
+      plot.margin = ggplot2::margin(t = 1, r = 1.5, unit = "cm")
+    )
+}
+
 #' Write voting maps for communal and cantonal level to path
 #'
 #' @param url The url where the data comes from
@@ -134,7 +205,7 @@ geo_map_swiss_relief <- function() {
                          ggplot2::aes_string(x = "x", y = "y",
                                              fill = NULL,
                                              alpha = "value")),
-    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = F)
+    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none")
   )
 }
 
@@ -148,3 +219,12 @@ geo_map_swiss_lakes <- function(fill_color = "skyblue") {
   ggplot2::geom_sf(data = themakart::thema_topo("seen"), fill = fill_color, color = NA)
 }
 
+#' Swiss lakes for maps from OpenData
+#'
+#' @param fill_color A color for the lakes (default: skyblue)
+#'
+#' @return A ggplot 2 layer for Swiss lakes
+#' @export
+geo_map_swiss_lakes_json <- function(fill_color = "skyblue") {
+  ggplot2::geom_sf(data = geodata::gdt_opendata_swiss_geodata("lakes"), fill = fill_color, color = NA)
+}
