@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_graph_scolarisation_filles_afghanistan}
 \alias{oc_geo_au_feminin_graph_scolarisation_filles_afghanistan}
-\title{OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistant}
+\title{OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan}
 \usage{
 oc_geo_au_feminin_graph_scolarisation_filles_afghanistan(
   theme = ggplot2::theme_minimal()
@@ -15,5 +15,5 @@ oc_geo_au_feminin_graph_scolarisation_filles_afghanistan(
 A ggplot2 graph
 }
 \description{
-OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistant
+OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
 }

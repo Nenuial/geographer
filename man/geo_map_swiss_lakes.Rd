@@ -4,10 +4,15 @@
 \alias{geo_map_swiss_lakes}
 \title{Swiss lakes for maps}
 \usage{
-geo_map_swiss_lakes(fill_color = "skyblue")
+geo_map_swiss_lakes(
+  fill_color = "skyblue",
+  source = themakart::thema_topo("seen")
+)
 }
 \arguments{
 \item{fill_color}{A color for the lakes (default: skyblue)}
+
+\item{source}{The geometry for lakes (default: ThemaKart lakes)}
 }
 \value{
 A ggplot 2 layer for Swiss lakes

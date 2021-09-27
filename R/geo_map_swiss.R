@@ -1,4 +1,4 @@
-#' Plot latest
+#' Plot latest swiss votation
 #'
 #' @param geolevel One of "canton", "district" or "municipality"
 #' @param votedates The date of the vote
@@ -7,7 +7,7 @@
 #'
 #' @return A ggplot2 map
 #' @export
-geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, language = "FR", id) {
+gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, language = "FR", id) {
   # Check input
   geolevel <- match.arg(geolevel)
 
@@ -33,9 +33,9 @@ geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
                          ggplot2::aes_string(x = "x", y = "y",
                                              fill = NULL,
                                              alpha = "value")) +
-    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = F )+
+    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none")+
     ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", size = .1) +
-    geo_map_swiss_lakes_json() +
+    geo_map_swiss_lakes(source = geodata::gdt_opendata_swiss_geodata("lakes")) +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
       values = prismatic::clr_alpha(
@@ -49,7 +49,7 @@ geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE,
+        even.steps = TRUE, title.position = "top",
         barwidth = ggplot2::unit(150, units = "mm"),
         keyheight = ggplot2::unit(5, units = "mm")
       )
@@ -57,7 +57,8 @@ geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
     ggplot2::labs(
       title = glue::glue('Votation du {pretty_date}'),
       subtitle = pretty_subtitle,
-      fill = "", x = "", y = ""
+      fill = "Pourcentage de oui", x = "", y = "",
+      caption = "Données : OFS, Fond de carte : Themakart"
     ) +
     ggeo::ggeotheme(
       theme = geotools::gtl_options("theme"),
@@ -68,6 +69,69 @@ geo_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
       plot.margin = ggplot2::margin(t = 1, r = 1.5, unit = "cm")
     )
 }
+
+#' Plot latest swiss votation using highcharts
+#'
+#' @param geolevel One of "canton", "district" or "municipality"
+#' @param votedates The date of the vote
+#' @param language One of "DE", "FR", "IT" or "RM"
+#' @param id The vote id
+#'
+#' @return A highcharter map
+#' @export
+gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
+  # Check input
+  geolevel <- match.arg(geolevel)
+
+  vote_data <- swissdd::get_nationalvotes(geolevel = geolevel, votedates = votedates, language = language) |>
+    dplyr::filter(id == {{ id }}) |>
+    dplyr::mutate(value = round(jaStimmenInProzent,2))
+
+  geo_data <- geodata::gdt_opendata_swiss_geodata_json(geolevel)
+
+  pretty_date <- withr::with_locale(new = c("LC_TIME" = "fr_CH"), format(as.Date(votedates), "%d %B %Y"))
+  pretty_title <- glue::glue('Votation du {pretty_date}')
+  pretty_subtitle <- vote_data[[1, "name"]]
+
+  join_id <- dplyr::case_when(
+    geolevel == "canton"       ~ "canton_id",
+    geolevel == "district"     ~ "district_id",
+    geolevel == "municipality" ~ "mun_id"
+  )
+
+  name_field <- dplyr::case_when(
+    geolevel == "canton"       ~ "canton_name",
+    geolevel == "district"     ~ "district_name",
+    geolevel == "municipality" ~ "mun_name"
+  )
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_title(text = pretty_title) |>
+    highcharter::hc_subtitle(text = pretty_subtitle) |>
+    highcharter::hc_add_series(data = vote_data, name = "Votation", value = "value", mapData = geo_data, joinBy = join_id, showInLegend= F) |>
+    highcharter::hc_add_series(mapData = geodata::gdt_opendata_swiss_geodata_json("lakes"), negativeColor = "lightblue", showInLegend = F) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.point.{name_field} + '</b><br/>' +
+          'Oui (%): ' + this.point.value }}"))
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = list(
+        list(color = "#340D35", from = 0, to = 10),
+        list(color = "#7B1C5D", from = 10, to = 20),
+        list(color = "#B64A60", from = 20, to = 30),
+        list(color = "#DA8C78", from = 30, to = 40),
+        list(color = "#EED2C4", from = 40, to = 50),
+        list(color = "#D6DCCB", from = 50, to = 60),
+        list(color = "#7BB291", from = 60, to = 70),
+        list(color = "#1F867B", from = 70, to = 80),
+        list(color = "#1B5163", from = 80, to = 90),
+        list(color = "#151D44", from = 90, to = 100)
+      ),
+      showInLegend = F
+    )
+}
+
 
 #' Write voting maps for communal and cantonal level to path
 #'
@@ -212,19 +276,10 @@ geo_map_swiss_relief <- function() {
 #' Swiss lakes for maps
 #'
 #' @param fill_color A color for the lakes (default: skyblue)
+#' @param source The geometry for lakes (default: ThemaKart lakes)
 #'
 #' @return A ggplot 2 layer for Swiss lakes
 #' @export
-geo_map_swiss_lakes <- function(fill_color = "skyblue") {
-  ggplot2::geom_sf(data = themakart::thema_topo("seen"), fill = fill_color, color = NA)
-}
-
-#' Swiss lakes for maps from OpenData
-#'
-#' @param fill_color A color for the lakes (default: skyblue)
-#'
-#' @return A ggplot 2 layer for Swiss lakes
-#' @export
-geo_map_swiss_lakes_json <- function(fill_color = "skyblue") {
-  ggplot2::geom_sf(data = geodata::gdt_opendata_swiss_geodata("lakes"), fill = fill_color, color = NA)
+geo_map_swiss_lakes <- function(fill_color = "skyblue", source = themakart::thema_topo("seen")) {
+  ggplot2::geom_sf(data = source, fill = fill_color, color = NA)
 }
