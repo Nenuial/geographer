@@ -1,4 +1,4 @@
-#' OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistant
+#' OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
 #'
 #' @param theme A ggplot2 theme
 #'
