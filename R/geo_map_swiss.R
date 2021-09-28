@@ -13,7 +13,12 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 
   # Retrieve geodata
   geo_data <- swissdd::get_geodata(geolevel)
-  plot_data <- gph_swiss_votes_data(geolevel, votedates, id, language)
+  plot_data <- gph_swiss_votes_data(
+    geolevel = geolevel,
+    votedates = votedates,
+    id = id,
+    language = language
+  )
 
   geo_data |>
     dplyr::left_join(plot_data$vote_data, by = plot_data$join_id) |>
@@ -71,7 +76,12 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
   geolevel <- match.arg(geolevel)
 
   geo_data <- geodata::gdt_opendata_swiss_geodata_json(geolevel)
-  plot_data <- gph_swiss_votes_data(geolevel, votedates, id, language)
+  plot_data <- gph_swiss_votes_data(
+    geolevel = geolevel,
+    votedates = votedates,
+    filter_id = id,
+    language = language
+  )
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = plot_data$pretty_title) |>
@@ -120,9 +130,9 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
 #' @inherit gph_map_swiss_votes
 #'
 #' @keywords internal
-gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
+gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipality"), votedates, filter_id, language = "FR") {
   vote_data <- swissdd::get_nationalvotes(geolevel = geolevel, votedates = votedates, language = language) |>
-    dplyr::filter(id == {{ id }}) |>
+    dplyr::filter(id == filter_id) |>
     dplyr::mutate(value = round(jaStimmenInProzent,2))
 
   pretty_date <- withr::with_locale(

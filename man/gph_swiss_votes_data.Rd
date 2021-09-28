@@ -7,7 +7,7 @@
 gph_swiss_votes_data(
   geolevel = c("canton", "district", "municipality"),
   votedates,
-  id,
+  filter_id,
   language = "FR"
 )
 }
@@ -15,8 +15,6 @@ gph_swiss_votes_data(
 \item{geolevel}{One of "canton", "district" or "municipality"}
 
 \item{votedates}{The date of the vote}
-
-\item{id}{The vote id}
 
 \item{language}{One of "DE", "FR", "IT" or "RM"}
 }
