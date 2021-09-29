@@ -16,7 +16,7 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
   plot_data <- gph_swiss_votes_data(
     geolevel = geolevel,
     votedates = votedates,
-    id = id,
+    filter_id = id,
     language = language
   )
 
