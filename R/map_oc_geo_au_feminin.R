@@ -208,3 +208,53 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020 <- function(theme =
       fill = "Différence (années)"
     )
 }
+
+#' OC Géo au féminin: carte du sex ratio à la naissance
+#'
+#' @param year The year
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 map
+#' @export
+oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minimal()) {
+  wbstats::wb_data(indicator = c("ratio" = "SP.POP.BRTH.MF"),
+                   start_date = year,
+                   end_date = year) |>
+    dplyr::mutate(data = santoku::chop(ratio, c(1.05,1.1,1.15), extend = T, drop = F)) -> data
+
+  rnaturalearth::ne_countries(returnclass = "sf") |>
+    dplyr::filter(sovereignt != "Antarctica") |>
+    dplyr::left_join(data,
+                     by = c("adm0_a3" = "iso3c")) -> plot_data
+
+  plot_data |>
+    ggplot2::ggplot() +
+    ggfx::with_shadow(ggplot2::geom_sf(ggplot2::aes(fill = data),
+                                       color = "#fffeea", size = .1),
+                      colour = "#c6c6c5",
+                      x_offset = 5,
+                      y_offset = 5,
+                      sigma = 4) +
+    ggplot2::coord_sf(crs = geotools::gtl_crs_proj("eqearth"), datum = NA) +
+    ggplot2::scale_fill_manual(
+      values = viridis::viridis(4),
+      breaks = levels(plot_data$data),
+      limits = levels(plot_data$data),
+      drop = FALSE
+    ) +
+    ggplot2::guides(
+      fill = ggplot2::guide_coloursteps(
+        title.position = "top",
+        even.steps = TRUE, show.limits = FALSE,
+        barwidth = 30
+      )
+    ) +
+    theme +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::labs(
+      title = "Sex ratio à la naissance",
+      subtitle = glue::glue("Année {year}"),
+      fill = "Naissances garçons/filles",
+      caption = "Données : Banque Mondiale"
+    )
+}
