@@ -136,7 +136,7 @@ gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipalit
     dplyr::mutate(value = round(jaStimmenInProzent,2))
 
   pretty_date <- withr::with_locale(
-    new = c("LC_TIME" = "fr_CH"),
+    new = c("LC_TIME" = "fr_CH.UTF-8"),
     format(as.Date(vote_data[[1, "votedate"]]), "%d %B %Y")
   )
   pretty_title <- glue::glue('Votation du {pretty_date}')
