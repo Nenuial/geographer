@@ -162,6 +162,8 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
     ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
     theme +
     ggplot2::labs(
+      title = country,
+      subtitle = year,
       x = "", y = "",
       caption = geotools::translate_enfr("Data: US Census Bureau", "Données: US Census Bureau")
     )
