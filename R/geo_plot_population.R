@@ -149,13 +149,18 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
 #' @return A ggplot graph
 #' @export
 gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
-  geodata::gdt_idb_pyramid(country, year) %>%
+  pyramid_data <- geodata::gdt_idb_pyramid(country, year)
+
+  pop_max <- max(abs(c(max(pyramid_data$population), min(pyramid_data$population))))
+
+  pyramid_data |>
     ggplot2::ggplot(ggplot2::aes(x = age, y = population, fill = gender)) +
     ggplot2::geom_col(show.legend = F) +
     ggplot2::coord_flip() +
     ggplot2::scale_x_continuous(breaks = seq(0, 100, 5), expand = c(0, 0),
                                 sec.axis = ggplot2::dup_axis()) +
     ggplot2::scale_y_continuous(
+      limits = c(-pop_max, pop_max),
       breaks = ggeo::ggeo_remove_breaks(scales::breaks_pretty(6), list(0)),
       labels = ggeo::ggeo_label_pyramid
     ) +
