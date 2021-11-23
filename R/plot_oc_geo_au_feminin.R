@@ -39,7 +39,7 @@ oc_geo_au_feminin_graph_scolarisation_filles_afghanistan <- function(theme = ggp
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_geo_au_femini_graph_suisse_avortements <- function(theme = ggplot2::theme_minimal()) {
+oc_geo_au_feminin_graph_suisse_avortements <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2021_ofs_avortements |>
     ggplot2::ggplot(ggplot2::aes(year, rate, color = type)) +
     ggplot2::geom_line(size = 2.5) +
