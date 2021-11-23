@@ -201,7 +201,7 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
       family = "Fira Sans Light", size = 3) +
     ggplot2::annotate(
       "text",
-      label = paste0("Population:\n", total_population),
+      label = paste0("Population:\n", scales::number(total_population, big.mark = "'")),
       family = "Fira Sans Light",
       hjust = 0, vjust = .8,
       x = "100+", y = min(data_plot$percent)
