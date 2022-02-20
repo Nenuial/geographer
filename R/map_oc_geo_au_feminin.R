@@ -258,3 +258,23 @@ oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minim
       caption = "Données : Banque Mondiale"
     )
 }
+
+oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minimal()) {
+  sf::sf_use_s2(FALSE)
+
+  rnaturalearth::ne_countries(scale = 50, returnclass = "sf") |>
+    #dplyr::mutate(centroid = sf::st_centroid(geometry, of_largest_polygon = T)) |>
+    dplyr::left_join(geodata::oc_geo_au_feminin_2020_fgm_indirect_data, by = c("adm0_a3" = "iso")) |>
+    dplyr::filter(region_un == "Europe", adm0_a3 != "RUS") -> map
+
+  mapsf::mf_map(map)
+  mapsf::mf_map(map, var = "Girls_undergone_FGM", type = "prop")
+
+    # ggplot2::ggplot(ggplot2::aes(fill = Legal_status)) +
+    # ggplot2::geom_sf(color = "#fffeea", size = .1) +
+    # ggplot2::geom_sf(mapping = ggplot2::aes(geometry = centroid, size = Girls_undergone_FGM)) +
+    # ggplot2::coord_sf(crs = geotools::gtl_crs_proj("eqearth"), datum = NA,
+    #                   xlim = c(-1450000, 3223000),
+    #                   ylim = c(4220000, 8120000)) +
+    # ggplot2::scale_size_continuous(breaks = c(1000, 10000, 100000))
+}
