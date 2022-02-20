@@ -17,7 +17,7 @@ get_noaa_climate_data <- function(location_id, data_type = "temperature") {
               startdate = "2000-01-01", enddate = "2009-12-31", limit = 500)
   dat <- rbind(dat, out$data)
   out <- rnoaa::ncdc(datasetid = "GHCNDMS", locationid = location_id, datatypeid = data_id,
-              startdate = "2010-01-01", enddate = "2014-12-31", limit = 500)
+              startdate = "2010-01-01", enddate = "2019-12-31", limit = 500)
   dat <- rbind(dat, out$data)
 
   dat %>%
@@ -72,7 +72,7 @@ update_ncdc_city_list <- function() {
     dplyr::mutate(address = glue::glue("{city}, {country}")) %>%
     stats::na.omit() %>%
     dplyr::filter(mindate < lubridate::ymd("1990-01-01"),
-                  maxdate > lubridate::ymd("2014-12-31"),
+                  maxdate > lubridate::ymd("2019-12-31"),
                   datacoverage >= .9) %>%
     tidygeocoder::geocode(address = address, method = "osm") -> cities
 
