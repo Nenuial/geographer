@@ -178,7 +178,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
     ggplot2::theme(
       plot.title = ggplot2::element_text(hjust = .5),
       plot.subtitle = ggplot2::element_text(hjust = .5)
-    )
+    ) +
     theme +
     ggplot2::labs(
       title = country_name,
