@@ -159,7 +159,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       "Gaza" = "Gaza",
       "West Bank" = "Cisjordanie"
     )
-  )
+  ) -> country_name
 
   pop_max <- max(abs(c(max(pyramid_data$population), min(pyramid_data$population))))
 
@@ -175,11 +175,11 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       labels = ggeo::ggeo_label_pyramid
     ) +
     ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
+    theme +
     ggplot2::theme(
       plot.title = ggplot2::element_text(hjust = .5),
       plot.subtitle = ggplot2::element_text(hjust = .5)
     ) +
-    theme +
     ggplot2::labs(
       title = country_name,
       subtitle = year,
