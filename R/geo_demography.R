@@ -149,7 +149,17 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
 #' @return A ggplot graph
 #' @export
 gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
+  country_name <- country
   pyramid_data <- geodata::gdt_idb_pyramid(country, year)
+
+  if(geotools::gtl_opt_short_language() == "fr") countrycode::countrycode(
+    country, "country.name", "un.name.fr",
+    custom_match = c(
+      "Kosovo" = "Kosovo",
+      "Gaza" = "Gaza",
+      "West Bank" = "Cisjordanie"
+    )
+  )
 
   pop_max <- max(abs(c(max(pyramid_data$population), min(pyramid_data$population))))
 
@@ -165,9 +175,13 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       labels = ggeo::ggeo_label_pyramid
     ) +
     ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = .5),
+      plot.subtitle = ggplot2::element_text(hjust = .5)
+    )
     theme +
     ggplot2::labs(
-      title = country,
+      title = country_name,
       subtitle = year,
       x = "", y = "",
       caption = geotools::translate_enfr("Data: US Census Bureau", "Données: US Census Bureau")
