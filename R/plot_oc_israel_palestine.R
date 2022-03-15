@@ -1,7 +1,7 @@
-#' OC Russie: graphique des naissances
+#' OC Israël-Palestine: graphique des migration
 #'
-#' Graphique des naissances en Russie
-#' jusqu'en 2017 (pour alignement avec avortements).
+#' Graphique de l'immigration en Isräel
+#' de 1949 à 2017.
 #'
 #' @param theme A ggplot2 theme
 #'
@@ -18,4 +18,47 @@ oc_israel_palestine_migration_israel <- function(theme = ggplot2::theme_minimal(
       x = "", y = ""
     ) +
     theme
+}
+
+#' OC Israël-Palestine: graphique de la
+#' population néé à l'étranger
+#'
+#' Graphique avec la population néé à l'étranger
+#' par pays de naissance d'après le recensement 2018.
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_israel_palestine_population_nae <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_israel_palestine_2008_population_nae |>
+    dplyr::arrange(-population) |>
+    dplyr::mutate(country = forcats::fct_inorder(country)) |>
+    dplyr::group_by(continent) |>
+    dplyr::mutate(country = forcats::fct_lump_n(country, 3, w = population,
+                                                other_level = paste("Other", dplyr::first(continent)))) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(country, continent) |>
+    dplyr::summarise(population = sum(population), .groups = "keep") |>
+    dplyr::ungroup() |>
+    dplyr::mutate(country = forcats::fct_rev(forcats::fct_reorder(country, population, max))) |>
+    ggplot2::ggplot(ggplot2::aes(x = country, y = population, fill = continent)) +
+    ggplot2::geom_col() +
+    ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 3)) +
+    ggplot2::scale_y_continuous(
+      labels = ggeo::ggeo_label_sci_10
+    ) +
+    ggplot2::scale_fill_manual(
+      values = paletteer::paletteer_d("IslamicArt::jerusalem")[c(1,2,8,3,5)]
+    ) +
+    theme +
+    ggplot2::theme(
+      legend.position = "bottom"
+    ) +
+    ggplot2::labs(
+      title = "Population néé à l'étranger",
+      subtitle = "par pays de naissance",
+      x = "", y = "Population",
+      fill = "", caption = "Données: CBS Isräel (2008)"
+    )
 }

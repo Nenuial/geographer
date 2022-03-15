@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_israel_palestine.R
 \name{oc_israel_palestine_migration_israel}
 \alias{oc_israel_palestine_migration_israel}
-\title{OC Russie: graphique des naissances}
+\title{OC Israël-Palestine: graphique des migration}
 \usage{
 oc_israel_palestine_migration_israel(theme = ggplot2::theme_minimal())
 }
@@ -13,6 +13,6 @@ oc_israel_palestine_migration_israel(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-Graphique des naissances en Russie
-jusqu'en 2017 (pour alignement avec avortements).
+Graphique de l'immigration en Isräel
+de 1949 à 2017.
 }

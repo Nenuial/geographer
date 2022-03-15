@@ -45,9 +45,12 @@ Imports:
     cshapes,
     wpp2012,
     wpp2019,
-    swissdd
+    swissdd,
+    paletteer,
+    IslamicArt
 URL: https://github.com/Nenuial/geographer.git
 Remotes: 
+    lambdamoses/IslamicArt,
     ropensci/rrricanes,
     Nenuial/geodata,
     Nenuial/ggeo,
