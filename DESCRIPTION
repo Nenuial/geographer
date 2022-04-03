@@ -47,10 +47,13 @@ Imports:
     wpp2019,
     swissdd,
     paletteer,
+    ochRe,
     IslamicArt
 URL: https://github.com/Nenuial/geographer.git
-Remotes: 
+Remotes:
+    hollylkirk/ochRe,
     lambdamoses/IslamicArt,
+    politanch/swissdd,
     ropensci/rrricanes,
     Nenuial/geodata,
     Nenuial/ggeo,
