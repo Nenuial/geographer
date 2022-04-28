@@ -301,3 +301,25 @@ oc_russie_graph_immigration <- function(theme = ggplot2::theme_minimal()) {
     )
 
 }
+
+#' OC Russie: demogram pour l'exa 2022
+#'
+#' Graphique de l'évolution démographique de la Russie
+#' entre 1980 et 2020. Graphique destiné à l'examen de
+#' maturité2022.
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
+  gph_demogram(country = "Russian Federation", population_color = ochRe::ochre_palettes$healthy_reef[6]) +
+    ggplot2::scale_color_manual(values = ochRe::ochre_palettes$healthy_reef[c(8,5)]) +
+    ggplot2::scale_x_continuous(breaks = seq(1960, 2020, 10),
+                       expand = c(0, 0)) +
+    ggplot2::coord_cartesian(xlim = c(1980, 2020)) +
+    ggplot2::labs(
+      title = "Évolution démographique de la Russie",
+      subtitle = "1980 à 2020"
+    )
+}
