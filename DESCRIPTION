@@ -48,7 +48,8 @@ Imports:
     swissdd,
     paletteer,
     ochRe,
-    IslamicArt
+    IslamicArt,
+    plotly
 URL: https://github.com/Nenuial/geographer.git
 Remotes:
     hollylkirk/ochRe,
