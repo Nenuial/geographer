@@ -4,12 +4,18 @@
 \alias{gph_demogram}
 \title{Create demogram for country}
 \usage{
-gph_demogram(country, theme = ggplot2::theme_minimal())
+gph_demogram(
+  country,
+  theme = ggplot2::theme_minimal(),
+  population_color = "blue"
+)
 }
 \arguments{
 \item{country}{A string with the country name}
 
 \item{theme}{A ggplot2 theme}
+
+\item{population_color}{A color value for the population curve}
 }
 \value{
 A ggplot2 graph

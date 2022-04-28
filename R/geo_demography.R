@@ -9,10 +9,11 @@
 #'
 #' @param country A string with the country name
 #' @param theme A ggplot2 theme
+#' @param population_color A color value for the population curve
 #'
 #' @return A ggplot2 graph
 #' @export
-gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
+gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_color = "blue") {
   data <- geodata::gdt_wb_demo(country)
   coef <- max(data$population, na.rm = T) / max(data$birth_rate, data$death_rate, na.rm = T)
 
@@ -20,7 +21,7 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
     ggplot2::ggplot() +
     ggplot2::geom_line(ggplot2::aes(date, birth_rate, color = "cbr"), size = .8) +
     ggplot2::geom_line(ggplot2::aes(date, death_rate, color = "cdr"), size = .8) +
-    ggplot2::geom_line(ggplot2::aes(date, population / coef), color = "blue", size = .8) +
+    ggplot2::geom_line(ggplot2::aes(date, population / coef), color = population_color, size = .8) +
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::scale_y_continuous(
       limits = c(0, NA),
@@ -38,7 +39,7 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal()) {
     ) +
     theme +
     ggplot2::theme(
-      axis.title.y.right = ggplot2::element_text(color = "blue"),
+      axis.title.y.right = ggplot2::element_text(color = population_color),
       legend.position = c(.05, .05),
       legend.justification = c("left", "bottom"),
       legend.box.just = "right",
