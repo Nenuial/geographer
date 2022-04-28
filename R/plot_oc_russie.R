@@ -321,5 +321,6 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       title = "Évolution démographique de la Russie",
       subtitle = "1980 à 2020"
-    )
+    ) +
+    theme
 }
