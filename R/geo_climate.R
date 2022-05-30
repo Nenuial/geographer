@@ -60,7 +60,7 @@ update_ncdc_city_list <- function() {
   out <- rnoaa::ncdc_locs(datasetid = "GHCNDMS", locationcategoryid = "CITY", limit = 1000, offset = 1001)
   dat <- rbind(dat, out$data)
 
-  dat %>%
+  dat |>
     dplyr::mutate(mindate = lubridate::ymd(mindate),
                   maxdate = lubridate::ymd(maxdate),
                   iso = stringr::str_sub(name, -2),
@@ -68,12 +68,12 @@ update_ncdc_city_list <- function() {
                   country = countrycode::countrycode(iso, "fips", "country.name",
                                                      custom_match = c("NT" = "Curaçao",
                                                                       "RB" = "Serbia"),
-                                                     warn = FALSE)) %>%
-    dplyr::mutate(address = glue::glue("{city}, {country}")) %>%
-    stats::na.omit() %>%
+                                                     warn = FALSE)) |>
+    dplyr::mutate(address = glue::glue("{city}, {country}")) |>
+    stats::na.omit() |>
     dplyr::filter(mindate < lubridate::ymd("1990-01-01"),
-                  maxdate > lubridate::ymd("2019-12-31"),
-                  datacoverage >= .9) %>%
+                  maxdate > lubridate::ymd("2015-01-01"),
+                  datacoverage >= .9) |>
     tidygeocoder::geocode(address = address, method = "osm") -> cities
 
   saveRDS(cities, file = filename)
