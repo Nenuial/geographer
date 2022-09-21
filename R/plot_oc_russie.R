@@ -314,7 +314,12 @@ oc_russie_graph_immigration <- function(theme = ggplot2::theme_minimal()) {
 #' @export
 oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
   gph_demogram(country = "Russian Federation", population_color = ochRe::ochre_palettes$healthy_reef[6]) +
-    ggplot2::scale_color_manual(values = ochRe::ochre_palettes$healthy_reef[c(8,5)]) +
+    ggplot2::scale_color_manual(
+      values = ochRe::ochre_palettes$healthy_reef[c(5,8)],
+      breaks = c("cbr", "cdr"),
+      labels = c("cbr" = geotools::translate_enfr("birth", "natalité"),
+                 "cdr" = geotools::translate_enfr("death", "mortalité"))
+    ) +
     ggplot2::scale_x_continuous(breaks = seq(1960, 2020, 10),
                        expand = c(0, 0)) +
     ggplot2::coord_cartesian(xlim = c(1980, 2020)) +
@@ -322,5 +327,11 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
       title = "Évolution démographique de la Russie",
       subtitle = "1980 à 2020"
     ) +
-    theme
+    theme +
+    ggplot2::theme(
+      legend.position = c(.05, .05),
+      legend.justification = c("left", "bottom"),
+      legend.box.just = "right",
+      legend.margin = ggplot2::margin(6, 6, 6, 6)
+    )
 }
