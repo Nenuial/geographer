@@ -51,6 +51,8 @@ get_ncdc_city_list <- function() {
 #'
 #' @export
 update_ncdc_city_list <- function() {
+  message("Updating NCDC City list… This will take a few minutes.")
+
   cachedir <- rappdirs::user_cache_dir("geographer")
   filename <- file.path(cachedir, "ncdc_cities.RData")
   if (!file.exists(cachedir)) dir.create(cachedir, recursive = TRUE)
