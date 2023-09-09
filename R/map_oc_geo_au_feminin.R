@@ -259,6 +259,69 @@ oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minim
     )
 }
 
+#' OC Géo au féminin: carte mondiale du suffrage féminin
+#'
+#' Carte interactive de l'accès au suffrage féminin par pays
+#'
+#' @param theme A ggplot 2 theme
+#'
+#' @return A ggiraph map
+#' @export
+oc_geo_au_feminin_carte_mondiale_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
+  rnaturalearth::ne_countries(scale = 50, returnclass = "sf") |>
+  dplyr::left_join(
+    geodata::oc_geo_au_feminin_owid_suffrage_feminin,
+    dplyr::join_by(adm0_a3 == Code)
+  ) |>
+    ggplot2::ggplot(ggplot2::aes(fill = Year, tooltip = Year)) +
+    ggiraph::geom_sf_interactive(linewidth = .05) +
+    ggplot2::scale_fill_viridis_c(option = "G") +
+    ggplot2::coord_sf(crs = "+proj=eqearth") +
+    ggplot2::labs(
+      title = "Le suffrage féminin",
+      fill = "Année"
+    ) +
+    theme -> plot
+
+  ggiraph::girafe(ggobj = plot)
+}
+
+oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
+  data <- geodata::oc_geo_au_feminin_owid_suffrage_feminin |>
+    dplyr::rename(value = Year) |>
+    dplyr::mutate(breaks = santoku::chop_pretty(value, 10))
+  map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world.topo.json")
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_title(text = "Le suffrage féminin") |>
+    highcharter::hc_mapView(
+      maxZoom = 30,
+      projection = list(
+        name= 'EqualEarth'
+      )
+    ) |>
+    # highcharter::hc_tooltip(
+    #   format = "<b>{point.name}</b>:<br>",
+    #   formatter = highcharter::JS("function(){ return this.point.value; }")
+    # ) |>
+    highcharter::hc_add_series(
+      name = "Année",
+      mapData = map,
+      data = data,
+      value = "value",
+      joinBy = c("iso.a3", "Code"),
+      borderColor = "#FAFAFA",
+      borderWidth = 0.1,
+      showInLegend = F
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_color_axis(
+        santoku::chop_pretty(data$value), viridis::cividis
+      ),
+      showInLegend = F
+    )
+}
+
 oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minimal()) {
   sf::sf_use_s2(FALSE)
 
@@ -277,4 +340,26 @@ oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minim
     #                   xlim = c(-1450000, 3223000),
     #                   ylim = c(4220000, 8120000)) +
     # ggplot2::scale_size_continuous(breaks = c(1000, 10000, 100000))
+}
+
+oc_geo_au_feminin_carte_femmes_parlement <- function(theme = ggplot2::theme_minimal()) {
+  wbstats::wb_data(indicator = c("parl" = "SG.GEN.PARL.ZS"),
+                   start_date = 2022,
+                   end_date = 2022) |>
+    dplyr::mutate(parl_cut = santoku::chop_equally(parl, 6)) -> data
+
+  rnaturalearth::ne_countries(returnclass = "sf") |>
+    dplyr::left_join(
+      data,
+      dplyr::join_by(adm0_a3 == iso3c)
+    ) |>
+    ggplot2::ggplot(ggplot2::aes(fill = parl_cut)) +
+    ggplot2::geom_sf() +
+    ggplot2::coord_sf(crs = "+proj=eqearth", datum = NA) +
+    ggplot2::scale_fill_manual(
+      values = viridis::turbo(6, direction = -1, alpha = .8)
+    ) +
+    ggplot2::guides(
+      fill = ggplot2::guide_colorsteps()
+    )
 }

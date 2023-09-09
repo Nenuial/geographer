@@ -83,7 +83,7 @@ oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_mini
 oc_russie_graph_mariages_et_divorces <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_mariages_divorces_national %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = data, color = indicator)) +
-    ggplot2::geom_line(size = 1, show.legend = F) +
+    ggplot2::geom_line(linewidth = 2, show.legend = F) +
     ggplot2::scale_color_manual(
       values = c("#475286", "#907A58"),
       breaks = c("mariages", "divorces")
@@ -143,7 +143,7 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
 oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "female") %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = lex, color = country)) +
-    ggplot2::geom_line(size = 1.5) +
+    ggplot2::geom_line(size = .8) +
     paletteer::scale_color_paletteer_d(palette = "IslamicArt::samarqand") +
     theme +
     ggplot2::theme(
@@ -171,7 +171,7 @@ oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()
 oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "male") %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = lex, color = country)) +
-    ggplot2::geom_line(size = 1.5) +
+    ggplot2::geom_line(size = .8) +
     paletteer::scale_color_paletteer_d(palette = "IslamicArt::samarqand") +
     theme +
     ggplot2::theme(
@@ -207,7 +207,7 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
     ) %>%
     dplyr::mutate(country = countrycode::countrycode(iso3c, "iso3c", "un.name.fr", warn = F)) %>%
     ggplot2::ggplot(ggplot2::aes(x = date, y = lex, color = iso3c)) +
-    ggplot2::geom_line(size = 1.5, show.legend = F) +
+    ggplot2::geom_line(size = .8, show.legend = F) +
     ggplot2::scale_color_manual(values = c("#4C9AC4FF")) +
     gghighlight::gghighlight(iso3c == "RUS", use_direct_label = F,
                              unhighlighted_params = list(size = .5)) +
@@ -243,7 +243,7 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
     ) %>%
     dplyr::mutate(country = countrycode::countrycode(iso3c, "iso3c", "un.name.fr", warn = F)) %>%
     ggplot2::ggplot(ggplot2::aes(x = date, y = lex, color = iso3c)) +
-    ggplot2::geom_line(size = 1.2, show.legend = F) +
+    ggplot2::geom_line(size = .8, show.legend = F) +
     ggplot2::scale_color_manual(values = c("#4C9AC4FF")) +
     gghighlight::gghighlight(iso3c == "RUS", use_direct_label = F,
                              unhighlighted_params = list(size = .5)) +
@@ -334,4 +334,125 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
       legend.box.just = "right",
       legend.margin = ggplot2::margin(6, 6, 6, 6)
     )
+}
+
+#' OC Russie: Attitude envers les USA
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_russie_graph_attitude_us <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_russie_levada_attitude_us |>
+    dplyr::filter(attitude != "Difficult to answer") |>
+    ggplot2::ggplot(ggplot2::aes(x = date, y = percentage/100, color = attitude)) +
+    ggplot2::geom_line(linewidth = 1) +
+    ggplot2::scale_y_continuous(limits = c(0, NA), labels = scales::percent) +
+    ggplot2::scale_x_datetime(date_labels = "%Y",
+                              guide = ggplot2::guide_axis(n.dodge = 3),
+                              breaks = almanac::alma_search(
+                                min(geodata::oc_russie_levada_attitude_us$date),
+                                max(geodata::oc_russie_levada_attitude_us$date),
+                                almanac::yearly()
+                              ) |> lubridate::as_datetime()) +
+    ggplot2::scale_color_manual(values = c("#e66b0f", "#0b6b8b")) +
+    theme +
+    ggplot2::labs(
+      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>négative</span>** vis-à-vis des USA en Russie",
+      x = "", y = "",
+      caption = "Source: sondages de l'institut Levada (1990-2023)",
+      color = ""
+    ) +
+    ggplot2::theme(
+      plot.title = ggtext::element_textbox_simple(
+        lineheight = .5,
+        margin = ggplot2::unit(.5, "cm")),
+      legend.position = "none"
+    )
+}
+
+#' OC Russie: Attitude envers l'UE
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_russie_levada_attitude_eu |>
+    dplyr::filter(attitude != "Difficult to answer") |>
+    ggplot2::ggplot(ggplot2::aes(x = date, y = percentage/100, color = attitude)) +
+    ggplot2::geom_line(linewidth = 1) +
+    ggplot2::scale_y_continuous(limits = c(0, NA), labels = scales::percent) +
+    ggplot2::scale_x_datetime(date_labels = "%Y",
+                              guide = ggplot2::guide_axis(n.dodge = 3),
+                              breaks = almanac::alma_search(
+                                min(geodata::oc_russie_levada_attitude_eu$date),
+                                max(geodata::oc_russie_levada_attitude_eu$date),
+                                almanac::yearly()
+                              ) |> lubridate::as_datetime()) +
+    ggplot2::scale_color_manual(values = c("#e66b0f", "#0b6b8b")) +
+    theme +
+    ggplot2::labs(
+      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>négative</span>** vis-à-vis de l'UE en Russie",
+      x = "", y = "",
+      caption = "Source: sondages de l'institut Levada (2003-2023)",
+      color = ""
+    ) +
+    ggplot2::theme(
+      plot.title = ggtext::element_textbox_simple(
+        lineheight = .5,
+        margin = ggplot2::unit(.5, "cm")),
+      legend.position = "none"
+    )
+}
+
+oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_russie_depenses_militaires |>
+    dplyr::filter(year == 2021) |>
+    dplyr::arrange(-military_expenditure) |>
+    dplyr::slice(1:10) |>
+    dplyr::pull(iso3c) -> top_expenditures
+
+  geodata::oc_russie_depenses_militaires |>
+    dplyr::filter(iso3c %in% top_expenditures) |>
+    dplyr::mutate(pays = countrycode::countrycode(iso3c, "iso3c", "country.name.fr")) |>
+    dplyr::group_by(year) |>
+    dplyr::arrange(year, military_expenditure) |>
+    dplyr::mutate(rank = 1:dplyr::n()) |>
+    ggplot2::ggplot() +
+    ggplot2::aes(xmin = 0 ,
+                 xmax = military_expenditure / 1000) +
+    ggplot2::aes(ymin = rank - .45,
+                 ymax = rank + .45,
+                 y = rank) +
+    ggplot2::facet_wrap(~ year) +
+    ggplot2::geom_rect(alpha = .7) +
+    ggplot2::geom_text(col = "gray13",
+                       hjust = "right",
+                       ggplot2::aes(label = pays),
+                       x = -1) +
+    ggplot2::labs(x = 'Dépenses militaires (mia)') +
+    ggplot2::labs(y = '') +
+    ggplot2::labs(caption = 'Source: SIPRI') +
+    ggeo::ggeotheme("islamic_samarquand") +
+    ggplot2::theme(axis.text.y = ggplot2::element_blank()) +
+    ggplot2::theme(axis.ticks.y = ggplot2::element_blank()) +
+    ggplot2::theme(axis.line.y = ggplot2::element_blank()) -> full_plot
+
+  full_plot +
+    ggplot2::facet_null() +
+    ggplot2::scale_x_continuous(
+      limits = c(-200, 900),
+      breaks = c(seq(0,800,200))) +
+    ggplot2::geom_text(x = 500, y = 1.5,
+                       ggplot2::aes(label = as.character(year)),
+                       size = 30, col = "grey18") +
+    ggplot2::aes(group = country) +
+    gganimate::transition_time(year) -> animated_plot
+
+  gganimate::animate(
+    animated_plot,
+    fps = 5, renderer = gganimate::ffmpeg_renderer(),
+    width = 1600, height = 800, res = 150
+  ) -> plot_animation
 }

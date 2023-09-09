@@ -4,33 +4,148 @@
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_geo_au_feminin_graph_scolarisation_filles_afghanistan <- function(theme = ggplot2::theme_minimal()) {
+oc_geo_au_feminin_graph_scolarisation_filles_afghanistan <- function(theme = ggplot2::theme_minimal(), line_color = "black") {
   wbstats::wb_data(
     indicator = c(school = "SE.PRM.ENRR.FE"),
     country = "Afghanistan",
     start_date = 1960,
-    end_date = 2018
+    end_date = 2022
   ) |>
     tidyr::drop_na(school) |>
     dplyr::mutate(school = school / 100) |>
     ggplot2::ggplot(ggplot2::aes(x = date, y = school)) +
-    ggplot2::geom_point(size = 2) +
-    ggplot2::geom_path() +
+    ggplot2::geom_point(size = 2, color = line_color) +
+    ggplot2::geom_path(color = line_color) +
     ggplot2::annotate("rect", xmin = 1996, xmax = 2001, ymin = 0, ymax = 1,
-             fill = "red", alpha = .2) +
-    ggplot2::annotate("text", x = 1998.5, y = .8, label = "Talibans\n au pouvoir",
-                      size = 12, family = "Fira Sans Light") +
-    ggplot2::coord_cartesian(xlim = c(1970, 2018), ylim = c(0, .9)) +
+             fill = "#bf616a", alpha = .2) +
+    ggplot2::annotate("rect", xmin = 2021, xmax = 2025, ymin = 0, ymax = 1,
+                      fill = "#bf616a", alpha = .2) +
+    ggplot2::coord_cartesian(xlim = c(1970, 2024), ylim = c(0, .9)) +
     ggplot2::scale_y_continuous(labels = scales::percent,
       expand = c(0,0)
     ) +
+    ggplot2::scale_x_continuous(expand = c(0,0)) +
     ggplot2::labs(
-      title = "LE RETOUR DES TALIBANS…",
+      title = "Le retour des talibans…",
       subtitle = "Pourcentage de filles allant à l'école primaire",
       x = "", y = "",
-      captions = "Source: John Burn-Murdoch (FT), Données: Banque Mondiale"
+      caption = "Source: John Burn-Murdoch (FT), Données: Banque Mondiale"
     ) +
     theme
+}
+
+#' OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
+#'
+#' @return A highcharts graph
+#' @export
+oc_geo_au_feminin_hc_scolarisation_filles_afghanistan <- function() {
+  wbstats::wb_data(
+    indicator = c(school = "SE.PRM.ENRR.FE"),
+    country = "Afghanistan",
+    start_date = 1960,
+    end_date = 2022
+  ) |>
+    tidyr::drop_na(school) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Le retour des talibans…") |>
+    highcharter::hc_subtitle(text = "Pourcentage de filles allant à l'école primaire") |>
+    highcharter::hc_caption(text = "Source: John Burn-Murdoch (FT), Données: Banque Mondiale") |>
+    highcharter::hc_xAxis(
+      title = list(text = ""),
+      max = 2025,
+      showInLegend = F,
+      plotBands = list(
+        list(
+          from = 1996,
+          to = 2001,
+          color = "#bf616a",
+          label = list(
+            text = 'Talibans',
+            style = list(
+              color = "#e0d9fb"
+            )
+          )
+        ),
+        list(
+          from = 2021,
+          to = 2025,
+          color = "#bf616a",
+          label = list(
+            text = '???',
+            style = list(
+              color = "#e0d9fb"
+            )
+          )
+        )
+      )
+    ) |>
+    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text}%")) |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
+    highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = "Scolarisation",
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = "%"),
+      highcharter::hcaes(x = date, y = round(school, 2))
+    ) |>
+    ggeo::hc_purple_theme()
+}
+
+#' OC Géographie au féminin: graphique du PIB par habitant
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_situation_eco_afghanistan <- function(theme, line_color = "black") {
+  wbstats::wb_data(
+    indicator = c(gdp = "NY.GDP.PCAP.CD"),
+    country = "Afghanistan",
+    start_date = 1960,
+    end_date = 2022
+  ) |>
+    ggplot2::ggplot(ggplot2::aes(x = date, y = gdp)) +
+    ggplot2::geom_line(color = line_color) +
+    ggplot2::scale_y_continuous(label = ggeo::ggeo_label_sci_10) +
+    ggplot2::labs(
+      title = "Une économie qui ralentit",
+      y = "PIB par hab.", x = "",
+      caption = "Données: Banque Mondiale"
+    ) +
+    theme
+}
+
+#' OC Géo au féminin: représentation politique
+#' Pourcentage de femmes dans les parlements nationaux par régions
+#'
+#' @return A highcharts graph
+#' @export
+oc_geo_au_feminin_hc_situation_eco_afghanistan <- function() {
+  wbstats::wb_data(
+    indicator = c(gdp = "NY.GDP.PCAP.CD"),
+    country = "Afghanistan",
+    start_date = 1960,
+    end_date = 2022
+  ) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Une économie qui ralentit") |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(title = list(text = "$US courrant")) |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
+    highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = "PIB par hab.",
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = date, y = round(gdp,2))
+    ) |>
+    ggeo::hc_purple_theme()
 }
 
 #' OC Géographie au féminin: taux d'avortement en Suisse
@@ -177,4 +292,84 @@ oc_geo_auf_feminin_graph_2019_violences_sexuelles_police <- function(theme = ggp
       plot.title.position = "plot",
       legend.position = "bottom"
     )
+}
+
+#' OC Géographie au féminin: Espérance de vie
+#' Graphiques de l'expérance de vie
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_esperances_de_vie <- function(theme = ggplot2::theme_minimal()) {
+  wbstats::wb_data(
+    indicator = c(
+      "lexf" = "SP.DYN.LE00.FE.IN",
+      "lexm" = "SP.DYN.LE00.MA.IN"),
+    start_date = 1960, end_date = 2022
+  ) |>
+    ggplot2::ggplot() +
+    ggplot2::geom_line(ggplot2::aes(x = date, y = lexf, color = "purple")) +
+    ggplot2::geom_line(ggplot2::aes(x = date, y = lexm, color = "blue")) +
+    geofacet::facet_geo(~iso3c, grid = "europe_countries_grid2")
+}
+
+#' OC Géo au féminin
+#' Graphique de l'évolution de l'écart entre
+#' l'espérence de vie des hommes et des femmes
+#' pour le Japon, la Suisse et les USA
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_difference_esperance_de_vie <- function(theme = ggplot2::theme_minimal()) {
+  list(
+    "Japon" = geodata::gdt_hmd_e0_table("Japan"),
+    "Suisse" = geodata::gdt_hmd_e0_table("Switzerland"),
+    "USA" = geodata::gdt_hmd_e0_table("USA")
+  ) |> purrr::list_rbind(names_to = "country") -> data
+
+  data |>
+    dplyr::filter(year > 1950) |>
+    dplyr::mutate(diff = Female - Male) |>
+    ggplot2::ggplot(ggplot2::aes(x = year, y = diff, color = country)) +
+    ggplot2::geom_line(size = 1.2) +
+    ggplot2::scale_y_continuous(limits = c(3, NA)) +
+    theme
+
+}
+
+#' OC Géo au féminin: représentation politique
+#' Pourcentage de femmes dans les parlements nationaux par régions
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_proportion_parlements <- function(theme = ggplot2::theme_minimal()) {
+  wbstats::wb_data(
+    indicator = c("parl" = "SG.GEN.PARL.ZS"),
+    start_date = 1997,
+    end_date = 2022,
+    country = "regions_only"
+  ) -> data
+
+  data |>
+    dplyr::rename(
+      Année = date,
+      Représentation = parl,
+      Région = country
+    ) |>
+    ggplot2::ggplot(ggplot2::aes(x = Année, y = Représentation, fill = Région, color = Région)) +
+    ggplot2::geom_area(show.legend = F) +
+    ggplot2::geom_line() +
+    ggplot2::facet_wrap(~Région, nrow = 2) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(suffix = "%")) +
+    ggplot2::scale_fill_manual(values = MetBrewer::met.brewer("Nizami")[c(2:8)]) +
+    ggplot2::scale_color_manual(values = MetBrewer::met.brewer("Nizami")[c(2:8)]) +
+    ggplot2::labs(
+      x = "", y = ""
+    ) +
+    theme
 }
