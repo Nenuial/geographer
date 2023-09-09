@@ -13,7 +13,7 @@ carto_ne_get_boundbox <- function() {
 #' @return A ggplot pbject
 #' @export
 geo_project_world <- function(crs) {
-  ggplot2::ggplot(sf::st_as_sf(rworldmap::getMap(resolution = "low"))) +
+  ggplot2::ggplot(rnaturalearth::ne_countries(returnclass = "sf")) +
     ggplot2::geom_sf(
       data = carto_ne_get_boundbox(),
       fill = "#56B4E950", color = "grey30", size = 0.5/ggplot2::.pt
@@ -30,7 +30,7 @@ geo_project_world <- function(crs) {
 #' @return A ggplot object
 #' @export
 geo_project_world_tissot <- function(crs) {
-  ggplot2::ggplot(sf::st_as_sf(rworldmap::getMap(resolution = "low"))) +
+  ggplot2::ggplot(rnaturalearth::ne_countries(returnclass = "sf")) +
     ggplot2::geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/ggplot2::.pt) +
     ggplot2::geom_sf(
       data = sf::st_read("data/raw/tissot/TissotsIndicatrix.gdb/", layer = "TissotEllipses") |>
