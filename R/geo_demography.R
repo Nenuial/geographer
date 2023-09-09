@@ -124,15 +124,18 @@ gph_highcharter_demogram <-  function(country) {
 #'
 #' @param country A string with the country name
 #' @param theme A ggplot2 theme
+#' @param men Color for men line
+#' @param women Color for women line
+#' @param all Color for average line
 #'
 #' @return A ggplot2 graph
 #' @export
-gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
+gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue", women = "red", all = "black") {
   geodata::gdt_wb_lex(country) |>
     ggplot2::ggplot(ggplot2::aes(x = date)) +
-    ggplot2::geom_line(ggplot2::aes(y = lex), linetype = "dotted", size = .8) +
-    ggplot2::geom_line(ggplot2::aes(y = lex_male), color = "blue", size = .8) +
-    ggplot2::geom_line(ggplot2::aes(y = lex_female), color = "red", size = .8) +
+    ggplot2::geom_line(ggplot2::aes(y = lex), linetype = "dotted", color = all, size = .8) +
+    ggplot2::geom_line(ggplot2::aes(y = lex_male), color = men, size = .8) +
+    ggplot2::geom_line(ggplot2::aes(y = lex_female), color = women, size = .8) +
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::labs(
       x = "",
@@ -140,6 +143,63 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal()) {
       caption = geotools::translate_enfr("Data: World Bank", "Données: Banque Mondiale")
     ) +
     theme
+}
+
+#' Create lexgram for country
+#'
+#' Provides basic ggplot2 graph with the following data on it :
+#' \describe{
+#'   \item{lex}{the total life expectancy (black dotted)}
+#'   \item{lex_male}{the male life expectancy (blue)}
+#'   \item{ley_female}{the male life expectancy (red)}
+#' }
+#'
+#' @param country A string with the country name
+#' @param men Color for men line
+#' @param women Color for women line
+#' @param all Color for average line
+#'
+#' @return A highcharts graph
+#' @export
+gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = "black") {
+  geodata::gdt_wb_lex(country) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(title = list(text = geotools::translate_enfr("Life expectancy", "Espérance de vie"))) |>
+    highcharter::hc_caption(text = geotools::translate_enfr("Data: World Bank", "Données: Banque Mondiale")) |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
+    highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = geotools::translate_enfr("Women", "Femmes"),
+      color = women,
+      showInLegend = F,
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = date, y = round(lex_female,2))
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = geotools::translate_enfr("Everyone", "Tous"),
+      color = all,
+      showInLegend = F,
+      dashStyle = "shortdot",
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = date, y = round(lex,2))
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = geotools::translate_enfr("Men", "Hommes"),
+      color = men,
+      showInLegend = F,
+      dashStyle = "solid",
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = date, y = round(lex_male,2))
+    )
 }
 
 #' Create population pyramid
@@ -288,10 +348,4 @@ gph_highcharter_pyramid <- function(country, year) {
     ) |>
     highcharter::hc_title(text = glue::glue("{countrycode::countrycode(country, 'country.name', geotools::translate_enfr('un.name.en', 'un.name.fr'))}")) |>
     highcharter::hc_subtitle(text = glue::glue("{year}"))
-}
-
-gph_ploty_pyramid <- function(country, year) {
-  gph_pyramid(country, year) |>
-    plotly::ggplotly() |>
-    plotly::config(displayModeBar = FALSE)
 }
