@@ -101,17 +101,3 @@ geo_historical_world_map <- function(date) {
   cshapes::cshp(date, dependencies = T) |>
     sf::st_as_sf()
 }
-
-
-# TODO
-
-geo_globe <- function(lat, lon) {
-  rnaturalearth::ne_countries(returnclass = "sf") |>
-    ggplot2::ggplot() +
-    ggplot2::geom_sf() +
-    ggplot2::coord_sf(
-      crs = "+proj=ortho +lat_0=45 +lon_0=70 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs",
-      datum = NA
-    ) +
-    ggplot2::theme_minimal()
-}
