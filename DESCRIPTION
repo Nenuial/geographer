@@ -15,6 +15,7 @@ Imports:
     dplyr,
     forcats,
     geodata,
+    geofacet,
     geotools,
     ggeo,
     ggfx,
