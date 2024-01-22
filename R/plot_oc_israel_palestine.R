@@ -1,4 +1,4 @@
-#' OC Israël-Palestine: graphique des migration
+#' OC Israël-Palestine: graphique des migrations
 #'
 #' Graphique de l'immigration en Isräel
 #' de 1949 à 2017.
@@ -7,7 +7,7 @@
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_israel_palestine_migration_israel <- function(theme = ggplot2::theme_minimal()) {
+oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_immigration_israel |>
     ggplot2::ggplot(ggplot2::aes(year, immigration)) +
     ggplot2::geom_line() +
@@ -15,9 +15,41 @@ oc_israel_palestine_migration_israel <- function(theme = ggplot2::theme_minimal(
     ggplot2::scale_y_continuous(labels = scales::label_number(big.mark = "'")) +
     ggplot2::labs(
       title = "Immigration en Israël depuis 1948",
-      x = "", y = ""
+      x = "", y = "",
+      caption = "Source: CBS, Israël"
     ) +
     theme
+}
+
+#' OC Israël-Palestine: graphique dynamique des migrations
+#'
+#' Graphique de l'immigration en Isräel
+#' de 1949 à 2017.
+#'
+#' @return A highcharts graph
+#' @export
+oc_israel_palestine_hc_migration_israel <- function() {
+  geodata::oc_israel_palestine_immigration_israel -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Immigration en Israël depuis 1948") |>
+    highcharter::hc_caption(text = "Source: CBS, Israël") |>
+    highcharter::hc_legend(enabled = FALSE) |>
+    highcharter::hc_plotOptions(
+      line = list(
+        marker = list(
+          enabled = FALSE,
+          symbol = "circle"
+        )
+      )
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "line",
+      name = "Immigration",
+      dashStyle = "solid",
+      highcharter::hcaes(x = year, y = immigration)
+    )
 }
 
 #' OC Israël-Palestine: graphique de la
