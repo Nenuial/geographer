@@ -1,3 +1,6 @@
+
+# Afghanistan ---------------------------------------------------------------------------------
+
 #' OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
 #'
 #' @param theme A ggplot2 theme
@@ -148,6 +151,9 @@ oc_geo_au_feminin_hc_situation_eco_afghanistan <- function() {
     ggeo::hc_purple_theme()
 }
 
+
+# Avortement ----------------------------------------------------------------------------------
+
 #' OC Géographie au féminin: taux d'avortement en Suisse
 #'
 #' @param theme A ggplot2 theme
@@ -174,6 +180,209 @@ oc_geo_au_feminin_graph_suisse_avortements <- function(theme = ggplot2::theme_mi
     )
 }
 
+#' OC Géographie au féminin: taux d'avortement en Suisse
+#' par classe d'âge
+#'
+#' @return A hichgcharts graph
+#' @export
+oc_geo_au_feminin_hc_suisse_avortements_par_ages <- function() {
+  geodata::oc_geo_au_feminin_2022_ofs_avortements_par_ages |>
+    dplyr::filter(unit == "%") |>
+    dplyr::mutate(age_group = forcats::fct_inorder(age_group)) |>
+    dplyr::rename(name = age_group, value = abortion) -> data
+
+  data |>
+    highcharter::hchart("column", highcharter::hcaes(x = name, y = value), name = "Avortements") |>
+    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text} %")) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_plotOptions(
+      column = list(colorByPoint = TRUE)
+    ) |>
+    highcharter::hc_colors(palettetown::ichooseyou("salamence", 9)) |>
+    highcharter::hc_title(text = "Interruptions de grossesse par classe d'âge") |>
+    highcharter::hc_subtitle(text = "sur 11 143 en Suisse en 2022") |>
+    highcharter::hc_caption(text = "Source: OFS (2022)")
+
+}
+
+#' OC Géographie au féminin: taux d'avortement en Suisse
+#' par classes d'âge
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_suisse_avortements_par_ages <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_geo_au_feminin_2022_ofs_avortements_par_ages |>
+    dplyr::filter(unit == "%") |>
+    dplyr::mutate(age_group = forcats::fct_inorder(age_group)) |>
+    ggplot2::ggplot(ggplot2::aes(x = age_group, y = abortion, fill = age_group)) +
+    ggplot2::geom_col(show.legend = F) +
+    ggplot2::scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+    paletteer::scale_fill_paletteer_d("palettetown::salamence") +
+    theme +
+    ggplot2::labs(
+      title = "Interruptions de grossesse par classe d'âge",
+      subtitle = "sur 11 143 en Suisse en 2022",
+      x = "", y = "",
+      caption = "Source: OFS (2022)"
+    )
+}
+
+#' OC Géographie au féminin: taux d'avortement
+#' en Suisse par régions
+#'
+#' @return A highcharts
+#' @export
+oc_geo_au_feminin_hc_suisse_avortements_par_regions <- function() {
+  geodata::oc_geo_au_feminin_ofs_avortements_par_region |>
+    highcharter::hchart(
+      "line",
+      highcharter::hcaes(x = annee, y = avortement, group = region)
+    )  |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(min = 0, title = list(text = "")) |>
+    highcharter::hc_plotOptions(
+      line = list(
+        marker = list(
+          enabled = FALSE,
+          symbol = "circle"
+        )
+      )
+    ) |>
+    highcharter::hc_colors(as.character(MetBrewer::met.brewer("Tiepolo", 8))) |>
+    highcharter::hc_title(text = "Le taux d'avortement varie fortement selon les régions en Suisse") |>
+    highcharter::hc_subtitle(text = "Taux d'interruptions de grossesse pour 1000 femmes de 15–44 ans") |>
+    highcharter::hc_caption(text = "Source: OFS")
+}
+
+
+#' OC Géographie au féminin: taux d'avortement
+#' en Suisse par régions
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_suisse_avortements_par_regions <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_geo_au_feminin_ofs_avortements_par_region |>
+    dplyr::filter(annee == 2022) |>
+    ggplot2::ggplot(ggplot2::aes(x = annee, y = avortement, color = region, group = region)) +
+    ggplot2::scale_y_continuous(
+      breaks = seq(0, 10, by = 2),
+      limits = c(0, 11),
+      expand = c(0,NA)) +
+    ggplot2::scale_x_continuous(
+      breaks = seq(2008, 2022, by = 4),
+      limits = c(NA, 2028),
+      expand = c(0,NA)
+    ) +
+    MetBrewer::scale_color_met_d("Tiepolo") +
+    # "Artificial" grid lines
+    ggplot2::geom_vline(
+      xintercept = seq(2008, 2022, by = 4),
+      color = "grey91",
+      linewidth = .6
+    ) +
+    ggplot2::geom_segment(
+      data = tibble::tibble(y = seq(0, 10, by = 2), x1 = 2007, x2 = 2022),
+      ggplot2::aes(x = x1, xend = x2, y = y, yend = y),
+      inherit.aes = FALSE,
+      color = "grey91",
+      size = .6
+    ) +
+    ggplot2::geom_line(
+      linewidth = .8,
+      data = geodata::oc_geo_au_feminin_ofs_avortements_par_region,
+      show.legend = F
+    ) +
+    ggrepel::geom_text_repel(
+      ggplot2::aes(label = region),
+      direction = "y",
+      xlim = c(2023, NA),
+      hjust = 0,
+      segment.size = .7,
+      segment.alpha = .5,
+      segment.linetype = "dotted",
+      box.padding = .4,
+      segment.curvature = -0.1,
+      segment.ncp = 3,
+      segment.angle = 20,
+      show.legend = F
+    ) +
+    theme +
+    ggplot2::theme(
+      panel.grid = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(
+      title = "Le taux d'avortement varie fortement selon les régions en Suisse",
+      subtitle = "Taux d'interruptions de grossesse pour 1000 femmes de 15–44 ans",
+      x = "", y = "",
+      caption = "Source: OFS"
+    )
+}
+
+#' OC Géographie au féminin: les résultats de différentes
+#' votations fédérale sur le sujet de l'avortement
+#'
+#' @return A highcharts
+#' @export
+oc_geo_au_feminin_hc_suisse_votations_avortement <- function() {
+  geodata::oc_geo_au_feminin_votations_avortement |>
+    dplyr::mutate(Votation = forcats::fct_inorder(Votation)) |>
+    tidyr::pivot_longer(-Votation, names_to = "Vote", values_to = "Pourcent") |>
+    dplyr::mutate(Color = dplyr::if_else(Vote == "Oui", "#457aad", "#cc504c")) -> data
+
+  data |>
+    highcharter::hchart("bar", highcharter::hcaes(x = Votation, y = Pourcent, color = Color)) |>
+    highcharter::hc_chart(inverted = TRUE) |>
+    highcharter::hc_plotOptions(
+      bar = list(
+        colorByPoint = T,
+        stacking = "percent",
+        dataLabels = list(
+          enabled = TRUE,
+          format = '{point.percentage:.0f}%'
+        )
+      )
+    ) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.point.Vote + '</b> :' + this.point.Pourcent + ' %' }}"))
+    ) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(title = list(text = "")) |>
+    highcharter::hc_title(text = "La population suisse a toujours refusé les restrictions du droit à l'avortement")
+}
+
+#' OC Géographie au féminin: les résultats de différentes
+#' votations fédérale sur le sujet de l'avortement
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_suisse_votations_avortement <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_geo_au_feminin_votations_avortement |>
+    dplyr::mutate(Votation = forcats::fct_inorder(Votation)) |>
+    tidyr::pivot_longer(-Votation, names_to = "Vote", values_to = "Pourcent") |>
+    ggplot2::ggplot(ggplot2::aes(y = Votation, x = Pourcent, fill = Vote)) +
+    ggplot2::geom_col() +
+    ggplot2::scale_y_discrete(labels = scales::label_wrap(40)) +
+    theme +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::scale_fill_manual(values = c("#cc504c", "#457aad")) +
+    ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE)) +
+    ggplot2::labs(
+      title = "La population suisse a toujours refusé les restrictions du droit à l'avortement",
+      x = "", y = "", fill = ""
+    )
+}
+
+
+# Sex-ratio -----------------------------------------------------------------------------------
+
+# TODO
 oc_geo_au_feminin_graph_rapport_hommes_femmes_2020 <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_wpp2019_sex_ratio |>
     dplyr::filter(
@@ -186,13 +395,24 @@ oc_geo_au_feminin_graph_rapport_hommes_femmes_2020 <- function(theme = ggplot2::
     ggplot2::geom_line()
 }
 
+# TODO
+oc_geo_au_feminin_hc_sex_ratio <- function() {
+  geodata::oc_geo_au_feminin_sex_ratio |>
+    dplyr::filter(Year %in% c(1950, 2022)) |>
+    dplyr::filter(Region == "Geographic region") |>
+    dplyr::rename(value = SRB)
+}
+
+
+# Violences -----------------------------------------------------------------------------------
+
 #' OC Géographie au féminin: Expérience de violences sexuelles
 #'
 #' @param theme A ggplot2 theme
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_geo_auf_feminin_graph_2019_violences_sexuelles_experiences <- function(theme = ggplot2::theme_minimal()) {
+oc_geo_au_feminin_graph_2019_violences_sexuelles_experiences <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2019_gfs_violences_sexuelles_experiences |>
     dplyr::arrange(oui) |>
     dplyr::mutate(Expérience = forcats::fct_inorder(Expérience)) |>
@@ -230,7 +450,7 @@ oc_geo_auf_feminin_graph_2019_violences_sexuelles_experiences <- function(theme 
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_geo_auf_feminin_graph_2019_violences_sexuelles_actes <- function(theme = ggplot2::theme_minimal()) {
+oc_geo_au_feminin_graph_2019_violences_sexuelles_actes <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2019_gfs_violences_sexuelles_actes |>
     dplyr::arrange(Pourcentage) |>
     dplyr::mutate(Acte = forcats::fct_inorder(Acte)) |>
@@ -261,7 +481,7 @@ oc_geo_auf_feminin_graph_2019_violences_sexuelles_actes <- function(theme = ggpl
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_geo_auf_feminin_graph_2019_violences_sexuelles_police <- function(theme = ggplot2::theme_minimal()) {
+oc_geo_au_feminin_graph_2019_violences_sexuelles_police <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2019_gfs_violences_sexuelles_police |>
     dplyr::arrange(oui) |>
     dplyr::mutate(Raison = forcats::fct_inorder(Raison)) |>
@@ -293,6 +513,9 @@ oc_geo_auf_feminin_graph_2019_violences_sexuelles_police <- function(theme = ggp
       legend.position = "bottom"
     )
 }
+
+
+# Démographie ---------------------------------------------------------------------------------
 
 #' OC Géographie au féminin: Espérance de vie
 #' Graphiques de l'expérance de vie
@@ -340,6 +563,9 @@ oc_geo_au_feminin_graph_difference_esperance_de_vie <- function(theme = ggplot2:
 
 }
 
+
+# Politique -----------------------------------------------------------------------------------
+
 #' OC Géo au féminin: représentation politique
 #' Pourcentage de femmes dans les parlements nationaux par régions
 #'
@@ -372,4 +598,208 @@ oc_geo_au_feminin_graph_proportion_parlements <- function(theme = ggplot2::theme
       x = "", y = ""
     ) +
     theme
+}
+
+
+# Économie ------------------------------------------------------------------------------------
+
+#' OC Géo au féminin: différences salariales brut en Suisse
+#' Par formation
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot
+#' @export
+oc_geo_au_feminin_graph_difference_salariale_brut_par_formation <- function(theme = ggplot2::theme_minimal()) {
+  tibble::tribble(
+    ~Formation, ~Homme, ~Femme,
+    "Haute école universitaire (UNI, EPF)", 10767, 8683,
+    "Haute école spécialisée (HES),\n Haute école pédagogique (HEP)", 9648, 7959,
+    "Formation prof. supérieure, écoles sup.", 8728, 7434,
+    "Brevet d'enseignement", 8985, 8479,
+    "Maturité", 7073, 6217,
+    "Apprentissage complet (CFC)", 6293, 5612,
+    "Formation acquise en entreprise", 5543, 4619,
+    "Sans formation professionnelle complète", 5209, 4395
+  ) |>
+    tidyr::pivot_longer(-Formation, names_to = "Sexe", values_to = "Salaire") |>
+    dplyr::arrange(c(Salaire)) |>
+    dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Formation, x = Salaire, fill = Sexe))  +
+    ggplot2::geom_col(position = "dodge2") +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::labs(
+      color = "",
+      caption = "Source: OFS (2016)"
+    ) +
+    theme
+}
+
+#' OC Géo au féminin: différences salariales relative en Suisse
+#' Par formation
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot
+#' @export
+oc_geo_au_feminin_graph_difference_salariale_pourcent_par_formation <- function(theme = ggplot2::theme_minimal()) {
+  tibble::tribble(
+    ~Formation, ~Pourcent,
+    "Haute école universitaire (UNI, EPF)", 19.4,
+    "Haute école spécialisée (HES),\n Haute école pédagogique (HEP)", 17.5,
+    "Formation prof. supérieure, écoles sup.", 14.8,
+    "Brevet d'enseignement", 5.6,
+    "Maturité", 12.1,
+    "Apprentissage complet (CFC)", 10.8,
+    "Formation acquise en entreprise", 16.7,
+    "Sans formation professionnelle complète", 15.6,
+  ) |>
+    dplyr::arrange(c(Pourcent)) |>
+    dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Formation, x = Pourcent))  +
+    ggplot2::geom_col(fill = "#2e9093") +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::labs(caption = "Source: OFS (2016)") +
+    theme
+}
+
+#' OC Géo au féminin: différences salariales brut en Suisse
+#' Par position
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot
+#' @export
+oc_geo_au_feminin_graph_difference_salariale_brut_par_position <- function(theme = ggplot2::theme_minimal()) {
+  tibble::tribble(
+    ~Formation, ~Homme, ~Femme,
+    "Cadre supérieur et moyen", 10878, 8861,
+    "Cadre inférieur", 8760, 7580,
+    "Responsable de\nl'exécution de travaux", 7238, 6481,
+    "Sans fonction\nde cadre", 6121, 5607,
+  ) |>
+    tidyr::pivot_longer(-Formation, names_to = "Sexe", values_to = "Salaire") |>
+    dplyr::arrange(c(Salaire)) |>
+    dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Formation, x = Salaire, fill = Sexe))  +
+    ggplot2::geom_col(position = "dodge2") +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::labs(
+      color = "",
+      caption = "Source: OFS (2016)"
+    ) +
+    theme
+}
+
+#' OC Géo au féminin: différences salariales relative en Suisse
+#' Par position
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot
+#' @export
+oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position <- function(theme = ggplot2::theme_minimal()) {
+  tibble::tribble(
+    ~Formation, ~Pourcent,
+    "Cadre supérieur et moyen", 18.5,
+    "Cadre inférieur", 13.5,
+    "Responsable de\nl'exécution de travaux", 10.5,
+    "Sans fonction\nde cadre", 8.4,
+  ) |>
+    dplyr::arrange(c(Pourcent)) |>
+    dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Formation, x = Pourcent))  +
+    ggplot2::geom_col(fill = "#2e9093") +
+    ggplot2::labs(caption = "Source: OFS (2016)") +
+    theme
+}
+
+
+# Mesure d'inégalités -------------------------------------------------------------------------
+
+#' OC Géo au féminin: graphique sur le taux de jeunes apprenant à coder
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+oc_geo_au_feminin_graph_programmation_16_24_ans <- function(theme = ggplot2::theme_minimal()) {
+  geodata::oc_geo_au_feminin_oecd_programmation_16_24_ans |>
+    dplyr::filter(Gender != "Individuals")  |>
+    dplyr::filter(ISO != "EU") |>
+    dplyr::filter(Time == 2021) |>
+    dplyr::mutate(Pays = countrycode::countrycode(ISO, origin = "iso3c", "country.name.fr")) |>
+    dplyr::arrange(-Value) |>
+    dplyr::mutate(Pays = forcats::fct_inorder(Pays)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Pays, x = Value, color = Gender)) +
+    ggplot2::geom_line(color = "black") +
+    ggplot2::geom_point(size = 2) +
+    ggplot2::scale_x_continuous(labels = scales::percent_format(scale = 1)) +
+    ggplot2::scale_color_manual(
+      values = c("#2a6096", "#5e813f"),
+      labels = c("Femmes", "Hommes")
+    ) +
+    theme +
+    ggplot2::theme(
+      legend.position = "bottom",
+      panel.grid.major.y = ggplot2::element_blank(),
+      panel.grid.minor.y = ggplot2::element_blank(),
+      panel.grid.minor.x = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(
+      title = "Jeunes de 16 à 24 ans apprenant à coder, 2019",
+      color  = "", x = "", y = "",
+      caption = "Source: OCDE (2021), OECD Going Digital Toolkit"
+    )
+}
+
+#' OC Géo au féminin: graphique interactif sur le taux de jeunes apprenant à coder
+#'
+#' @return A highcharts graph
+#' @export
+oc_geo_au_feminin_hc_programmation_16_24_ans <- function() {
+  geodata::oc_geo_au_feminin_oecd_programmation_16_24_ans |>
+    dplyr::filter(Gender != "Individuals")  |>
+    dplyr::filter(ISO != "EU") |>
+    dplyr::filter(Time == 2021) |>
+    dplyr::mutate(Pays = countrycode::countrycode(ISO, origin = "iso3c", "country.name.fr")) |>
+    dplyr::select(Pays, Gender, Value) |>
+    dplyr::mutate(Value = round(Value, 2)) |>
+    tidyr::pivot_wider(names_from = Gender, values_from = Value) |>
+    dplyr::arrange(Male) |>
+    dplyr::rename(name = Pays, high = Male, low = Female) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Jeunes de 16 à 24 ans apprenant à coder, 2019") |>
+    highcharter::hc_caption(text = "Source: OCDE (2021), <a href='https://goingdigital.oecd.org/indicator/54' target='_blank'>OECD Going Digital Toolkit</a>") |>
+    highcharter::hc_add_series(
+      name = "",
+      type = "dumbbell",
+      data = data,
+      connectorColor = "black",
+      marker = list(
+        fillColor = "#5e813f"
+      ),
+      lowColor = "#2a6096",
+      showInLegend = F
+    ) |>
+    highcharter::hc_chart(
+      inverted = T
+    ) |>
+    highcharter::hc_xAxis(type = "category") |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.point.name + '</b><br/>' +
+          'Femmes: ' + this.point.low + ' – ' + 'Hommes: ' + this.point.high }}"))
+    )
+}
+
+oc_geo_au_feminin_carte_mesure_inegalite_2023 <- function() {
+  # TODO: Create a map for the student's inequality measure
+  wbstats::wb_data("SP.POP.TOTL", start_date = 2020, end_date = 2020) -> data
+
+  recipes::recipe(~., data = data) |>
+    recipes::step_range(SP.POP.TOTL, min = 0, max = 1) |>
+    recipes::prep() |>
+    recipes::bake(new_data = NULL) -> data_clean
 }
