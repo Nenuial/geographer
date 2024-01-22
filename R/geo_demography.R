@@ -68,13 +68,14 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
 #' @export
 gph_highcharter_demogram <-  function(country) {
   data <- geodata::gdt_wb_demo(country)
+  pays <- countrycode::countryname(country, destination = "cldr.name.fr")
 
   highcharter::highchart() |>
-    highcharter::hc_title(text = glue::glue("Demograph for {country}")) |>
-    highcharter::hc_xAxis(title = list(text = "Year")) -> hc
+    highcharter::hc_title(text = glue::glue(geotools::translate_enfr("Demograph for {country}", "Démographe pour {pays}"),)) |>
+    highcharter::hc_xAxis(title = list(text = geotools::translate_enfr("Year", "Année"))) -> hc
 
   list(
-    list(min = 0, title = list(text = "Rates")),
+    list(min = 0, title = list(text = geotools::translate_enfr("Rate (‰)", "Taux (‰)"))),
     list(min= 0, title = list(text = "Population", style = list(color = "blue")), opposite = TRUE)
   ) -> hc$x$hc_opts$yAxis
 
@@ -95,7 +96,7 @@ gph_highcharter_demogram <-  function(country) {
       data = data,
       "line",
       yAxis = 0,
-      name = "crude birth rate",
+      name = geotools::translate_enfr("crude birth rate", "taux de natalité"),
       color = "grey",
       dashStyle = "solid",
       tooltip = list(valueSuffix = " ‰"),
@@ -105,7 +106,7 @@ gph_highcharter_demogram <-  function(country) {
       data = data,
       "line",
       yAxis = 0,
-      name = "crude death rate",
+      name = geotools::translate_enfr("crude death rate", "taux de mortalité"),
       color = "black",
       dashStyle = "solid",
       tooltip = list(valueSuffix = " ‰"),
@@ -302,50 +303,83 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
 #' @return A highcharter graph
 #' @export
 gph_highcharter_pyramid <- function(country, year) {
-  data <- geodata::gdt_idb_pyramid(country, year) |>
+  country -> country_name
+  geodata::gdt_idb_pyramid(country, year) |>
     tidyr::pivot_wider(names_from = "gender", values_from = "population") |>
     dplyr::arrange(dplyr::desc(age)) |>
-    dplyr::mutate(age = as.character(age))
+    dplyr::mutate(age = as.character(age)) -> data
+
+  ceiling(
+    max(c(max(abs(data$male)), max(data$female))) / 10000
+  ) * 10000 -> pop_max
+
+  if(geotools::gtl_opt_short_language() == "fr") countrycode::countrycode(
+    country, "country.name", "un.name.fr",
+    custom_match = c(
+      "Kosovo" = "Kosovo",
+      "Gaza" = "Gaza",
+      "West Bank" = "Cisjordanie"
+    )
+  ) -> country_name
 
   highcharter::highchart() |>
-    highcharter::hc_add_series(
-      data = data,
-      type = "bar",
-      name = geotools::translate_enfr("Male", "Hommes"),
-      highcharter::hcaes(age, male)
-    ) |>
-    highcharter::hc_add_series(
-      data = data,
-      type = "bar",
-      name = geotools::translate_enfr("Female", "Femmes"),
-      colorIndex = 5,
-      highcharter::hcaes(age, female)
-    ) |>
-    highcharter::hc_xAxis(
+    highcharter::hc_title(text = glue::glue("{country_name}")) |>
+    highcharter::hc_subtitle(text = glue::glue("{year}")) |>
+    highcharter::hc_plotOptions(
+      series = list(stacking = "normal",
+                    pointPadding = .1,
+                    groupPadding = 0)
+    ) -> hc
+
+  list(
+    list(
       title = list(text = geotools::translate_enfr("Year", "Année")),
       categories = data |> dplyr::pull(age),
       labels = list(
         step = 5,
         formatter = shinyjqui::JS(glue::glue("function () {{ return ({year} - this.value) }}"))
       )
+    ),
+    list(
+      opposite = TRUE,
+      categories = data |> dplyr::pull(age),
+      labels = list(
+        step = 5,
+        formatter = shinyjqui::JS(glue::glue("function () {{ return ({year} - this.value) }}"))
+      ),
+      linkedTo = 0
+    )
+  ) -> hc$x$hc_opts$xAxis
+
+  hc |>
+    highcharter::hc_add_series(
+      data = data,
+      type = "bar",
+      name = geotools::translate_enfr("Male", "Hommes"),
+      color = "#4f93b8",
+      borderWidth = 0,
+      highcharter::hcaes(age, male)
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      type = "bar",
+      name = geotools::translate_enfr("Female", "Femmes"),
+      color = "#ad8cae",
+      borderWidth = 0,
+      highcharter::hcaes(age, female)
     ) |>
     highcharter::hc_yAxis(
+      max = pop_max,
+      min = pop_max * -1,
       labels = list(
         formatter = shinyjqui::JS("function () { this.value = Math.abs(this.value)
                                                    return this.axis.defaultLabelFormatter.call(this) }")
       )
-    ) |>
-    highcharter::hc_plotOptions(
-      series = list(stacking = "normal",
-                    pointPadding = .1,
-                    groupPadding = 0)
     ) |>
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue("function () {{
           return '<b>' + this.series.name + ', age ' + this.point.category + ', ' +
           ({year} - this.point.category) + '</b><br/>' +
           'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0); }}"))
-    ) |>
-    highcharter::hc_title(text = glue::glue("{countrycode::countrycode(country, 'country.name', geotools::translate_enfr('un.name.en', 'un.name.fr'))}")) |>
-    highcharter::hc_subtitle(text = glue::glue("{year}"))
+    )
 }
