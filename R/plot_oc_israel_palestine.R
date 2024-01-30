@@ -1,3 +1,5 @@
+# Démographie ---------------------------------------------------------------------------------
+
 #' OC Israël-Palestine: graphique des migrations
 #'
 #' Graphique de l'immigration en Isräel
@@ -62,7 +64,7 @@ oc_israel_palestine_hc_migration_israel <- function() {
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_israel_palestine_population_nae <- function(theme = ggplot2::theme_minimal()) {
+oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_2008_population_nae |>
     dplyr::arrange(-population) |>
     dplyr::mutate(country = forcats::fct_inorder(country)) |>
@@ -92,5 +94,32 @@ oc_israel_palestine_population_nae <- function(theme = ggplot2::theme_minimal())
       subtitle = "par pays de naissance",
       x = "", y = "Population",
       fill = "", caption = "Données: CBS Isräel (2008)"
+    )
+}
+
+#' OC Israël-Palestine: graphique dynamique
+#' de l'immigration juive en Palestine
+#' avant 1948
+#'
+#' @return A highcharts graph
+#' @export
+oc_israel_palestine_hc_immigration_sioniste <- function() {
+  geodata::oc_israel_palestine_immigration_juive_avant_1948 -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Immigration juive avant 1948") |>
+    highcharter::hc_subtitle(text = "chiffres approximatifs") |>
+    highcharter::hc_caption(text = "Source: <a href='https://www.bpb.de/themen/migration-integration/laenderprofile/english-version-country-profiles/58400/historical-development-of-jewish-immigration/'>BPD, 2008</a>") |>
+    highcharter::hc_legend(enabled = FALSE) |>
+    highcharter::hc_xAxis(
+      type= 'category'
+    ) |>
+    highcharter::hc_add_series(
+      data = data,
+      "column",
+      name = "Immigration",
+      color = "#475286FF",
+      dashStyle = "solid",
+      highcharter::hcaes(x = period, y = immigration)
     )
 }
