@@ -1,7 +1,7 @@
 Package: geographer
 Type: Package
 Title: Provide Geography Vizualisations
-Version: 0.1.1
+Version: 0.1.2
 Author: Pascal Burkhard
 Maintainer: Pascal Burkhard <pascal.burkhard@gmail.com>
 Description: Provides function and objects to establish vizualisations for my 

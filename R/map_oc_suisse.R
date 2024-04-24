@@ -12,7 +12,7 @@
 oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_suisse_suffrage_feminin %>%
     dplyr::mutate(id = geographer::geo_swiss_canton_id(Canton)) %>%
-    dplyr::mutate(Année = forcats::as_factor(Année)) %>%
+    dplyr::mutate(Annee = forcats::as_factor(Annee)) %>%
     dplyr::left_join(
       themakart::thema_map("inst", "kant"),
       by = "id"
@@ -21,7 +21,7 @@ oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
   plot_data  %>%
     ggplot2::ggplot() +
     geo_map_swiss_relief() +
-    ggplot2::geom_sf(ggplot2::aes(fill = Année, geometry = geometry),
+    ggplot2::geom_sf(ggplot2::aes(fill = Annee, geometry = geometry),
                      color = "white", size = 0.1) +
     geo_map_swiss_lakes() +
     ggplot2::coord_sf(datum = NA) +
@@ -30,8 +30,8 @@ oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
         paletteer::paletteer_d("ggthemes::Classic_Cyclic",  11),
         alpha = .8
       ),
-      breaks = levels(plot_data$Année),
-      limits = levels(plot_data$Année)
+      breaks = levels(plot_data$Annee),
+      limits = levels(plot_data$Annee)
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(nrow = 2, byrow = T)
