@@ -42,6 +42,7 @@ Imports:
     purrr,
     rappdirs,
     readr,
+    rlang,
     rnaturalearth,
     scales,
     santoku,
