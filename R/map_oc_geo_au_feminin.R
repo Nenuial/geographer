@@ -881,7 +881,7 @@ oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
 oc_geo_au_feminin_carte_hc_suisse_suffrage_feminin <- function() {
   data <- geodata::oc_suisse_suffrage_feminin |>
     dplyr::mutate(canton_id = geographer::geo_swiss_canton_id(Canton))|>
-    dplyr::rename(value = Année)
+    dplyr::rename(value = Annee)
   map <- geodata::gdt_opendata_swiss_geodata_json("canton")
 
   highcharter::highchart(type = "map") |>
