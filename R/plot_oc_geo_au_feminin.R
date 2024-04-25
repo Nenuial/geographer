@@ -415,22 +415,23 @@ oc_geo_au_feminin_hc_sex_ratio <- function() {
 oc_geo_au_feminin_graph_2019_violences_sexuelles_experiences <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2019_gfs_violences_sexuelles_experiences |>
     dplyr::arrange(oui) |>
-    dplyr::mutate(Expérience = forcats::fct_inorder(Expérience)) |>
+    dplyr::mutate(Experience = forcats::fct_inorder(Experience)) |>
     tidyr::pivot_longer(
-      cols = c(-"Expérience"),
-      names_to = "Réponse",
+      cols = c(-"Experience"),
+      names_to = "Reponse",
       values_to = "Pourcentage"
     ) |>
     dplyr::mutate(Label = dplyr::if_else(Pourcentage > 2, Pourcentage, NA_real_)) |>
-    dplyr::mutate(Réponse = forcats::fct_inorder(Réponse)) |>
-    ggplot2::ggplot(ggplot2::aes(y = Expérience, x = Pourcentage, fill = Réponse)) +
-    ggplot2::geom_col(position = ggplot2::position_stack(reverse = TRUE)) +
+    dplyr::mutate(Reponse = forcats::fct_inorder(Reponse)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Experience, x = Pourcentage, fill = Reponse)) +
+    ggplot2::geom_col(position = ggplot2::position_stack(reverse = T)) +
     ggplot2::geom_text(
       ggplot2::aes(label = Label),
-      position = ggplot2::position_stack(vjust = .5, reverse = TRUE)
+      position = ggplot2::position_stack(vjust = .5, reverse = T)
     ) +
     ggplot2::scale_fill_manual(
-      values = c("#0c60ae", "#1ea1ec", "#fbbf28", "#999999")
+      values = c("#0c60ae", "#1ea1ec", "#fbbf28", "#999999"),
+      labels = c("oui", "ambiguë", "non", "ne sait pas")
     ) +
     ggplot2::labs(
       subtitle = "% de femmes dès 16 ans",
@@ -487,12 +488,12 @@ oc_geo_au_feminin_graph_2019_violences_sexuelles_police <- function(theme = ggpl
     dplyr::mutate(Raison = forcats::fct_inorder(Raison)) |>
     tidyr::pivot_longer(
       cols = c(-"Raison"),
-      names_to = "Réponse",
+      names_to = "Reponse",
       values_to = "Pourcentage"
     ) |>
     dplyr::mutate(Label = dplyr::if_else(Pourcentage > 2, Pourcentage, NA_real_)) |>
-    dplyr::mutate(Réponse = forcats::fct_inorder(Réponse)) |>
-    ggplot2::ggplot(ggplot2::aes(y = Raison, x = Pourcentage, fill = Réponse)) +
+    dplyr::mutate(Reponse = forcats::fct_inorder(Reponse)) |>
+    ggplot2::ggplot(ggplot2::aes(y = Raison, x = Pourcentage, fill = Reponse)) +
     ggplot2::geom_col(position = ggplot2::position_stack(reverse = TRUE)) +
     ggplot2::geom_text(
       ggplot2::aes(label = Label),
