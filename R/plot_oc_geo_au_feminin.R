@@ -584,18 +584,20 @@ oc_geo_au_feminin_graph_proportion_parlements <- function(theme = ggplot2::theme
 
   data |>
     dplyr::rename(
-      Année = date,
-      Représentation = parl,
-      Région = country
+      Annee = date,
+      Representation = parl,
+      Region = country
     ) |>
-    ggplot2::ggplot(ggplot2::aes(x = Année, y = Représentation, fill = Région, color = Région)) +
+    ggplot2::ggplot(ggplot2::aes(x = Annee, y = Representation, fill = Region, color = Region)) +
     ggplot2::geom_area(show.legend = F) +
     ggplot2::geom_line() +
-    ggplot2::facet_wrap(~Région, nrow = 2) +
+    ggplot2::facet_wrap(~Region, nrow = 2) +
     ggplot2::scale_y_continuous(labels = scales::label_number(suffix = "%")) +
     ggplot2::scale_fill_manual(values = MetBrewer::met.brewer("Nizami")[c(2:8)]) +
     ggplot2::scale_color_manual(values = MetBrewer::met.brewer("Nizami")[c(2:8)]) +
+    ggplot2::guides(color = "none") +
     ggplot2::labs(
+      title = "Représentation politique par région",
       x = "", y = ""
     ) +
     theme
