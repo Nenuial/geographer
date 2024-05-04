@@ -219,7 +219,8 @@ gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = 
 #'
 #' @return A ggplot graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: needs a valid IDB API key
 #' gph_pyramid("Switzerland", 2020)
 gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
   country_name <- country
@@ -269,7 +270,8 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: needs a valid IDB API key
 #' gph_pyramid_relative("Switzerland", 2020)
 gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()) {
   geodata::gdt_idb_pyramid_5y(country, year) |>
@@ -316,7 +318,8 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
 #'
 #' @return A highcharter graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: need a valid IDB API key
 #' gph_highcharter_pyramid("Switzerland", 2020)
 gph_highcharter_pyramid <- function(country, year) {
   country -> country_name
