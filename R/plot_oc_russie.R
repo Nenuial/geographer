@@ -315,8 +315,8 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_color_manual(
       values = ochRe::ochre_palettes$healthy_reef[c(5,8)],
       breaks = c("cbr", "cdr"),
-      labels = c("cbr" = geotools::translate_enfr("birth", "natalit\u00e9"),
-                 "cdr" = geotools::translate_enfr("death", "mortalit\u00e9"))
+      labels = c("cbr" = geotools::gtl_translate_enfr("birth", "natalit\u00e9"),
+                 "cdr" = geotools::gtl_translate_enfr("death", "mortalit\u00e9"))
     ) +
     ggplot2::scale_x_continuous(breaks = seq(1960, 2020, 10),
                        expand = c(0, 0)) +

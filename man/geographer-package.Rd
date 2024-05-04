@@ -14,7 +14,12 @@ Provides function and objects to establish vizualisations for my Geography lesso
 Useful links:
 \itemize{
   \item \url{https://geographer.nenuial.org}
+  \item Report bugs at \url{http://github.com/nenuial/geographer/issues/}
 }
+
+}
+\author{
+\strong{Maintainer}: Pascal Burkhard \email{pascal.burkhard@gmail.com} (\href{https://orcid.org/0009-0001-5504-5084}{ORCID})
 
 }
 \keyword{internal}

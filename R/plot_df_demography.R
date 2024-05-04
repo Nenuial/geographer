@@ -27,7 +27,7 @@ df_demography_graph_world_population_historical <- function(theme = ggplot2::the
     ) +
     ggplot2::coord_cartesian(ylim = c(0, 300000000)) +
     ggplot2::labs(
-      title = geotools::translate_enfr("World population 10'000 BCE to 1200 CE", "Population mondiale de 10'000 av. JC \u00e0 1200 ap. JC"),
+      title = geotools::gtl_translate_enfr("World population 10'000 BCE to 1200 CE", "Population mondiale de 10'000 av. JC \u00e0 1200 ap. JC"),
       x = "",
       y = "Population (millions)"
     ) +
@@ -80,11 +80,11 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
       breaks = c("historical", "current", "un_low", "un_medium", "un_high"),
       values = c("historical" = "black", "current" = "blue",
                  "un_low" = "green", "un_medium" = "orange", "un_high" = "red"),
-      labels = c("historical" = geotools::translate_enfr("historical", "historique"),
-                 "current" = geotools::translate_enfr("current", "actuel"),
-                 "un_low" = geotools::translate_enfr("low estimate", "estimation basse"),
-                 "un_medium" = geotools::translate_enfr("medium estimate", "estimation moyenne"),
-                 "un_high" = geotools::translate_enfr("high estimate", "estimation haute"))
+      labels = c("historical" = geotools::gtl_translate_enfr("historical", "historique"),
+                 "current" = geotools::gtl_translate_enfr("current", "actuel"),
+                 "un_low" = geotools::gtl_translate_enfr("low estimate", "estimation basse"),
+                 "un_medium" = geotools::gtl_translate_enfr("medium estimate", "estimation moyenne"),
+                 "un_high" = geotools::gtl_translate_enfr("high estimate", "estimation haute"))
     ) +
     ggplot2::guides(
       color = ggplot2::guide_legend(title = NULL)
@@ -100,9 +100,9 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
       plot.title = ggplot2::element_text(hjust = .5)
     ) +
     ggplot2::labs(
-      title = geotools::translate_enfr("World population 1200 to 2100", "Population mondiale de 1200 \u00e0 2100"),
+      title = geotools::gtl_translate_enfr("World population 1200 to 2100", "Population mondiale de 1200 \u00e0 2100"),
       x = "",
-      y = geotools::translate_enfr("Population (billions)", "Population (milliards)")
+      y = geotools::gtl_translate_enfr("Population (billions)", "Population (milliards)")
     )
 }
 
@@ -136,9 +136,9 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
       plot.title = ggplot2::element_text(hjust = .5)
     ) +
     ggplot2::labs(
-      title = geotools::translate_enfr("World population growth", "Acroissement de la population mondiale"),
+      title = geotools::gtl_translate_enfr("World population growth", "Acroissement de la population mondiale"),
       x = "",
-      y = geotools::translate_enfr("Growth rate (%)", "Taux d'acroissement (%)")
+      y = geotools::gtl_translate_enfr("Growth rate (%)", "Taux d'acroissement (%)")
     )
 }
 

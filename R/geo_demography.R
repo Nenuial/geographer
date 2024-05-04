@@ -36,8 +36,8 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
     ggplot2::scale_color_manual(
       values = c("grey", "black"),
       breaks = c("cbr", "cdr"),
-      labels = c("cbr" = geotools::translate_enfr("birth", "natalit\u00e9"),
-                 "cdr" = geotools::translate_enfr("death", "mortalit\u00e9"))
+      labels = c("cbr" = geotools::gtl_translate_enfr("birth", "natalit\u00e9"),
+                 "cdr" = geotools::gtl_translate_enfr("death", "mortalit\u00e9"))
     ) +
     theme +
     ggplot2::theme(
@@ -49,9 +49,9 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
     ) +
     ggplot2::labs(
       x = "",
-      y = geotools::translate_enfr("Rate (\u2030)", "Taux (\u2030)"),
+      y = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)"),
       color = "",
-      caption = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
+      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
     )
 }
 
@@ -75,11 +75,11 @@ gph_highcharter_demogram <-  function(country) {
   pays <- countrycode::countryname(country, destination = "cldr.name.fr")
 
   highcharter::highchart() |>
-    highcharter::hc_title(text = glue::glue(geotools::translate_enfr("Demograph for {country}", "D\u00e9mographe pour {pays}"),)) |>
-    highcharter::hc_xAxis(title = list(text = geotools::translate_enfr("Year", "Ann\u00e9e"))) -> hc
+    highcharter::hc_title(text = glue::glue(geotools::gtl_translate_enfr("Demograph for {country}", "D\u00e9mographe pour {pays}"),)) |>
+    highcharter::hc_xAxis(title = list(text = geotools::gtl_translate_enfr("Year", "Ann\u00e9e"))) -> hc
 
   list(
-    list(min = 0, title = list(text = geotools::translate_enfr("Rate (\u2030)", "Taux (\u2030)"))),
+    list(min = 0, title = list(text = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)"))),
     list(min= 0, title = list(text = "Population", style = list(color = "blue")), opposite = TRUE)
   ) -> hc$x$hc_opts$yAxis
 
@@ -100,7 +100,7 @@ gph_highcharter_demogram <-  function(country) {
       data = data,
       "line",
       yAxis = 0,
-      name = geotools::translate_enfr("crude birth rate", "taux de natalit\u00e9"),
+      name = geotools::gtl_translate_enfr("crude birth rate", "taux de natalit\u00e9"),
       color = "grey",
       dashStyle = "solid",
       tooltip = list(valueSuffix = " \u2030"),
@@ -110,7 +110,7 @@ gph_highcharter_demogram <-  function(country) {
       data = data,
       "line",
       yAxis = 0,
-      name = geotools::translate_enfr("crude death rate", "taux de mortalit\u00e9"),
+      name = geotools::gtl_translate_enfr("crude death rate", "taux de mortalit\u00e9"),
       color = "black",
       dashStyle = "solid",
       tooltip = list(valueSuffix = " \u2030"),
@@ -146,8 +146,8 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue",
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::labs(
       x = "",
-      y = geotools::translate_enfr("Life expectancy", "Esp\u00e9rance de vie"),
-      caption = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
+      y = geotools::gtl_translate_enfr("Life expectancy", "Esp\u00e9rance de vie"),
+      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
     ) +
     theme
 }
@@ -175,14 +175,14 @@ gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = 
 
   highcharter::highchart() |>
     highcharter::hc_xAxis(title = list(text = "")) |>
-    highcharter::hc_yAxis(title = list(text = geotools::translate_enfr("Life expectancy", "Esp\u00e9rance de vie"))) |>
-    highcharter::hc_caption(text = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")) |>
+    highcharter::hc_yAxis(title = list(text = geotools::gtl_translate_enfr("Life expectancy", "Esp\u00e9rance de vie"))) |>
+    highcharter::hc_caption(text = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")) |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
     highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
     highcharter::hc_add_series(
       data = data,
       "line",
-      name = geotools::translate_enfr("Women", "Femmes"),
+      name = geotools::gtl_translate_enfr("Women", "Femmes"),
       color = women,
       showInLegend = F,
       dashStyle = "solid",
@@ -192,7 +192,7 @@ gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = 
     highcharter::hc_add_series(
       data = data,
       "line",
-      name = geotools::translate_enfr("Everyone", "Tous"),
+      name = geotools::gtl_translate_enfr("Everyone", "Tous"),
       color = all,
       showInLegend = F,
       dashStyle = "shortdot",
@@ -202,7 +202,7 @@ gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = 
     highcharter::hc_add_series(
       data = data,
       "line",
-      name = geotools::translate_enfr("Men", "Hommes"),
+      name = geotools::gtl_translate_enfr("Men", "Hommes"),
       color = men,
       showInLegend = F,
       dashStyle = "solid",
@@ -257,7 +257,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       title = country_name,
       subtitle = year,
       x = "", y = "",
-      caption = geotools::translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
+      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
     )
 }
 
@@ -305,7 +305,7 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
     theme +
     ggplot2::labs(
       x = "", y = "",
-      caption = geotools::translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
+      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
     )
 }
 
@@ -349,7 +349,7 @@ gph_highcharter_pyramid <- function(country, year) {
 
   list(
     list(
-      title = list(text = geotools::translate_enfr("Year", "Ann\u00e9e")),
+      title = list(text = geotools::gtl_translate_enfr("Year", "Ann\u00e9e")),
       categories = data |> dplyr::pull(age),
       labels = list(
         step = 5,
@@ -371,7 +371,7 @@ gph_highcharter_pyramid <- function(country, year) {
     highcharter::hc_add_series(
       data = data,
       type = "bar",
-      name = geotools::translate_enfr("Male", "Hommes"),
+      name = geotools::gtl_translate_enfr("Male", "Hommes"),
       color = "#4f93b8",
       borderWidth = 0,
       highcharter::hcaes(age, male)
@@ -379,7 +379,7 @@ gph_highcharter_pyramid <- function(country, year) {
     highcharter::hc_add_series(
       data = data,
       type = "bar",
-      name = geotools::translate_enfr("Female", "Femmes"),
+      name = geotools::gtl_translate_enfr("Female", "Femmes"),
       color = "#ad8cae",
       borderWidth = 0,
       highcharter::hcaes(age, female)

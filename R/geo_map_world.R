@@ -22,7 +22,9 @@
 #' indicators <- list(
 #'   list(code      = c("population" = "EN.POP.DNST"),
 #'        operation = expr(population),
-#'        title     = geotools::gtl_translate_enfr("Population density", "Densité de population"),
+#'        title     = geotools::gtl_translate_enfr(
+#'                      "Population density", "Densité de population"
+#'                    ),
 #'        file      = "density",
 #'        palette   = list(palette = "viridis::viridis",
 #'                         type = "cont", dir = -1),
@@ -48,7 +50,8 @@ gph_wb_world_map <- function(indicator) {
                                                                length(),
                                                              indicator$center,
                                                              indicator$palette),
-                              caption = geotools::gtl_translate_enfr("World Bank", "Banque Mondiale"))) %>%
+                              caption = geotools::gtl_translate_enfr(
+                                "World Bank", "Banque Mondiale"))) %>%
     patchwork::align_plots() %>%
     purrr::walk(~ggeo::ggeosave(glue::glue("{indicator$file}_{.x$labels$subtitle}"),
                                 plot = .x, height = 31, width = 64))

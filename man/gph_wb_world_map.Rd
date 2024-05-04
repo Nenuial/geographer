@@ -31,7 +31,9 @@ Create world maps for an indicator
 indicators <- list(
   list(code      = c("population" = "EN.POP.DNST"),
        operation = expr(population),
-       title     = geotools::gtl_translate_enfr("Population density", "Densité de population"),
+       title     = geotools::gtl_translate_enfr(
+                     "Population density", "Densité de population"
+                   ),
        file      = "density",
        palette   = list(palette = "viridis::viridis",
                         type = "cont", dir = -1),
