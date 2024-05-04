@@ -142,6 +142,7 @@ utils::globalVariables(c(
 ignore_unused_imports <- function() {
   IslamicArt::islamic_pal
   pals::alphabet
+  rnaturalearthhires::countries10
 }
 
 #' @importFrom magrittr %>%

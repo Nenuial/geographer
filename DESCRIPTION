@@ -64,13 +64,15 @@ Imports:
     withr
 Remotes:
     hollylkirk/ochRe,
+    jbkunst/highcharter,
     lambdamoses/IslamicArt,
-    politanch/swissdd,
-    ropensci/rrricanes,
     Nenuial/geodata,
     Nenuial/ggeo,
     Nenuial/geotools,
-    Nenuial/themakart
+    Nenuial/themakart,
+    politanch/swissdd,
+    ropensci/rnaturalearthhires,
+    ropensci/rrricanes
 RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.0)
