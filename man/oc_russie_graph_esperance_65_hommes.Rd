@@ -17,3 +17,6 @@ Graphique de l'évolution de l'espérance de vie
 de la Russie comparé à l'Italie et le Portugal
 pour les hommes de 65 ans.
 }
+\examples{
+oc_russie_graph_esperance_65_hommes()
+}

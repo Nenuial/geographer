@@ -15,3 +15,6 @@ A ggplot2 graph
 \description{
 Graphique des mariages en comparaison avec les divorces
 }
+\examples{
+oc_russie_graph_mariages_et_divorces()
+}

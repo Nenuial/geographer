@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique des naissances en Russie
 jusqu'en 2017 (pour alignement avec avortements).
 }
+\examples{
+oc_russie_graph_naissances()
+}

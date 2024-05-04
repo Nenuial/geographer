@@ -7,6 +7,8 @@
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_naissances()
 oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_naissances_national %>%
     dplyr::filter(year <= 2017) %>%
@@ -32,6 +34,8 @@ oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_avortements()
 oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_avortements_national %>%
     dplyr::mutate(fill = dplyr::case_when(
@@ -63,6 +67,8 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_naissance_et_avortements()
 oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_minimal()) {
   avortements <- oc_russie_graph_avortements()
   naissances <- oc_russie_graph_naissances() + ggplot2::labs(caption = "")
@@ -78,6 +84,8 @@ oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_mini
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_mariages_et_divorces()
 oc_russie_graph_mariages_et_divorces <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_mariages_divorces_national %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = data, color = indicator)) +
@@ -110,6 +118,8 @@ oc_russie_graph_mariages_et_divorces <- function(theme = ggplot2::theme_minimal(
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_solde_migratoire()
 oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
   geodata::un_wpp_2019_period_estimates %>%
     dplyr::filter(LocID == 643, MidPeriod < 2020) %>%
@@ -138,6 +148,9 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examplesIf interactive()
+#' # Not run: need credentials for HMD database
+#' oc_russie_graph_esperance_65_femmes()
 oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "female") %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = lex, color = country)) +
@@ -166,6 +179,8 @@ oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_esperance_65_hommes()
 oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "male") %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = lex, color = country)) +
@@ -193,6 +208,8 @@ oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_esperance_europe()
 oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
   wbstats::wb_countries() %>%
     dplyr::filter(region_iso3c == "ECS") %>%
@@ -229,6 +246,8 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_fertilite_europe()
 oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
   wbstats::wb_countries() %>%
     dplyr::filter(region_iso3c == "ECS") %>%
@@ -265,6 +284,8 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_immigration()
 oc_russie_graph_immigration <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_2019_migration %>%
     dplyr::filter(type == "arrival") %>%
@@ -310,6 +331,8 @@ oc_russie_graph_immigration <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_demo_exa()
 oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
   gph_demogram(country = "Russian Federation", population_color = ochRe::ochre_palettes$healthy_reef[6]) +
     ggplot2::scale_color_manual(
@@ -340,6 +363,8 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_attitude_us()
 oc_russie_graph_attitude_us <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_levada_attitude_us |>
     dplyr::filter(attitude != "Difficult to answer") |>
@@ -375,6 +400,8 @@ oc_russie_graph_attitude_us <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_russie_graph_attitude_eu()
 oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_levada_attitude_eu |>
     dplyr::filter(attitude != "Difficult to answer") |>
@@ -404,6 +431,7 @@ oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
     )
 }
 
+# TODO
 oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_depenses_militaires |>
     dplyr::filter(year == 2021) |>

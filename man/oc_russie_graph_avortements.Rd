@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique de l'évolution des avortements
 en Russie par rapport aux naissances.
 }
+\examples{
+oc_russie_graph_avortements()
+}

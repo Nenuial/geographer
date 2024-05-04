@@ -15,3 +15,6 @@ A ggplot2 graph
 \description{
 Graphique des naissances en comparaison aux avortements.
 }
+\examples{
+oc_russie_graph_naissance_et_avortements()
+}

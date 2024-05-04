@@ -15,3 +15,6 @@ A ggplot2 graph
 \description{
 OC Russie: Attitude envers l'UE
 }
+\examples{
+oc_russie_graph_attitude_eu()
+}

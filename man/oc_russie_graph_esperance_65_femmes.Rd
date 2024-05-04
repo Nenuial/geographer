@@ -17,3 +17,9 @@ Graphique de l'évolution de l'espérance de vie
 de la Russie comparé à l'Italie et le Portugal
 pour les femmes de 65 ans.
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: need credentials for HMD database
+oc_russie_graph_esperance_65_femmes()
+\dontshow{\}) # examplesIf}
+}

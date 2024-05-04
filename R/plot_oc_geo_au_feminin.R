@@ -581,7 +581,8 @@ oc_geo_au_feminin_graph_esperances_de_vie <- function(theme = ggplot2::theme_min
 #'
 #' @return A ggplot2 graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: need credentials for HMD database
 #' oc_geo_au_feminin_graph_difference_esperance_de_vie()
 oc_geo_au_feminin_graph_difference_esperance_de_vie <- function(theme = ggplot2::theme_minimal()) {
   list(

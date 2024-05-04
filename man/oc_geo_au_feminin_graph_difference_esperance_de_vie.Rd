@@ -20,5 +20,8 @@ l'espérence de vie des hommes et des femmes
 pour le Japon, la Suisse et les USA
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: need credentials for HMD database
 oc_geo_au_feminin_graph_difference_esperance_de_vie()
+\dontshow{\}) # examplesIf}
 }

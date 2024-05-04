@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique de l'évolution de l'indice de fécondité
 de la Russie comparé au reste de l'Europe.
 }
+\examples{
+oc_russie_graph_fertilite_europe()
+}

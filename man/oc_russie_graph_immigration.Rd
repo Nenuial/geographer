@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique de l'immigration en Russie avec les 5 pays
 les plus représentés et une catégorie \code{autres}.
 }
+\examples{
+oc_russie_graph_immigration()
+}

@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique de l'évolution de l'espérance de vie
 de la Russie comparé au reste de l'Europe.
 }
+\examples{
+oc_russie_graph_esperance_europe()
+}

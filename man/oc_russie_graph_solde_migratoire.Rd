@@ -16,3 +16,6 @@ A ggplot2 graph
 Graphique du solde migratoire
 en Russie par décénies.
 }
+\examples{
+oc_russie_graph_solde_migratoire()
+}
