@@ -14,7 +14,7 @@ gph_basemap <- function(country) {
     returnclass = "sf")
 
   leaflet::leaflet() |>
-    leaflet::addProviderTiles(leaflet::providers$Stadia.OSMBright) |>
+    leaflet::addProviderTiles(leaflet::providers$OpenStreetMap) |>
     leaflet::addPolygons(data = border, color = "red", weight = 2)
 
   # The tmap version doesn't work in Quarto for now…
