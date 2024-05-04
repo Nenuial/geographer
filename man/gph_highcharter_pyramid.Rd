@@ -18,5 +18,8 @@ A highcharter graph
 Create highcharter population pyramid
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: need a valid IDB API key
 gph_highcharter_pyramid("Switzerland", 2020)
+\dontshow{\}) # examplesIf}
 }

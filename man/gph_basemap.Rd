@@ -16,7 +16,9 @@ A leaflet map with the country borders
 Get a basemap for a country
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: needs rnaturalearthhires
 gph_basemap("France")
 gph_basemap("Switzerland")
-
+\dontshow{\}) # examplesIf}
 }
