@@ -75,7 +75,7 @@ gph_highcharter_demogram <-  function(country) {
   pays <- countrycode::countryname(country, destination = "cldr.name.fr")
 
   highcharter::highchart() |>
-    highcharter::hc_title(text = glue::glue(geotools::gtl_translate_enfr("Demograph for {country}", "D\u00e9mographe pour {pays}"),)) |>
+    highcharter::hc_title(text = glue::glue(geotools::gtl_translate_enfr("Demograph for {country}", "D\u00e9mographe pour {pays}"))) |>
     highcharter::hc_xAxis(title = list(text = geotools::gtl_translate_enfr("Year", "Ann\u00e9e"))) -> hc
 
   list(
