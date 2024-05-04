@@ -19,3 +19,6 @@ A ggplot2 graph
 OC Géographie au féminin: taux d'avortement en Suisse
 par classes d'âge
 }
+\examples{
+oc_geo_au_feminin_graph_suisse_avortements_par_ages()
+}

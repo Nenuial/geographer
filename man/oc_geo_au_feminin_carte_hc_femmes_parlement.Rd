@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Géographie au féminin: carte interactive du nombre de femmes au parlement
 }
+\examples{
+oc_geo_au_feminin_carte_hc_femmes_parlement()
+}

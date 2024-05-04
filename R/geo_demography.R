@@ -13,6 +13,8 @@
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' gph_demogram("Switzerland")
 gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_color = "blue") {
   data <- geodata::gdt_wb_demo(country)
   coef <- max(data$population, na.rm = T) / max(data$birth_rate, data$death_rate, na.rm = T)
@@ -34,8 +36,8 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
     ggplot2::scale_color_manual(
       values = c("grey", "black"),
       breaks = c("cbr", "cdr"),
-      labels = c("cbr" = geotools::translate_enfr("birth", "natalité"),
-                 "cdr" = geotools::translate_enfr("death", "mortalité"))
+      labels = c("cbr" = geotools::translate_enfr("birth", "natalit\u00e9"),
+                 "cdr" = geotools::translate_enfr("death", "mortalit\u00e9"))
     ) +
     theme +
     ggplot2::theme(
@@ -47,9 +49,9 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
     ) +
     ggplot2::labs(
       x = "",
-      y = geotools::translate_enfr("Rate (‰)", "Taux (‰)"),
+      y = geotools::translate_enfr("Rate (\u2030)", "Taux (\u2030)"),
       color = "",
-      caption = geotools::translate_enfr("Data: World Bank", "Données: Banque Mondiale")
+      caption = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
     )
 }
 
@@ -66,16 +68,18 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
 #'
 #' @return A highcharter graph
 #' @export
+#' @examples
+#' gph_highcharter_demogram("Switzerland")
 gph_highcharter_demogram <-  function(country) {
   data <- geodata::gdt_wb_demo(country)
   pays <- countrycode::countryname(country, destination = "cldr.name.fr")
 
   highcharter::highchart() |>
-    highcharter::hc_title(text = glue::glue(geotools::translate_enfr("Demograph for {country}", "Démographe pour {pays}"),)) |>
-    highcharter::hc_xAxis(title = list(text = geotools::translate_enfr("Year", "Année"))) -> hc
+    highcharter::hc_title(text = glue::glue(geotools::translate_enfr("Demograph for {country}", "D\u00e9mographe pour {pays}"),)) |>
+    highcharter::hc_xAxis(title = list(text = geotools::translate_enfr("Year", "Ann\u00e9e"))) -> hc
 
   list(
-    list(min = 0, title = list(text = geotools::translate_enfr("Rate (‰)", "Taux (‰)"))),
+    list(min = 0, title = list(text = geotools::translate_enfr("Rate (\u2030)", "Taux (\u2030)"))),
     list(min= 0, title = list(text = "Population", style = list(color = "blue")), opposite = TRUE)
   ) -> hc$x$hc_opts$yAxis
 
@@ -96,20 +100,20 @@ gph_highcharter_demogram <-  function(country) {
       data = data,
       "line",
       yAxis = 0,
-      name = geotools::translate_enfr("crude birth rate", "taux de natalité"),
+      name = geotools::translate_enfr("crude birth rate", "taux de natalit\u00e9"),
       color = "grey",
       dashStyle = "solid",
-      tooltip = list(valueSuffix = " ‰"),
+      tooltip = list(valueSuffix = " \u2030"),
       highcharter::hcaes(x = date, y = birth_rate)
     ) |>
     highcharter::hc_add_series(
       data = data,
       "line",
       yAxis = 0,
-      name = geotools::translate_enfr("crude death rate", "taux de mortalité"),
+      name = geotools::translate_enfr("crude death rate", "taux de mortalit\u00e9"),
       color = "black",
       dashStyle = "solid",
-      tooltip = list(valueSuffix = " ‰"),
+      tooltip = list(valueSuffix = " \u2030"),
       highcharter::hcaes(x = date, y = death_rate)
     )
 }
@@ -131,6 +135,8 @@ gph_highcharter_demogram <-  function(country) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' gph_lexgram("Switzerland")
 gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue", women = "red", all = "black") {
   geodata::gdt_wb_lex(country) |>
     ggplot2::ggplot(ggplot2::aes(x = date)) +
@@ -140,8 +146,8 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue",
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
     ggplot2::labs(
       x = "",
-      y = geotools::translate_enfr("Life expectancy", "Espérance de vie"),
-      caption = geotools::translate_enfr("Data: World Bank", "Données: Banque Mondiale")
+      y = geotools::translate_enfr("Life expectancy", "Esp\u00e9rance de vie"),
+      caption = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
     ) +
     theme
 }
@@ -162,13 +168,15 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue",
 #'
 #' @return A highcharts graph
 #' @export
+#' @examples
+#' gph_highcharter_lexgram("Switzerland")
 gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = "black") {
   geodata::gdt_wb_lex(country) -> data
 
   highcharter::highchart() |>
     highcharter::hc_xAxis(title = list(text = "")) |>
-    highcharter::hc_yAxis(title = list(text = geotools::translate_enfr("Life expectancy", "Espérance de vie"))) |>
-    highcharter::hc_caption(text = geotools::translate_enfr("Data: World Bank", "Données: Banque Mondiale")) |>
+    highcharter::hc_yAxis(title = list(text = geotools::translate_enfr("Life expectancy", "Esp\u00e9rance de vie"))) |>
+    highcharter::hc_caption(text = geotools::translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")) |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
     highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
     highcharter::hc_add_series(
@@ -207,9 +215,12 @@ gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = 
 #'
 #' @param country A string with the country name
 #' @param year An integer for the year
+#' @param theme A ggplot2 theme
 #'
 #' @return A ggplot graph
 #' @export
+#' @examples
+#' gph_pyramid("Switzerland", 2020)
 gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
   country_name <- country
   pyramid_data <- geodata::gdt_idb_pyramid(country, year)
@@ -246,7 +257,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       title = country_name,
       subtitle = year,
       x = "", y = "",
-      caption = geotools::translate_enfr("Data: US Census Bureau", "Données: US Census Bureau")
+      caption = geotools::translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
     )
 }
 
@@ -254,9 +265,12 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
 #'
 #' @param country A string with the country name
 #' @param year An integer for the year
+#' @param theme A ggplot2 theme
 #'
 #' @return A ggplot graph
 #' @export
+#' @examples
+#' gph_pyramid_relative("Switzerland", 2020)
 gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()) {
   geodata::gdt_idb_pyramid_5y(country, year) |>
     dplyr::mutate(population = ifelse(gender == "male", population * -1, population)) |>
@@ -291,7 +305,7 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
     theme +
     ggplot2::labs(
       x = "", y = "",
-      caption = geotools::translate_enfr("Data: US Census Bureau", "Données: US Census Bureau")
+      caption = geotools::translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
     )
 }
 
@@ -302,6 +316,8 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
 #'
 #' @return A highcharter graph
 #' @export
+#' @examples
+#' gph_highcharter_pyramid("Switzerland", 2020)
 gph_highcharter_pyramid <- function(country, year) {
   country -> country_name
   geodata::gdt_idb_pyramid(country, year) |>
@@ -333,7 +349,7 @@ gph_highcharter_pyramid <- function(country, year) {
 
   list(
     list(
-      title = list(text = geotools::translate_enfr("Year", "Année")),
+      title = list(text = geotools::translate_enfr("Year", "Ann\u00e9e")),
       categories = data |> dplyr::pull(age),
       labels = list(
         step = 5,

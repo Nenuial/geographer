@@ -2,13 +2,15 @@
 
 #' OC Israël-Palestine: graphique des migrations
 #'
-#' Graphique de l'immigration en Isräel
+#' Graphique de l'immigration en Israël
 #' de 1949 à 2017.
 #'
 #' @param theme A ggplot2 theme
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_israel_palestine_graph_migration_israel()
 oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_immigration_israel |>
     ggplot2::ggplot(ggplot2::aes(year, immigration)) +
@@ -16,26 +18,28 @@ oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_mi
     ggplot2::scale_x_continuous(breaks = seq(1950, 2015, 5)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(big.mark = "'")) +
     ggplot2::labs(
-      title = "Immigration en Israël depuis 1948",
+      title = "Immigration en Isra\u00ebl depuis 1948",
       x = "", y = "",
-      caption = "Source: CBS, Israël"
+      caption = "Source: CBS, Isra\u00ebl"
     ) +
     theme
 }
 
 #' OC Israël-Palestine: graphique dynamique des migrations
 #'
-#' Graphique de l'immigration en Isräel
+#' Graphique de l'immigration en Israël
 #' de 1949 à 2017.
 #'
 #' @return A highcharts graph
 #' @export
+#' @examples
+#' oc_israel_palestine_hc_migration_israel()
 oc_israel_palestine_hc_migration_israel <- function() {
   geodata::oc_israel_palestine_immigration_israel -> data
 
   highcharter::highchart() |>
-    highcharter::hc_title(text = "Immigration en Israël depuis 1948") |>
-    highcharter::hc_caption(text = "Source: CBS, Israël") |>
+    highcharter::hc_title(text = "Immigration en Isra\u00ebl depuis 1948") |>
+    highcharter::hc_caption(text = "Source: CBS, Isra\u00ebl") |>
     highcharter::hc_legend(enabled = FALSE) |>
     highcharter::hc_plotOptions(
       line = list(
@@ -64,6 +68,8 @@ oc_israel_palestine_hc_migration_israel <- function() {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' oc_israel_palestine_graph_population_nae()
 oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_2008_population_nae |>
     dplyr::arrange(-population) |>
@@ -90,10 +96,10 @@ oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_mini
       legend.position = "bottom"
     ) +
     ggplot2::labs(
-      title = "Population néé à l'étranger",
+      title = "Population n\u00c9\u00c9 \u00e0 l'\u00c9tranger",
       subtitle = "par pays de naissance",
       x = "", y = "Population",
-      fill = "", caption = "Données: CBS Isräel (2008)"
+      fill = "", caption = "Donn\u00c9es: CBS Isra\u00ebl (2008)"
     )
 }
 
@@ -103,6 +109,8 @@ oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_mini
 #'
 #' @return A highcharts graph
 #' @export
+#' @examples
+#' oc_israel_palestine_hc_immigration_sioniste()
 oc_israel_palestine_hc_immigration_sioniste <- function() {
   geodata::oc_israel_palestine_immigration_juive_avant_1948 -> data
 

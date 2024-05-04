@@ -17,3 +17,6 @@ A highcharter graph
 \description{
 Create highcharter population pyramid
 }
+\examples{
+gph_highcharter_pyramid("Switzerland", 2020)
+}

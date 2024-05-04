@@ -26,3 +26,6 @@ Provides basic ggplot2 graph with the following data on it :
 \item{ley_female}{the male life expectancy (red)}
 }
 }
+\examples{
+gph_highcharter_lexgram("Switzerland")
+}

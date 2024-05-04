@@ -4,6 +4,10 @@
 #'
 #' @return A leaflet map with the country borders
 #' @export
+#' @examples
+#' gph_basemap("France")
+#' gph_basemap("Switzerland")
+#'
 gph_basemap <- function(country) {
   border = rnaturalearth::ne_countries(
     scale = 10, country = country,

@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Carte interactive du Social Institutions and Gender Index 2023
 }
+\examples{
+oc_geo_au_feminin_carte_hc_sigi_2023()
+}

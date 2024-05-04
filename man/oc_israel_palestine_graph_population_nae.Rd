@@ -17,3 +17,6 @@ A ggplot2 graph
 Graphique avec la population néé à l'étranger
 par pays de naissance d'après le recensement 2018.
 }
+\examples{
+oc_israel_palestine_graph_population_nae()
+}

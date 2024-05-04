@@ -4,6 +4,8 @@
 #'
 #' @return A ggplot map
 #' @export
+#' @examples
+#' gph_mini_globe("Switzerland")
 gph_mini_globe <- function(countries) {
   rnaturalearth::ne_countries(
     scale = 50, country = countries,

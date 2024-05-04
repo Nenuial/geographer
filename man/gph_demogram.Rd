@@ -28,3 +28,6 @@ Provides basic ggplot2 graph with the following data on it :
 \item{death_rate}{the death_rate curve (black)}
 }
 }
+\examples{
+gph_demogram("Switzerland")
+}

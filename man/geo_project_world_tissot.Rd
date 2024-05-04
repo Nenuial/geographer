@@ -7,7 +7,7 @@
 geo_project_world_tissot(crs)
 }
 \arguments{
-\item{crs}{A valid CRS string}
+\item{crs}{A valid CRS string or object}
 }
 \value{
 A ggplot object
@@ -15,3 +15,4 @@ A ggplot object
 \description{
 Projet world map with tissot matrices
 }
+\keyword{internal}

@@ -17,3 +17,6 @@ A ggplot2 map
 \description{
 OC Géo au féminin: carte de la différence d'espérance de vie
 }
+\examples{
+oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020()
+}

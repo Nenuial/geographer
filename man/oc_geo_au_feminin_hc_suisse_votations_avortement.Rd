@@ -14,3 +14,6 @@ A highcharts
 OC Géographie au féminin: les résultats de différentes
 votations fédérale sur le sujet de l'avortement
 }
+\examples{
+oc_geo_au_feminin_hc_suisse_votations_avortement()
+}

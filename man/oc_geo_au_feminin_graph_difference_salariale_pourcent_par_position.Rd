@@ -3,7 +3,7 @@
 \name{oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position}
 \alias{oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position}
 \title{OC Géo au féminin: différences salariales relative en Suisse
-Par position}
+par position}
 \usage{
 oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position(
   theme = ggplot2::theme_minimal()
@@ -17,5 +17,8 @@ A ggplot
 }
 \description{
 OC Géo au féminin: différences salariales relative en Suisse
-Par position
+par position
+}
+\examples{
+oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position()
 }

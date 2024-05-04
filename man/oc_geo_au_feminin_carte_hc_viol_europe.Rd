@@ -14,3 +14,6 @@ A highcharts map
 OC Géo au féminin: carte interactive du taux de viols
 déclarés
 }
+\examples{
+oc_geo_au_feminin_carte_hc_viol_europe()
+}

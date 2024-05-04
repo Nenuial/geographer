@@ -4,14 +4,22 @@
 \alias{oc_geo_au_feminin_graph_situation_eco_afghanistan}
 \title{OC Géographie au féminin: graphique du PIB par habitant}
 \usage{
-oc_geo_au_feminin_graph_situation_eco_afghanistan(theme, line_color = "black")
+oc_geo_au_feminin_graph_situation_eco_afghanistan(
+  theme = ggplot2::theme_minimal(),
+  line_color = "black"
+)
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{line_color}{Graph line color}
 }
 \value{
 A ggplot2 graph
 }
 \description{
 OC Géographie au féminin: graphique du PIB par habitant
+}
+\examples{
+oc_geo_au_feminin_graph_situation_eco_afghanistan()
 }

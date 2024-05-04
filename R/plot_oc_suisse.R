@@ -8,7 +8,9 @@
 #' @concept oc suisse population immigration
 #'
 #' @export
-oc_suisse_2021_graph_immigration_italienne <- function(theme = ggplot2::theme_minimal()) {
+#' @examples
+#' oc_suisse_graph_2021_immigration_italienne()
+oc_suisse_graph_2021_immigration_italienne <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_suisse_2021_immigration_italienne %>%
     ggplot2::ggplot(ggplot2::aes(x = year)) +
     ggplot2::geom_line(ggplot2::aes(y = population), color = "blue") +
@@ -31,7 +33,7 @@ oc_suisse_2021_graph_immigration_italienne <- function(theme = ggplot2::theme_mi
     ) +
     ggplot2::labs(
       title = "Population et immigration italienne en Suisse",
-      caption = "Données: OFS (2021)",
+      caption = "Donn\u00e9es: OFS (2021)",
       x = ""
     )
 }

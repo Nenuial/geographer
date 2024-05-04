@@ -17,4 +17,6 @@ A ggplot2 map
 \description{
 OC Géo au féminin: carte de l'Afhanistan 1919
 }
-\concept{oc géo au féminin Afghanistan}
+\examples{
+oc_geo_au_feminin_carte_afghanistan_independance()
+}

@@ -24,4 +24,7 @@ A ggplot2 map
 \description{
 Retrieve swiss vote data
 }
+\examples{
+gph_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
+}
 \keyword{internal}

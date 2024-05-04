@@ -16,3 +16,6 @@ OC Israël-Palestine: graphique dynamique
 de l'immigration juive en Palestine
 avant 1948
 }
+\examples{
+oc_israel_palestine_hc_immigration_sioniste()
+}

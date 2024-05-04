@@ -15,3 +15,6 @@ A ggplot map
 \description{
 Create a globe with the countries in the list highlighted
 }
+\examples{
+gph_mini_globe("Switzerland")
+}

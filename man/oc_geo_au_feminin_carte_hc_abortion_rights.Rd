@@ -14,3 +14,6 @@ A highcharts map
 Géographie au féminin: carte interactive des droits
 en matière d'avortement
 }
+\examples{
+oc_geo_au_feminin_carte_hc_abortion_rights()
+}

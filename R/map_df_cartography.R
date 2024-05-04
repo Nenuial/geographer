@@ -4,6 +4,8 @@
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_equirectangular()
 df_cartography_project_equirectangular <- function() {
   geo_project_world(geotools::gtl_crs_proj("equirec"))
 }
@@ -14,6 +16,8 @@ df_cartography_project_equirectangular <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_gallpeters()
 df_cartography_project_gallpeters <- function() {
   geo_project_world(geotools::gtl_crs_proj("gallpeters"))
 }
@@ -24,6 +28,8 @@ df_cartography_project_gallpeters <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_hobodyer()
 df_cartography_project_hobodyer <- function() {
   geo_project_world(geotools::gtl_crs_proj("hobodyer"))
 }
@@ -34,6 +40,8 @@ df_cartography_project_hobodyer <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_mercator()
 df_cartography_project_mercator <- function() {
   geo_project_world("+proj=longlat") +
     ggplot2::coord_sf(
@@ -51,6 +59,8 @@ df_cartography_project_mercator <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_winkeltripel()
 df_cartography_project_winkeltripel <- function() {
   geo_project_world(geotools::gtl_crs_proj("wintri"))
 }
@@ -61,6 +71,8 @@ df_cartography_project_winkeltripel <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_robinson()
 df_cartography_project_robinson <- function() {
   geo_project_world(geotools::gtl_crs_proj("robinson"))
 }
@@ -89,11 +101,13 @@ df_cartography_robinson_outline <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_goodehomolosine()
 df_cartography_project_goodehomolosine <- function() {
   ggplot2::ggplot(rnaturalearth::ne_countries(returnclass = "sf")) +
     ggplot2::geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/ggplot2::.pt) +
     ggplot2::geom_sf(data = df_cartography_goodehomolosine_cutout(), fill = "white", color = "NA") +
-    ggplot2::geom_sf(data = df_cartography_goodehomolosine_outline(), fill = NA, color = "gray30", size = 0.5/.pt) +
+    ggplot2::geom_sf(data = df_cartography_goodehomolosine_outline(), fill = NA, color = "gray30", size = 0.5/ggplot2::.pt) +
     ggplot2::coord_sf(
       crs = geotools::gtl_crs_proj("goode"),
       xlim = 0.95 * sf::st_bbox(df_cartography_goodehomolosine_outline())[c("xmin", "xmax")] * 1.1,
@@ -178,40 +192,52 @@ df_cartography_goodehomolosine_outline <- function() {
 #'
 #' @return A ggplot2 object
 #' @export
+#' @examples
+#' df_cartography_project_equalearth()
 df_cartography_project_equalearth <- function() {
   geo_project_world(geotools::gtl_crs_proj("eqearth"))
 }
 
-#' DF Cartography: Patchwork of rectangular projections
-#'
-#' A patchwork composition of Equirectangular, Mercator,
-#' Gall-Peters and Hobo Dyer projections.
-#'
-#' @return A patchwork object
-#' @export
-df_cartography_rectangular_projections <- function() {
-  require(patchwork)
+# Remove from package because require() is a warning in
+# R CMD Check. Remains here for future me.
+# #' DF Cartography: Patchwork of rectangular projections
+# #'
+# #' A patchwork composition of Equirectangular, Mercator,
+# #' Gall-Peters and Hobo Dyer projections.
+# #'
+# #' @return A patchwork object
+# #' @export
+# #' @examples
+# #' df_cartography_rectangular_projections()
+# #'
+# df_cartography_rectangular_projections <- function() {
+#   require(patchwork)
+#
+#   df_cartography_project_equirectangular() +
+#     df_cartography_project_mercator() +
+#     df_cartography_project_gallpeters() +
+#     df_cartography_project_hobodyer() +
+#     patchwork::plot_layout(ncol = 2, widths = c(1, 1))
+# }
 
-  df_cartography_project_equirectangular() +
-    df_cartography_project_mercator() +
-    df_cartography_project_gallpeters() +
-    df_cartography_project_hobodyer() +
-    patchwork::plot_layout(ncol = 2, widths = c(1, 1))
-}
-
-#' DF Cartography: Patchwork of pseudo projections
-#'
-#' A patchwork composition of Goode Homolosine, Robinson,
-#' Winkel-Tripel and Equal Earth projections.
-#'
-#' @return A patchwork object
-#' @export
-df_cartography_nonrectangular_projections <- function() {
-  require(patchwork)
-
-  df_cartography_project_goodehomolosine() +
-    df_cartography_project_robinson() +
-    df_cartography_project_winkeltripel() +
-    df_cartography_project_equalearth() +
-    patchwork::plot_layout(ncol = 2, widths = c(1, 1))
-}
+# Remove from package because require() is a warning in
+# R CMD Check. Remains here for future me.
+# #' DF Cartography: Patchwork of pseudo projections
+# #'
+# #' A patchwork composition of Goode Homolosine, Robinson,
+# #' Winkel-Tripel and Equal Earth projections.
+# #'
+# #' @return A patchwork object
+# #' @export
+# #' @examples
+# #' df_cartography_nonrectangular_projections()
+# #'
+# df_cartography_nonrectangular_projections <- function() {
+#   require(patchwork)
+#
+#   df_cartography_project_goodehomolosine() +
+#     df_cartography_project_robinson() +
+#     df_cartography_project_winkeltripel() +
+#     df_cartography_project_equalearth() +
+#     patchwork::plot_layout(ncol = 2, widths = c(1, 1))
+# }

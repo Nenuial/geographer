@@ -13,6 +13,9 @@ oc_israel_palestine_graph_migration_israel(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-Graphique de l'immigration en Isräel
+Graphique de l'immigration en Israël
 de 1949 à 2017.
+}
+\examples{
+oc_israel_palestine_graph_migration_israel()
 }

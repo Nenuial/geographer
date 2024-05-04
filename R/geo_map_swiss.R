@@ -7,6 +7,8 @@
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' gph_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
 gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
   # Check input
   geolevel <- match.arg(geolevel)
@@ -30,7 +32,7 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
                                              alpha = "value")) +
     ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none")+
     ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", size = .1) +
-    geo_map_swiss_lakes(source = swissdd::get_geodata("lakes")) +
+    gph_map_swiss_lakes(source = swissdd::get_geodata("lakes")) +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
       values = prismatic::clr_alpha(
@@ -53,7 +55,7 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
       title = plot_data$pretty_title,
       subtitle = plot_data$pretty_subtitle,
       fill = "Pourcentage de oui", x = "", y = "",
-      caption = "Données : OFS, Fond de carte : Themakart"
+      caption = "Donn\u00e9es : OFS, Fond de carte : Themakart"
     ) +
     ggeo::ggeotheme(
       theme = geotools::gtl_options("theme"),
@@ -71,6 +73,8 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 #'
 #' @return A highcharter map
 #' @export
+#' @examples
+#' gph_highcharter_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
 gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
   # Check input
   geolevel <- match.arg(geolevel)
@@ -164,136 +168,15 @@ gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipalit
   ))
 }
 
-
-#' Write voting maps for communal and cantonal level to path
-#'
-#' @param url The url where the data comes from
-#' @param path A path where to write the maps
-#'
-#' @export
-geo_map_swiss_voting <- function(url) {
-  url %>%
-    jsonlite::fromJSON() -> voting_data
-
-  voting_data %>%
-    purrr::pluck("abstimmtag") %>%
-    lubridate::ymd() -> voting_date
-
-  voting_data %>%
-    tibble::as_tibble() %>%
-    geo_write_voting_charts()
-
-  voting_data %>%
-    purrr::pluck("schweiz", "vorlagen") %>%
-    as.list() %>%
-    purrr::walk(~geo_map_swiss_voting_walk(.x, date = voting_date))
-}
-
-#' Internal walk voting objects
-#'
-#' @param data The data of the voting object
-#' @param date The date of the vote
-#'
-#' @keywords internal
-geo_map_swiss_voting_walk <- function(data, date) {
-  purrr::pluck(data, "vorlagenId") -> id
-  purrr::pluck(data, "vorlagenTitel", 2, 2) -> title
-
-  data %>%
-    purrr::pluck("kantone") %>%
-    tibble::as_tibble() %>%
-    tidyr::unpack(resultat) -> kantone
-
-  kantone %>%
-    dplyr::pull(gemeinden) %>%
-    dplyr::bind_rows() %>%
-    tibble::as_tibble() %>%
-    tidyr::unpack(resultat) %>%
-    dplyr::mutate(geoLevelnummer = readr::parse_integer(geoLevelnummer)) -> gemeinden
-
-  themakart::thema_map("inst", "voge", 2020, "vf") %>%
-    geo_map_swiss_voting_write(
-      data = gemeinden,
-      id = id,
-      title = title,
-      level = "comm",
-      date = date
-    )
-
-  themakart::thema_map("inst", "kant", 1997) %>%
-    geo_map_swiss_voting_write(
-      data = kantone,
-      id = id,
-      title = title,
-      level = "cant",
-      date = date
-    )
-}
-
-#' Internal write voting maps
-#'
-#' @param map The map data
-#' @param data The voting data
-#' @param id The id of the voting object
-#' @param title The title of the voting object
-#' @param level The geometry level for the filename
-#' @param date The date of the vote
-#'
-#' @keywords internal
-geo_map_swiss_voting_write <- function(map, data, id, title, level, date) {
-  pretty_date <- withr::with_locale(new = c("LC_TIME" = "fr_CH"), format(date, "%d %B %Y"))
-
-  map %>%
-    dplyr::left_join(data, by = c("id" = "geoLevelnummer")) %>%
-    dplyr::mutate(value = santoku::chop(jaStimmenInProzent, c(0,10,20,30,40,50,60,70,80,90,100))) %>%
-    ggplot2::ggplot(ggplot2::aes(fill = value)) +
-    geo_map_swiss_relief() +
-    ggplot2::geom_sf(color = "white", size = .1) +
-    geo_map_swiss_lakes() +
-    ggplot2::coord_sf(datum = NA) +
-    ggplot2::scale_fill_manual(
-      values = prismatic::clr_alpha(
-        paletteer::paletteer_c("pals::ocean.curl", direction = -1, 10),
-        alpha = .8
-      ),
-      breaks = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"),
-      limits = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)")
-    ) +
-    ggplot2::guides(
-      fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = TRUE,
-        barheight = 20, label.hjust = 1
-      )
-    ) +
-    ggplot2::labs(
-      title = glue::glue('Votation du {pretty_date}'),
-      subtitle = title %>% stringr::str_wrap(65),
-      x = "", y = "", fill = "",
-      caption = "Fond: OFS ThemaKart (2020), Données: OFS (2020)"
-    ) +
-    ggeo::ggeotheme(
-      theme = geotools::gtl_options("theme"),
-      mode = geotools::gtl_options("mode"),
-      plot.title = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
-      plot.subtitle = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
-      plot.title.position = "plot",
-      plot.margin = ggplot2::margin(t = 1, r = 1.5, unit = "cm")
-    ) -> plot
-
-  ggeo::ggeosave(
-    glue::glue("votemap_{id}_{level}_{date}"),
-    width = geotools::gtl_options("plot_full_width"),
-    height = geotools::gtl_options("plot_full_height")
-  )
-}
-
 #' Swiss relief background for maps
 #'
 #' @return A list of ggplot 2 layers for Swiss relief backgroup
 #' @export
-geo_map_swiss_relief <- function() {
+#' @examples
+#' ggplot2::ggplot() +
+#'   gph_map_swiss_relief() +
+#'   gph_map_swiss_lakes()
+gph_map_swiss_relief <- function() {
   list(
     ggplot2::geom_sf(data = themakart::thema_map("inst", "suis", 1848, "gf"),
                      fill = "white", size = .1),
@@ -310,8 +193,12 @@ geo_map_swiss_relief <- function() {
 #' @param fill_color A color for the lakes (default: skyblue)
 #' @param source The geometry for lakes (default: ThemaKart lakes)
 #'
-#' @return A ggplot 2 layer for Swiss lakes
+#' @return A ggplot2 layer for Swiss lakes
 #' @export
-geo_map_swiss_lakes <- function(fill_color = "skyblue", source = themakart::thema_topo("seen")) {
+#' @examples
+#' ggplot2::ggplot() +
+#'   gph_map_swiss_relief() +
+#'   gph_map_swiss_lakes()
+gph_map_swiss_lakes <- function(fill_color = "skyblue", source = themakart::thema_topo("seen")) {
   ggplot2::geom_sf(data = source, fill = fill_color, color = NA)
 }

@@ -10,6 +10,9 @@ oc_israel_palestine_hc_migration_israel()
 A highcharts graph
 }
 \description{
-Graphique de l'immigration en Isräel
+Graphique de l'immigration en Israël
 de 1949 à 2017.
+}
+\examples{
+oc_israel_palestine_hc_migration_israel()
 }

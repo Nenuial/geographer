@@ -12,6 +12,10 @@ oc_russie_carte_accroissement(
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{barwidth}{Width of legend bar}
+
+\item{greyscale}{Boolean: whether to create a grey scale map}
 }
 \value{
 A ggplot2 map
@@ -19,5 +23,8 @@ A ggplot2 map
 \description{
 Une carte de l'accroissement naturel en 2019
 au niveau régional en Russie.
+}
+\examples{
+oc_russie_carte_accroissement()
 }
 \concept{oc russie mortalité}

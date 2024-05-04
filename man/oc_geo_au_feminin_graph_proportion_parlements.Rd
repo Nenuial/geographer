@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_graph_proportion_parlements}
 \alias{oc_geo_au_feminin_graph_proportion_parlements}
-\title{OC Géo au féminin: représentation politique
-Pourcentage de femmes dans les parlements nationaux par régions}
+\title{OC Géo au féminin: représentation politique}
 \usage{
 oc_geo_au_feminin_graph_proportion_parlements(theme = ggplot2::theme_minimal())
 }
@@ -14,6 +13,8 @@ oc_geo_au_feminin_graph_proportion_parlements(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-OC Géo au féminin: représentation politique
 Pourcentage de femmes dans les parlements nationaux par régions
+}
+\examples{
+oc_geo_au_feminin_graph_proportion_parlements()
 }

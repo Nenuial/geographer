@@ -14,3 +14,6 @@ A highcharts
 OC Géographie au féminin: taux d'avortement
 en Suisse par régions
 }
+\examples{
+oc_geo_au_feminin_hc_suisse_avortements_par_regions()
+}

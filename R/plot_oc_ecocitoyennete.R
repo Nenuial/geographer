@@ -4,7 +4,9 @@
 #'
 #' @return A ggplot2 graph
 #' @export
-oc_ecocitoyennete_energy_per_source <- function(theme = ggplot2::theme_minimal()) {
+#' @examples
+#' oc_ecocitoyennete_graph_energy_per_source()
+oc_ecocitoyennete_graph_energy_per_source <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_ecocitoyennete_energy_consumption_per_source |>
     dplyr::mutate(source = stringr::str_replace(source, " per capita", "")) |>
     dplyr::mutate(source = forcats::fct_inorder(source) |> forcats::fct_rev()) |>
@@ -20,8 +22,8 @@ oc_ecocitoyennete_energy_per_source <- function(theme = ggplot2::theme_minimal()
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Consommation d'énergie par source",
-      y = "Énergie par personne (kWh)",
+      title = "Consommation d'\u00e9nergie par source",
+      y = "\u00c9nergie par personne (kWh)",
       x = "", fill = ""
     )
 }

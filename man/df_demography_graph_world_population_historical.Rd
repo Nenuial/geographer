@@ -17,3 +17,6 @@ A ggplot2 graph
 \description{
 World population graph from 10'000 BCE to 1200 CE
 }
+\examples{
+df_demography_graph_world_population_historical()
+}

@@ -10,10 +10,15 @@ gph_pyramid_relative(country, year, theme = ggplot2::theme_minimal())
 \item{country}{A string with the country name}
 
 \item{year}{An integer for the year}
+
+\item{theme}{A ggplot2 theme}
 }
 \value{
 A ggplot graph
 }
 \description{
 Create relative population pyramid (5 year cohorts)
+}
+\examples{
+gph_pyramid_relative("Switzerland", 2020)
 }

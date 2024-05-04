@@ -7,8 +7,9 @@
 carto_ne_get_boundbox()
 }
 \value{
-An sf class map
+A simple feature
 }
 \description{
-Return NaturalEarth Bound box
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
+\keyword{internal}

@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Carte interactive du Women, Business and the Law index
 }
+\examples{
+oc_geo_au_feminin_carte_hc_wbl()
+}

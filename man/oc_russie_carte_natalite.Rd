@@ -8,6 +8,8 @@ oc_russie_carte_natalite(theme = ggplot2::theme_minimal(), barwidth = 40)
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{barwidth}{Width of legend bar}
 }
 \value{
 A ggplot2 map
@@ -15,5 +17,8 @@ A ggplot2 map
 \description{
 Une carte du taux de natalité en 2019
 au niveau régional en Russie.
+}
+\examples{
+oc_russie_carte_natalite()
 }
 \concept{oc russie fertilité}

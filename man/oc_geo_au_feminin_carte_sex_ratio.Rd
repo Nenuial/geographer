@@ -17,3 +17,6 @@ A ggplot2 map
 \description{
 OC Géo au féminin: carte du sex ratio à la naissance
 }
+\examples{
+oc_geo_au_feminin_carte_sex_ratio(2015)
+}

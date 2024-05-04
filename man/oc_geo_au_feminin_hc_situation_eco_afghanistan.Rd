@@ -14,3 +14,6 @@ A highcharts graph
 OC Géo au féminin: représentation politique
 Pourcentage de femmes dans les parlements nationaux par régions
 }
+\examples{
+oc_geo_au_feminin_hc_situation_eco_afghanistan()
+}

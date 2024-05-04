@@ -5,6 +5,8 @@
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_abortion_rights()
 oc_geo_au_feminin_carte_hc_abortion_rights <- function() {
   geodata::gdt_crr_get_data() |>
     tidyr::unnest_auto(category_id) |>
@@ -23,7 +25,7 @@ oc_geo_au_feminin_carte_hc_abortion_rights <- function() {
   map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
 
   highcharter::highchart(type = "map") |>
-    highcharter::hc_title(text = "Les législations sur l'avortement dans le monde") |>
+    highcharter::hc_title(text = "Les l\u00e9gislations sur l'avortement dans le monde") |>
     highcharter::hc_caption(text = "Source : <a href='https://reproductiverights.org/maps/worlds-abortion-laws/' target='_blank'>Center for reproduction rights (2023)</a>") |>
     highcharter::hc_mapView(
       maxZoom = 30,
@@ -52,14 +54,14 @@ oc_geo_au_feminin_carte_hc_abortion_rights <- function() {
       borderColor = "transparent"
     ) |>
     highcharter::hc_add_series(
-      name = "Raisons de santé",
+      name = "Raisons de sant\u00e9",
       data = data |> dplyr::filter(gest == 1350),
       color = "#f1c936",
       value = "value",
       borderColor = "transparent"
     ) |>
     highcharter::hc_add_series(
-      name = "Motifs socio-économiques",
+      name = "Motifs socio-\u00e9conomiques",
       data = data |> dplyr::filter(gest == 1351),
       color = "#bbdb8e",
       value = "value",
@@ -86,6 +88,8 @@ oc_geo_au_feminin_carte_hc_abortion_rights <- function() {
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_abortion_rights()
 oc_geo_au_feminin_carte_abortion_rights <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_crr_get_data() |>
     tidyr::unnest_auto(category_id) |>
@@ -97,8 +101,8 @@ oc_geo_au_feminin_carte_abortion_rights <- function(theme = ggplot2::theme_minim
         gest,
         1348 ~ "Totalement interdit",
         1349 ~ "Sauver la vie de la femme",
-        1350 ~ "Raisons de santé",
-        1351 ~ "Motifs socio-économiques",
+        1350 ~ "Raisons de sant\u00e9",
+        1351 ~ "Motifs socio-\u00e9conomiques",
         1352 ~ "Sur demande"
       )
     ) |>
@@ -127,12 +131,12 @@ oc_geo_au_feminin_carte_abortion_rights <- function(theme = ggplot2::theme_minim
         "#da7c59",
         "#950023"
       ),
-      labels = function(breaks) {breaks[is.na(breaks)] <- "Pas de données"; breaks},
+      labels = function(breaks) {breaks[is.na(breaks)] <- "Pas de donn\u00e9es"; breaks},
     ) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Les législations sur l'avortement dans le monde",
+      title = "Les l\u00e9gislations sur l'avortement dans le monde",
       caption = "Source : Center for reproduction rights (2023)"
     )
 }
@@ -142,7 +146,9 @@ oc_geo_au_feminin_carte_abortion_rights <- function(theme = ggplot2::theme_minim
 #'
 #' @return A highcharts map
 #' @export
-oc_geographie_au_feminin_carte_hc_taux_avortement <- function() {
+#' @examples
+#' oc_geo_au_feminin_carte_hc_taux_avortement()
+oc_geo_au_feminin_carte_hc_taux_avortement <- function() {
   geodata::gdt_gutt_get_abortion_rates() |>
     dplyr::rename(value = abortion_rate) |>
     dplyr::mutate(
@@ -195,7 +201,9 @@ oc_geographie_au_feminin_carte_hc_taux_avortement <- function() {
 #'
 #' @return A ggplot2 map
 #' @export
-oc_geographie_au_feminin_carte_taux_avortement <- function(theme = ggplot2::theme_minimal()) {
+#' @examples
+#' oc_geo_au_feminin_carte_taux_avortement()
+oc_geo_au_feminin_carte_taux_avortement <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_gutt_get_abortion_rates() |>
     dplyr::mutate(
       country_name = countrycode::countrycode(iso3, "iso3c", "country.name.fr")
@@ -236,7 +244,9 @@ oc_geographie_au_feminin_carte_taux_avortement <- function(theme = ggplot2::them
 #'
 #' @return A highcharts map
 #' @export
-oc_geographie_au_feminin_carte_hc_contraception <- function() {
+#' @examples
+#' oc_geo_au_feminin_carte_hc_contraception()
+oc_geo_au_feminin_carte_hc_contraception <- function() {
   palette <- function(...) {
     viridis::viridis(direction = -1, ...)
   }
@@ -250,7 +260,7 @@ oc_geographie_au_feminin_carte_hc_contraception <- function() {
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "L'usage de la contraception") |>
-    highcharter::hc_subtitle(text = "% des femmes âgées de 15 à 49 ans") |>
+    highcharter::hc_subtitle(text = "% des femmes \u00e2g\u00e9es de 15 \u00e0 49 ans") |>
     highcharter::hc_caption(text = "Source : <a href='https://donnees.banquemondiale.org/indicateur/SP.DYN.CONU.ZS' target='_blank'>Banque Mondiale</a>") |>
     highcharter::hc_mapView(
       maxZoom = 30,
@@ -278,7 +288,7 @@ oc_geographie_au_feminin_carte_hc_contraception <- function() {
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue("function () {{
           return '<b>' + this.point.country + '</b><br/>' +
-          'Prévalence ('+ this.point.date + '): ' + this.point.value }}"))
+          'Pr\u00e9valence ('+ this.point.date + '): ' + this.point.value }}"))
     )
 }
 
@@ -344,6 +354,8 @@ oc_geo_au_feminin_carte_base_carte_wpp <- function(data) {
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_esperance_de_vie_wpp2012_2005_a_2010()
 oc_geo_au_feminin_carte_esperance_de_vie_wpp2012_2005_a_2010 <- function(theme = ggplot2::theme_minimal()) {
   oc_geo_au_feminin_carte_base_donnees_wpp(
     geodata::oc_geo_au_feminin_wpp2012_lex,
@@ -352,10 +364,10 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2012_2005_a_2010 <- function(theme =
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Différence d'espérance de vie",
+      title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2005-2010)",
-      caption = "Données : WPP2012",
-      fill = "Différence (années)"
+      caption = "Donn\u00e9es : WPP2012",
+      fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
 
@@ -365,6 +377,8 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2012_2005_a_2010 <- function(theme =
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2005_a_2010()
 oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2005_a_2010 <- function(theme = ggplot2::theme_minimal()) {
   oc_geo_au_feminin_carte_base_donnees_wpp(
     geodata::oc_geo_au_feminin_wpp2019_lex,
@@ -373,10 +387,10 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2005_a_2010 <- function(theme =
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Différence d'espérance de vie",
+      title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2005-2010)",
-      caption = "Données : WPP2019",
-      fill = "Différence (années)"
+      caption = "Donn\u00e9es : WPP2019",
+      fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
 
@@ -386,6 +400,8 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2005_a_2010 <- function(theme =
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020()
 oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020 <- function(theme = ggplot2::theme_minimal()) {
   oc_geo_au_feminin_carte_base_donnees_wpp(
     geodata::oc_geo_au_feminin_wpp2019_lex,
@@ -397,10 +413,10 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020 <- function(theme =
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Différence d'espérance de vie",
+      title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2015-2020)",
-      caption = "Données : WPP2019",
-      fill = "Différence (années)"
+      caption = "Donn\u00e9es : WPP2019",
+      fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
 
@@ -412,9 +428,10 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020 <- function(theme =
 #' @param theme A ggplot2 theme
 #'
 #' @return A ggplot2 map
-#' @concept oc géo au féminin Afghanistan
 #'
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_afghanistan_independance()
 oc_geo_au_feminin_carte_afghanistan_independance <- function(theme = ggplot2::theme_minimal()) {
   crs <- "+proj=laea +lat_0=31 +lon_0=69 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
 
@@ -422,7 +439,7 @@ oc_geo_au_feminin_carte_afghanistan_independance <- function(theme = ggplot2::th
   box <- sf::sf_project(from = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", to = crs,
                         pts = matrix(c(50.75, 103.62, 17.18, 44.21), ncol = 2))
 
-  geo_historical_world_map(lubridate::ymd("1919-12-31")) |>
+  gph_historical_world_map(lubridate::ymd("1919-12-31")) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(data = rnaturalearth::ne_download(scale = 50, category = "physical", type = "land",
                                                        returnclass = "sf"),
@@ -455,9 +472,10 @@ oc_geo_au_feminin_carte_afghanistan_independance <- function(theme = ggplot2::th
 #' @param theme A ggplot2 theme
 #'
 #' @return A ggplot2 map
-#' @concept oc géo au féminin Afghanistan
 #'
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_afghanistan()
 oc_geo_au_feminin_carte_afghanistan <- function(theme = ggplot2::theme_minimal()) {
   crs <- "+proj=laea +lat_0=31 +lon_0=69 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
 
@@ -465,7 +483,7 @@ oc_geo_au_feminin_carte_afghanistan <- function(theme = ggplot2::theme_minimal()
   box <- sf::sf_project(from = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", to = crs,
                         pts = matrix(c(50.75, 103.62, 17.18, 44.21), ncol = 2))
 
-  geo_historical_world_map(lubridate::ymd("1950-01-01")) |>
+  gph_historical_world_map(lubridate::ymd("1950-01-01")) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(data = rnaturalearth::ne_download(scale = 50, category = "physical", type = "land",
                                                        returnclass = "sf"),
@@ -506,6 +524,8 @@ oc_geo_au_feminin_carte_afghanistan <- function(theme = ggplot2::theme_minimal()
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_sigi_2023()
 oc_geo_au_feminin_carte_sigi_2023 <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_geo_au_feminin_2023_oecd_sigi |>
     dplyr::filter(VAR == "SIGI") -> map_data
@@ -519,7 +539,7 @@ oc_geo_au_feminin_carte_sigi_2023 <- function(theme = ggplot2::theme_minimal()) 
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "L’indice Institutions sociales et égalité des genres",
+      title = "L'indice Institutions sociales et \u00e9galit\u00e9 des genres",
       subtitle = "0 = pas de discrimination ; 100 = discrimination absolue, 2023",
       fill = "",
       caption = "Source OCDE (2023), SIGI"
@@ -532,6 +552,8 @@ oc_geo_au_feminin_carte_sigi_2023 <- function(theme = ggplot2::theme_minimal()) 
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_sigi_2023()
 oc_geo_au_feminin_carte_hc_sigi_2023 <- function() {
   data <- geodata::oc_geo_au_feminin_2023_oecd_sigi |>
     dplyr::filter(VAR == "SIGI") |>
@@ -539,7 +561,7 @@ oc_geo_au_feminin_carte_hc_sigi_2023 <- function() {
   map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
 
   highcharter::highchart(type = "map") |>
-    highcharter::hc_title(text = "L’indice Institutions sociales et égalité des genres") |>
+    highcharter::hc_title(text = "L'indice Institutions sociales et \u00e9galit\u00e9 des genres") |>
     highcharter::hc_subtitle(text = "0 = pas de discrimination ; 100 = discrimination absolue, 2023") |>
     highcharter::hc_caption(text = "Source : <a href='https://www.oecd.org/stories/gender/social-norms-and-gender-discrimination/sigi' target='_blank'>OCDE (2023)</a>, <a href='https://www.oecd.org/stories/gender/social-norms-and-gender-discrimination/sigi' target='_blank'>SIGI</a>") |>
     highcharter::hc_mapView(
@@ -578,13 +600,15 @@ oc_geo_au_feminin_carte_hc_sigi_2023 <- function() {
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_gii_2021()
 oc_geo_au_feminin_carte_hc_gii_2021 <- function() {
   data <- geodata::oc_geo_au_feminin_2021_unhdr_gii |>
     dplyr::rename(value = gii)
   map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
 
   highcharter::highchart(type = "map") |>
-    highcharter::hc_title(text = "Indice d'inégalité de genre") |>
+    highcharter::hc_title(text = "Indice d'in\u00e9galit\u00e9 de genre") |>
     highcharter::hc_caption(text = "Source : <a href='https://hdr.undp.org/data-center/thematic-composite-indices/gender-inequality-index#/indicies/GII' target='_blank'>UN HDR (2021)</a>") |>
     highcharter::hc_mapView(
       maxZoom = 30,
@@ -622,6 +646,8 @@ oc_geo_au_feminin_carte_hc_gii_2021 <- function() {
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_wbl()
 oc_geo_au_feminin_carte_hc_wbl <- function() {
   palette <- function(...) {
     viridis::viridis(direction = -1, ...)
@@ -672,6 +698,8 @@ oc_geo_au_feminin_carte_hc_wbl <- function() {
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_femmes_parlement()
 oc_geo_au_feminin_carte_hc_femmes_parlement <- function() {
   wbstats::wb_data(indicator = c("value" = "SG.GEN.PARL.ZS"),
                    start_date = 2022,
@@ -726,11 +754,13 @@ oc_geo_au_feminin_carte_hc_femmes_parlement <- function() {
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_sex_ratio(2015)
 oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minimal()) {
   wbstats::wb_data(indicator = c("ratio" = "SP.POP.BRTH.MF"),
                    start_date = year,
                    end_date = year) |>
-    dplyr::mutate(data = santoku::chop(ratio, c(1.05,1.1,1.15), extend = T, drop = F)) -> data
+    dplyr::mutate(data = santoku::chop(ratio, c(1.05,1.10,1.15), extend = T, drop = F)) -> data
 
   rnaturalearth::ne_countries(returnclass = "sf") |>
     dplyr::filter(sovereignt != "Antarctica") |>
@@ -762,10 +792,10 @@ oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minim
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Sex ratio à la naissance",
-      subtitle = glue::glue("Année {year}"),
-      fill = "Naissances garçons/filles",
-      caption = "Données : Banque Mondiale"
+      title = "Sex ratio \u00e0 la naissance",
+      subtitle = glue::glue("Ann\u00e9e {year}"),
+      fill = "Naissances gar\u00e7ons/filles",
+      caption = "Donn\u00e9es : Banque Mondiale"
     )
 }
 
@@ -773,6 +803,8 @@ oc_geo_au_feminin_carte_sex_ratio <- function(year, theme = ggplot2::theme_minim
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_sex_ratio()
 oc_geo_au_feminin_carte_hc_sex_ratio <- function() {
   geodata::oc_geo_au_feminin_sex_ratio |>
     dplyr::filter(Year == 2022) |>
@@ -788,7 +820,7 @@ oc_geo_au_feminin_carte_hc_sex_ratio <- function() {
   }
 
   highcharter::highchart(type = "map") |>
-    highcharter::hc_title(text = "Sex-ratio à la naissance") |>
+    highcharter::hc_title(text = "Sex-ratio \u00e0 la naissance") |>
     highcharter::hc_caption(text = "Source : <a href='https://population.un.org/wpp/' target='_blank'>UN WPP (2022)</a>") |>
     highcharter::hc_mapView(
       maxZoom = 30,
@@ -824,13 +856,14 @@ oc_geo_au_feminin_carte_hc_sex_ratio <- function() {
 
 # Suffrage féminin ----------------------------------------------------------------------------
 
-
 #' OC Géo au féminin: carte mondiale du suffrage féminin
 #'
 #' Carte interactive de l'accès au suffrage féminin par pays
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin()
 oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
   data <- geodata::oc_geo_au_feminin_owid_suffrage_feminin |>
     dplyr::rename(value = Year) |>
@@ -849,7 +882,7 @@ oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
     #   formatter = highcharter::JS("function(){ return this.point.value; }")
     # ) |>
     highcharter::hc_add_series(
-      name = "Année",
+      name = "Ann\u00e9e",
       mapData = map,
       data = data,
       value = "value",
@@ -868,7 +901,7 @@ oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue("function () {{
           return '<b>' + this.point.Entity + '</b><br/>' +
-          'Année: ' + this.point.value }}"))
+          'Ann\u00e9e: ' + this.point.value }}"))
     )
 }
 
@@ -878,15 +911,17 @@ oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_suisse_suffrage_feminin()
 oc_geo_au_feminin_carte_hc_suisse_suffrage_feminin <- function() {
   data <- geodata::oc_suisse_suffrage_feminin |>
-    dplyr::mutate(canton_id = geographer::geo_swiss_canton_id(Canton))|>
+    dplyr::mutate(canton_id = geotools::gtl_swiss_canton_id(Canton))|>
     dplyr::rename(value = Annee)
   map <- geodata::gdt_opendata_swiss_geodata_json("canton")
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_add_series(
-      name = "Année",
+      name = "Ann\u00e9e",
       mapData = map,
       data = data,
       value = "value",
@@ -911,7 +946,7 @@ oc_geo_au_feminin_carte_hc_suisse_suffrage_feminin <- function() {
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue("function () {{
           return '<b>' + this.point.Canton + '</b><br/>' +
-          'Année: ' + this.point.value }}"))
+          'Ann\u00e9e: ' + this.point.value }}"))
     )
 }
 
@@ -947,10 +982,12 @@ oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minim
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_viol_europe()
 oc_geo_au_feminin_carte_viol_europe <- function(theme = ggplot2::theme_minimal()) {
   eurostat::get_eurostat("crim_off_cat") |>
     dplyr::filter(iccs == "ICCS03011", unit == "P_HTHAB") |>
-    dplyr::mutate(time = lubridate::ymd(time)) |>
+    dplyr::mutate(time = lubridate::ymd(TIME_PERIOD)) |>
     dplyr::filter(lubridate::year(time) == 2021) -> data
 
   eurostat::get_eurostat_geospatial(nuts_level = 0, make_valid = T) |>
@@ -961,7 +998,7 @@ oc_geo_au_feminin_carte_viol_europe <- function(theme = ggplot2::theme_minimal()
     ggplot2::coord_sf(crs = 3034, xlim = c(2.4e6,5.5e6), ylim = c(1e6, NA), datum = NA) +
     theme +
     ggplot2::labs(
-      title = "Nombre de plainte enregistrées pour viol",
+      title = "Nombre de plainte enregistr\u00e9es pour viol",
       subtitle = "Pour 100'000 habitants",
       fill = "",
       caption = "Eurostat (2021)"
@@ -973,10 +1010,12 @@ oc_geo_au_feminin_carte_viol_europe <- function(theme = ggplot2::theme_minimal()
 #'
 #' @return A highcharts map
 #' @export
+#' @examples
+#' oc_geo_au_feminin_carte_hc_viol_europe()
 oc_geo_au_feminin_carte_hc_viol_europe <- function() {
   eurostat::get_eurostat("crim_off_cat") |>
     dplyr::filter(iccs == "ICCS03011", unit == "P_HTHAB") |>
-    dplyr::mutate(time = lubridate::ymd(time)) |>
+    dplyr::mutate(time = lubridate::ymd(TIME_PERIOD)) |>
     dplyr::filter(lubridate::year(time) == 2021) |>
     dplyr::rename(value = values) |>
     dplyr::mutate(pays = countrycode::countrycode(geo, "eurostat", "country.name.fr")) |>
@@ -989,7 +1028,7 @@ oc_geo_au_feminin_carte_hc_viol_europe <- function() {
   }
 
   highcharter::highchart(type = "map") |>
-    highcharter::hc_title(text = "Nombre de plainte enregistrées pour viol") |>
+    highcharter::hc_title(text = "Nombre de plainte enregistr\u00e9es pour viol") |>
     highcharter::hc_subtitle(text = "Pour 100'000 habitants") |>
     highcharter::hc_caption(text = "Source : <a href='' target='_blank'>Eurostat (2021)</a>") |>
     highcharter::hc_mapView(

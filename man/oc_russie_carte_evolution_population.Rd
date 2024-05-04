@@ -4,10 +4,15 @@
 \alias{oc_russie_carte_evolution_population}
 \title{OC Russie: carte de l'évolution démographique}
 \usage{
-oc_russie_carte_evolution_population(theme = ggplot2::theme_minimal())
+oc_russie_carte_evolution_population(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40
+)
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{barwidth}{Width of legend bar}
 }
 \value{
 A ggplot2 map
@@ -15,4 +20,7 @@ A ggplot2 map
 \description{
 Une carte de l'évolution démographique Russe
 entre 1990 et 2020.
+}
+\examples{
+oc_russie_carte_evolution_population()
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_hc_programmation_16_24_ans}
 \alias{oc_geo_au_feminin_hc_programmation_16_24_ans}
-\title{OC Géo au féminin: graphique interactif sur le taux de jeunes apprenant à coder}
+\title{OC Géo au féminin: graphique interactif sur le taux
+de jeunes apprenant à coder}
 \usage{
 oc_geo_au_feminin_hc_programmation_16_24_ans()
 }
@@ -10,5 +11,9 @@ oc_geo_au_feminin_hc_programmation_16_24_ans()
 A highcharts graph
 }
 \description{
-OC Géo au féminin: graphique interactif sur le taux de jeunes apprenant à coder
+OC Géo au féminin: graphique interactif sur le taux
+de jeunes apprenant à coder
+}
+\examples{
+oc_geo_au_feminin_hc_programmation_16_24_ans()
 }

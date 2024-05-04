@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_graph_esperances_de_vie}
 \alias{oc_geo_au_feminin_graph_esperances_de_vie}
-\title{OC Géographie au féminin: Espérance de vie
-Graphiques de l'expérance de vie}
+\title{OC Géographie au féminin: Espérance de vie}
 \usage{
 oc_geo_au_feminin_graph_esperances_de_vie(theme = ggplot2::theme_minimal())
 }
@@ -14,6 +13,8 @@ oc_geo_au_feminin_graph_esperances_de_vie(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-OC Géographie au féminin: Espérance de vie
 Graphiques de l'expérance de vie
+}
+\examples{
+oc_geo_au_feminin_graph_esperances_de_vie()
 }

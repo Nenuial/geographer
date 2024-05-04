@@ -7,11 +7,12 @@
 geo_project_world(crs)
 }
 \arguments{
-\item{crs}{A valid CRS string}
+\item{crs}{A valid CRS string or object}
 }
 \value{
-A ggplot pbject
+A ggplot map
 }
 \description{
 Project simple world map
 }
+\keyword{internal}

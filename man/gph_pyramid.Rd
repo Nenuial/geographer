@@ -10,10 +10,15 @@ gph_pyramid(country, year, theme = ggplot2::theme_minimal())
 \item{country}{A string with the country name}
 
 \item{year}{An integer for the year}
+
+\item{theme}{A ggplot2 theme}
 }
 \value{
 A ggplot graph
 }
 \description{
 Create population pyramid
+}
+\examples{
+gph_pyramid("Switzerland", 2020)
 }

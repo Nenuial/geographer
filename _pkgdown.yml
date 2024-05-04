@@ -1,0 +1,125 @@
+url: https://geographer.nenuial.org
+template:
+  package: geopkg
+
+navbar:
+  structure:
+    left: [reference, geoverse]
+  components:
+    geoverse:
+      text: GeoVerse
+      menu:
+      - text: geodata
+        href: https://geodata.nenuial.org
+      - text: geotool
+        href: https://geotools.nenuial.org
+      - text: geovizr
+        href: https://geovizr.nenuial.org
+      - text: ggeo
+        href: https://ggeo.nenuial.org
+
+reference:
+- title: World vizualisations
+  description: |
+    These functions provide ways of visualizing the world in different ways.
+  contents:
+  - gph_basemap
+  - gph_wb_world_map
+  - gph_historical_world_map
+  - gph_mini_globe
+
+- title: Demography visualization
+  description: |
+    These functions provide visualizations for demography indicators.
+  contents:
+  - gph_demogram
+  - gph_highcharter_demogram
+  - gph_lexgram
+  - gph_highcharter_lexgram
+  - gph_pyramid
+  - gph_pyramid_relative
+  - gph_highcharter_pyramid
+
+- title: Swiss visualization
+  description: |
+    These functions provide visualizations for Switzerland.
+  contents:
+  - gph_map_swiss_votes
+  - gph_highcharter_map_swiss_votes
+  - gph_map_swiss_relief
+  - gph_map_swiss_lakes
+
+- title: DF Demography
+  description: |
+    These functions provide visualizations for the *DF Demography* chapter.
+- subtitle: Plots
+  contents:
+  - starts_with("df_demography")
+
+- title: DF Cartography
+  description: |
+    These functions provide visualizations for the *DF Cartography* chapter.
+- subtitle: Maps
+  contents:
+  - starts_with("df_cartography")
+
+- title: OC Chine
+  description: |
+    These functions provide visualizations for the *OC Chine* chapter.
+- subtitle: Maps
+  contents:
+  - starts_with("oc_chine_carte")
+
+- title: OC Ecocitoyenneté
+  description: |
+    These functions provide visualizations for the *OC Ecocitoyenneté* chapter.
+- subtitle: Plots
+  contents:
+  - starts_with("oc_ecocitoyennete_graph")
+
+- title: OC Géo au féminin
+  description: |
+    These functions provide visualizations for the *OC Géo au féminin* chapter.
+- subtitle: Maps
+  contents:
+  - starts_with("oc_geo_au_feminin_carte")
+- subtitle: Plots
+  contents:
+  - starts_with("oc_geo_au_feminin_graph")
+  - starts_with("oc_geo_au_feminin_hc")
+
+- title: OC Israël - Palestine
+  description: |
+    These functions provide visualizations for the *OC Israël - Palestine* chapter.
+- subtitle: Plots
+  contents:
+  - starts_with("oc_israel_palestine_graph")
+  - starts_with("oc_israel_palestine_hc")
+
+- title: OC Russie
+  description: |
+    These functions provide visualizations for the *OC Russie* chapter.
+- subtitle: Maps
+  contents:
+  - starts_with("oc_russie_carte")
+- subtitle: Plots
+  contents:
+  - starts_with("oc_russie_graph")
+
+- title: OC Suisse
+  description: |
+    These functions provide visualizations for the *OC Suisse* chapter.
+- subtitle: Maps
+  contents:
+  - starts_with("oc_suisse_carte")
+- subtitle: Plots
+  contents:
+  - starts_with("oc_suisse_graph")
+
+- title: GIS Projections
+  description: |
+    These functions provide ways of visualizing different projections.
+  contents:
+  - gph_boundbox
+  - gph_project_world
+  - gph_project_world_tissot

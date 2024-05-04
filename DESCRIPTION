@@ -1,65 +1,67 @@
 Package: geographer
 Type: Package
-Title: Provide Geography Vizualisations
-Version: 0.1.5
-Author: Pascal Burkhard
-Maintainer: Pascal Burkhard <pascal.burkhard@gmail.com>
+Title: Geography Vizualisations
+Version: 1.0.0
+Authors@R: 
+    person("Pascal", "Burkhard", , "pascal.burkhard@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-5504-5084"))
 Description: Provides function and objects to establish vizualisations for my 
   Geography lessons.
-License: CC0
+URL: https://geographer.nenuial.org
+BugReports: http://github.com/nenuial/geographer/issues/
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    basemaps,
+    almanac,
+    countrycode,
     cshapes,
     dplyr,
+    eurostat,
     forcats,
+    gganimate,
     geodata,
     geofacet,
+    geojsonio,
     geotools,
     ggeo,
     ggfx,
     gghighlight,
     ggplot2,
+    ggrepel,
     ggtext,
     glue,
-    here,
     highcharter,
-    idbr,
     IslamicArt,
+    leaflet,
     lifecycle,
-    lwgeom,
+    lubridate,
     magrittr,
     mapsf,
     mapview,
     MetBrewer,
     ochRe,
     paletteer,
+    palettetown,
     pals,
     patchwork,
-    plotly,
     prismatic,
     purrr,
-    rappdirs,
-    readr,
     rlang,
     rnaturalearth,
     scales,
     santoku,
-    settings,
     sf,
     shinyjqui,
     stringr,
     swissdd,
     themakart,
-    tidygeocoder,
-    usethis,
+    tibble,
+    tidyr,
+    viridis,
     wbstats,
     wesanderson,
-    withr,
-    wpp2012,
-    wpp2019
-URL: https://github.com/Nenuial/geographer.git
+    withr
 Remotes:
     hollylkirk/ochRe,
     lambdamoses/IslamicArt,
@@ -73,3 +75,4 @@ RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.0)
 Roxygen: list(markdown = TRUE)
+Config/Needs/website: nenuial/geopkg

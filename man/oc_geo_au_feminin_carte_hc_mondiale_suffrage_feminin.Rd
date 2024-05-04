@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Carte interactive de l'accès au suffrage féminin par pays
 }
+\examples{
+oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin()
+}

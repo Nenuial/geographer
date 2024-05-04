@@ -11,10 +11,15 @@ oc_geo_au_feminin_graph_scolarisation_filles_afghanistan(
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{line_color}{Graph line color}
 }
 \value{
 A ggplot2 graph
 }
 \description{
 OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
+}
+\examples{
+oc_geo_au_feminin_graph_scolarisation_filles_afghanistan()
 }

@@ -12,3 +12,6 @@ A highcharts graph
 \description{
 OC Géographie au féminin: graphique du taux de scolarisation des filles en Afghanistan
 }
+\examples{
+oc_geo_au_feminin_hc_scolarisation_filles_afghanistan()
+}

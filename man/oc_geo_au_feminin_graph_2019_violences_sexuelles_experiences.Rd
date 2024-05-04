@@ -17,3 +17,6 @@ A ggplot2 graph
 \description{
 OC Géographie au féminin: Expérience de violences sexuelles
 }
+\examples{
+oc_geo_au_feminin_graph_2019_violences_sexuelles_experiences()
+}

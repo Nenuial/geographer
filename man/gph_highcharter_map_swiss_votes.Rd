@@ -26,3 +26,6 @@ A highcharter map
 \description{
 Plot latest swiss votation using highcharts
 }
+\examples{
+gph_highcharter_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
+}

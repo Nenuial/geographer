@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Carte interactive de l'accès au suffrage féminin par canton
 }
+\examples{
+oc_geo_au_feminin_carte_hc_suisse_suffrage_feminin()
+}

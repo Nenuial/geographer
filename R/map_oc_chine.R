@@ -6,10 +6,11 @@
 #' @param theme A ggplot2 theme
 #'
 #' @return A ggplot2 map
-#' @concept oc chine sex ratio
 #'
 #' @export
-oc_chine_2018_carte_sex_ration_par_region <- function(theme = ggplot2::theme_minimal()) {
+#' @examples
+#' oc_chine_carte_2018_sex_ratio_par_region()
+oc_chine_carte_2018_sex_ratio_par_region <- function(theme = ggplot2::theme_minimal()) {
   rnaturalearth::ne_states(country = "China", returnclass = "sf") |>
     dplyr::left_join(
       geodata::oc_chine_2018_sex_ratio_par_region,
@@ -43,6 +44,6 @@ oc_chine_2018_carte_sex_ration_par_region <- function(theme = ggplot2::theme_min
       title = "Sex ratio de la population",
       subtitle = glue::glue("Chine 2018"),
       fill = "Rapport hommes/femmes",
-      caption = "Données : Bureau national des statistiques de Chine"
+      caption = "Donn\u00e9es : Bureau national des statistiques de Chine"
     )
 }

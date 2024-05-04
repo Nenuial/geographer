@@ -5,21 +5,17 @@
 \title{OC Russie: carte du taux de mariage}
 \usage{
 oc_russie_carte_mariages(theme = ggplot2::theme_minimal())
-
-oc_russie_carte_mariages(theme = ggplot2::theme_minimal())
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
 }
 \value{
 A ggplot2 map
-
-A ggplot2 map
 }
 \description{
 Une carte des mariages pour 1000 habitants
 par régions en 2019.
-
-Une carte des divorces pour 1000 habitants
-par régions en 2019.
+}
+\examples{
+oc_russie_carte_mariages()
 }

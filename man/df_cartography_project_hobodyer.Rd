@@ -12,3 +12,6 @@ A ggplot2 object
 \description{
 ggplot2 map of the world in Hobo-Dyer projection
 }
+\examples{
+df_cartography_project_hobodyer()
+}

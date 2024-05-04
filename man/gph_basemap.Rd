@@ -15,3 +15,8 @@ A leaflet map with the country borders
 \description{
 Get a basemap for a country
 }
+\examples{
+gph_basemap("France")
+gph_basemap("Switzerland")
+
+}

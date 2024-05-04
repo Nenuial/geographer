@@ -15,3 +15,6 @@ A ggplot2 map
 \description{
 Carte du Social Institutions and Gender Index 2023
 }
+\examples{
+oc_geo_au_feminin_carte_sigi_2023()
+}

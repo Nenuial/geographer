@@ -3,7 +3,9 @@
 \name{oc_geo_au_feminin_graph_2019_violences_sexuelles_police}
 \alias{oc_geo_au_feminin_graph_2019_violences_sexuelles_police}
 \title{OC Géographie au féminin: Violences sexuelles
-Raisons de ne pas contacter la police}
+\itemize{
+\item raisons de ne pas contacter la police
+}}
 \usage{
 oc_geo_au_feminin_graph_2019_violences_sexuelles_police(
   theme = ggplot2::theme_minimal()
@@ -17,5 +19,10 @@ A ggplot2 graph
 }
 \description{
 OC Géographie au féminin: Violences sexuelles
-Raisons de ne pas contacter la police
+\itemize{
+\item raisons de ne pas contacter la police
+}
+}
+\examples{
+oc_geo_au_feminin_graph_2019_violences_sexuelles_police()
 }

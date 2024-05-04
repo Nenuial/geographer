@@ -4,11 +4,15 @@
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
+#' @param barwidth Width of legend bar
+#' @param greyscale Boolean: whether to create a grey scale map
 #'
 #' @return A ggplot2 map
 #' @concept oc russie fertilité
 #'
 #' @export
+#' @examples
+#' oc_russie_carte_fecondite()
 oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = F) {
   if(greyscale) {
     fill_scale <- ggplot2::scale_fill_stepsn(
@@ -42,10 +46,10 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
       )
     ) +
     ggplot2::labs(
-      title = "Indice de fécondité",
-      subtitle = "par régions en 2019",
+      title = "Indice de f\u00e9condit\u00e9",
+      subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -55,11 +59,14 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
+#' @param barwidth Width of legend bar
 #'
 #' @return A ggplot2 map
 #' @concept oc russie fertilité
 #'
 #' @export
+#' @examples
+#' oc_russie_carte_natalite()
 oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
     dplyr::left_join(
@@ -81,10 +88,10 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Taux de natalité",
-      subtitle = "par régions en 2019",
+      title = "Taux de natalit\u00e9",
+      subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -94,11 +101,14 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
+#' @param barwidth Width of legend bar
 #'
 #' @return A ggplot2 map
 #' @concept oc russie mortalité
 #'
 #' @export
+#' @examples
+#' oc_russie_carte_mortalite()
 oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
     dplyr::left_join(
@@ -120,10 +130,10 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
-      title = "Taux de mortalité",
-      subtitle = "par régions en 2019",
+      title = "Taux de mortalit\u00e9",
+      subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -133,11 +143,15 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
+#' @param barwidth Width of legend bar
+#' @param greyscale Boolean: whether to create a grey scale map
 #'
 #' @return A ggplot2 map
 #' @concept oc russie mortalité
 #'
 #' @export
+#' @examples
+#' oc_russie_carte_accroissement()
 oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = F) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
     dplyr::left_join(
@@ -152,7 +166,7 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
       values = paletteer::paletteer_c("pals::kovesi.linear_grey_10_95_c0", n = 6, direction = -1),
       breaks = levels(data_plot$data_cut),
       limits = levels(data_plot$data_cut),
-      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "‰"),
+      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "\u2030"),
       na.value = "#CCCCCC"
     )
   } else {
@@ -163,7 +177,7 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
       ),
       breaks = levels(data_plot$data_cut),
       limits = levels(data_plot$data_cut),
-      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "‰"),
+      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "\u2030"),
       na.value = "#CCCCCC"
     )
   }
@@ -184,9 +198,9 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       title = "Taux d'accroissement naturel",
-      subtitle = "par régions en 2019",
+      subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -196,10 +210,13 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
 #' entre 1990 et 2020.
 #'
 #' @param theme A ggplot2 theme
+#' @param barwidth Width of legend bar
 #'
 #' @return A ggplot2 map
 #' @export
-oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal()) {
+#' @examples
+#' oc_russie_carte_evolution_population()
+oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
   data <- geodata::oc_russie_2020_evolution_population %>%
     dplyr::mutate(solde_cut = santoku::chop(solde, c(-250, -40, -20, -10, 0, 10, 20, 40, 80)))
 
@@ -231,10 +248,10 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
       )
     ) +
     ggplot2::labs(
-      title = "Évolution de la population russe",
-      subtitle = "de 1990 à 2020, par régions",
+      title = "\u00c9volution de la population russe",
+      subtitle = "de 1990 \u00e0 2020, par r\u009gions",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -247,12 +264,14 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
 #'
 #' @return A ggplot2 map
 #' @export
+#' @examples
+#' oc_russie_carte_mariages()
 oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_mariages,
+      geodata::oc_russie_mariages |> dplyr::filter(year == 2019),
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = mariages),
                      color = "black", size = .1) +
@@ -262,9 +281,9 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_fill_viridis_b(n.breaks = 7, direction = -1) +
     ggplot2::labs(
       title = "Mariages",
-      subtitle = "par régions en 2019 pour 1000 habitants",
+      subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }
 
@@ -277,12 +296,14 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 map
 #' @export
-oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+#' @examples
+#' oc_russie_carte_divorces()
+oc_russie_carte_divorces <- function(theme = ggplot2::theme_minimal()) {
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_divorces,
+      geodata::oc_russie_divorces |> dplyr::filter(year == 2019),
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = divorces),
                      color = "black", size = .1) +
@@ -292,8 +313,8 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_fill_viridis_b(n.breaks = 7, direction = -1, option = "inferno") +
     ggplot2::labs(
       title = "Divorces",
-      subtitle = "par régions en 2019 pour 1000 habitants",
+      subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Données: Rosstat (2020)"
+      caption = "Donn\u009es: Rosstat (2020)"
     )
 }

@@ -16,4 +16,7 @@ ggplot2 map
 Une carte de l'introduction du suffrage féminin
 au niveau cantonal en Suisse.
 }
+\examples{
+oc_suisse_carte_suffrage_feminin()
+}
 \concept{oc suisse votations suffrage femmes}

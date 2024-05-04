@@ -19,3 +19,6 @@ A ggplot2 graph
 OC Géographie au féminin: les résultats de différentes
 votations fédérale sur le sujet de l'avortement
 }
+\examples{
+oc_geo_au_feminin_graph_suisse_votations_avortement()
+}

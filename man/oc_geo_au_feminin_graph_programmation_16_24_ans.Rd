@@ -17,3 +17,6 @@ A ggplot2 graph
 \description{
 OC Géo au féminin: graphique sur le taux de jeunes apprenant à coder
 }
+\examples{
+oc_geo_au_feminin_graph_programmation_16_24_ans()
+}

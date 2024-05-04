@@ -17,3 +17,6 @@ A ggplot2 map
 Géographie au féminin: carte des droits
 en matière d'avortement
 }
+\examples{
+oc_geo_au_feminin_carte_abortion_rights()
+}

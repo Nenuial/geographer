@@ -2,10 +2,7 @@
 % Please edit documentation in R/plot_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_graph_difference_esperance_de_vie}
 \alias{oc_geo_au_feminin_graph_difference_esperance_de_vie}
-\title{OC Géo au féminin
-Graphique de l'évolution de l'écart entre
-l'espérence de vie des hommes et des femmes
-pour le Japon, la Suisse et les USA}
+\title{OC Géo au féminin: évolution de l'écart d'espérance de vie}
 \usage{
 oc_geo_au_feminin_graph_difference_esperance_de_vie(
   theme = ggplot2::theme_minimal()
@@ -18,8 +15,10 @@ oc_geo_au_feminin_graph_difference_esperance_de_vie(
 A ggplot2 graph
 }
 \description{
-OC Géo au féminin
 Graphique de l'évolution de l'écart entre
 l'espérence de vie des hommes et des femmes
 pour le Japon, la Suisse et les USA
+}
+\examples{
+oc_geo_au_feminin_graph_difference_esperance_de_vie()
 }

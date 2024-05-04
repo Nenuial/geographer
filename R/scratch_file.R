@@ -1,3 +1,5 @@
+# This is just some stuff that need finishing…
+#
 # geodata::oc_russie_2020_population_municipale %>%
 #   dplyr::mutate(change = (`2020`-`2016`) / `2020` * 100) %>%
 #   dplyr::mutate(change_cat = santoku::chop(change,

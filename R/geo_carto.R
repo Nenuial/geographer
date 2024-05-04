@@ -1,52 +1,96 @@
 #' Return NaturalEarth Bound box
 #'
-#' @return An sf class map
+#' `r lifecycle::badge("deprecated")`
+#'
+#' @return A simple feature
 #' @export
+#' @keywords internal
 carto_ne_get_boundbox <- function() {
+  lifecycle::deprecate_warn("1.0.0", "carto_ne_get_boundbox()", "gph_get_boundbox()")
+
+  gph_boundbox()
+}
+
+#' NaturalEarth Bound box for planet Earth
+#'
+#' @return A simple feature
+#' @export
+#' @examples
+#' gph_boundbox()
+gph_boundbox <- function() {
   return(internal$boundbox)
+}
+
+
+#' Project simple world map
+#'
+#' @param crs A valid CRS string or object
+#'
+#' @return A ggplot map
+#' @export
+#' @keywords internal
+geo_project_world <- function(crs) {
+  lifecycle::deprecate_warn("1.0.0", "geo_project_world()", "gph_project_world()")
+
+  gph_project_world(crs)
 }
 
 #' Project simple world map
 #'
-#' @param crs A valid CRS string
+#' @param crs A valid CRS string or object
 #'
-#' @return A ggplot pbject
+#' @return A ggplot map
 #' @export
-geo_project_world <- function(crs) {
+#' @examples
+#' gph_project_world("+proj=eqearth")
+gph_project_world <- function(crs) {
   ggplot2::ggplot(rnaturalearth::ne_countries(returnclass = "sf")) +
     ggplot2::geom_sf(
-      data = carto_ne_get_boundbox(),
+      data = gph_boundbox(),
       fill = "#56B4E950", color = "grey30", size = 0.5/ggplot2::.pt
     ) +
     ggplot2::geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/ggplot2::.pt) +
     ggplot2::coord_sf(expand = FALSE, crs = crs, label_graticule = "") +
-    geo_project_world_base_setup()
+    gph_project_world_base_setup()
 }
 
 #' Projet world map with tissot matrices
 #'
-#' @param crs A valid CRS string
+#' @param crs A valid CRS string or object
 #'
 #' @return A ggplot object
 #' @export
+#' @keywords internal
 geo_project_world_tissot <- function(crs) {
+  lifecycle::deprecate_warn("1.0.0", "geo_project_world_tissot()", "gph_project_world_tissot()")
+
+  gph_project_world_tissot(crs)
+}
+
+#' Projet world map with Tissot matrices
+#'
+#' @param crs A valid CRS string or object
+#'
+#' @return A ggplot object
+#' @export
+#' @examples
+#' gph_project_world_tissot("+proj=eqearth")
+gph_project_world_tissot <- function(crs) {
   ggplot2::ggplot(rnaturalearth::ne_countries(returnclass = "sf")) +
     ggplot2::geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/ggplot2::.pt) +
     ggplot2::geom_sf(
-      data = sf::st_read("data/raw/tissot/TissotsIndicatrix.gdb/", layer = "TissotEllipses") |>
-                       sf::st_wrap_dateline(c("WRAPDATELINE=YES", "DATELINEOFFSET=5")),
+      data = geotools::gtl_gis_tissot_indicatrix(),
       fill = "#ff7c7c", alpha = .4, color = "black", size = 0.5/ggplot2::.pt
     ) +
     ggplot2::coord_sf(expand = FALSE, crs = crs, label_graticule = "") +
-    geo_project_world_base_setup()
+    gph_project_world_base_setup()
 }
 
-#' Internal: return ggplot2 settings for world map projections
+#' Return ggplot2 settings for world map projections
 #'
 #' @return A list of ggproto elements
 #' @keywords internal
-geo_project_world_base_setup <- function() {
-  require(ggplot2)
+gph_project_world_base_setup <- function() {
   list(
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "white", color = "grey30", size = 0.5),

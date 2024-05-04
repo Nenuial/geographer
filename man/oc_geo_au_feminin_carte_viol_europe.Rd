@@ -17,3 +17,6 @@ A ggplot2 map
 OC Géo au féminin: carte du taux de viols
 déclarés
 }
+\examples{
+oc_geo_au_feminin_carte_viol_europe()
+}

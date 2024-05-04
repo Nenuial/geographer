@@ -26,3 +26,6 @@ A ggplot2 map
 \description{
 Plot latest swiss votation
 }
+\examples{
+gph_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
+}

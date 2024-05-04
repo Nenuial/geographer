@@ -19,7 +19,7 @@ oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       subtitle = "Naissances (total)",
       x = "", y = "",
-      caption = "Données: Rosstat (2021)"
+      caption = "Donn\u00e9es: Rosstat (2021)"
     )
 }
 
@@ -51,7 +51,7 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       subtitle = "Avortements (pour 100 naissances)",
       x = "", y = "",
-      caption = "Données: Rosstat (2021)"
+      caption = "Donn\u00e9es: Rosstat (2021)"
     )
 }
 
@@ -64,8 +64,6 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
 #' @return A ggplot2 graph
 #' @export
 oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_minimal()) {
-  require(patchwork)
-
   avortements <- oc_russie_graph_avortements()
   naissances <- oc_russie_graph_naissances() + ggplot2::labs(caption = "")
   naissances / avortements +
@@ -99,7 +97,7 @@ oc_russie_graph_mariages_et_divorces <- function(theme = ggplot2::theme_minimal(
       subtitle = "en Russie entre 1990 et 2019",
       color = "",
       x = "", y = "",
-      caption = "Données: Rosstat (2021)"
+      caption = "Donn\u00e9es: Rosstat (2021)"
     )
 }
 
@@ -126,7 +124,7 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
       title = "Solde migratoire net",
       subtitle = "en Russie",
       x = "", y = "",
-      caption = "Données: UN WPP (2019)"
+      caption = "Donn\u00e9es: UN WPP (2019)"
     )
 }
 
@@ -150,11 +148,11 @@ oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()
       legend.position = "bottom"
     ) +
     ggplot2::labs(
-      title = "Espérance de vie",
+      title = "Esp\u00e9rance de vie",
       subtitle = "des femmes de 65 ans",
       x = "", y = "",
       color = "",
-      caption = "Données: HMD (2021)"
+      caption = "Donn\u00e9es: HMD (2021)"
     )
 }
 
@@ -178,11 +176,11 @@ oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()
       legend.position = "bottom"
     ) +
     ggplot2::labs(
-      title = "Espérance de vie",
+      title = "Esp\u00e9rance de vie",
       subtitle = "des hommes de 65 ans",
       x = "", y = "",
       color = "",
-      caption = "Données: HMD (2021)"
+      caption = "Donn\u00e9es: HMD (2021)"
     )
 }
 
@@ -215,10 +213,10 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
     theme +
     ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
     ggplot2::labs(
-      title = "Évolution de l'espérance de vie",
-      subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie</b></span>, comparé au reste de l'Europe",
+      title = "\u00c9volution de l'esp\u00e9rance de vie",
+      subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie</b></span>, compar\u00e9 au reste de l'Europe",
       x = "", y = "",
-      caption = "Données: Banque Mondiale (2021)"
+      caption = "Donn\u00e9es: Banque Mondiale (2021)"
     )
 }
 
@@ -251,10 +249,10 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
     theme +
     ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
     ggplot2::labs(
-      title = "Évolution de l'indice de fécondité",
-      subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie<b></span>, comparé au reste de l'Europe",
+      title = "\u00c9volution de l'indice de f\u00e9condit\u00e9",
+      subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie<b></span>, compar\u00e9 au reste de l'Europe",
       x = "", y = "",
-      caption = "Données: Banque Mondiale (2021)"
+      caption = "Donn\u00e9es: Banque Mondiale (2021)"
     )
 }
 
@@ -317,15 +315,15 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_color_manual(
       values = ochRe::ochre_palettes$healthy_reef[c(5,8)],
       breaks = c("cbr", "cdr"),
-      labels = c("cbr" = geotools::translate_enfr("birth", "natalité"),
-                 "cdr" = geotools::translate_enfr("death", "mortalité"))
+      labels = c("cbr" = geotools::translate_enfr("birth", "natalit\u00e9"),
+                 "cdr" = geotools::translate_enfr("death", "mortalit\u00e9"))
     ) +
     ggplot2::scale_x_continuous(breaks = seq(1960, 2020, 10),
                        expand = c(0, 0)) +
     ggplot2::coord_cartesian(xlim = c(1980, 2020)) +
     ggplot2::labs(
-      title = "Évolution démographique de la Russie",
-      subtitle = "1980 à 2020"
+      title = "\u00c9volution d\u00e9mographique de la Russie",
+      subtitle = "1980 \u00e0 2020"
     ) +
     theme +
     ggplot2::theme(
@@ -358,7 +356,7 @@ oc_russie_graph_attitude_us <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_color_manual(values = c("#e66b0f", "#0b6b8b")) +
     theme +
     ggplot2::labs(
-      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>négative</span>** vis-à-vis des USA en Russie",
+      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>n\u00e9gative</span>** vis-\u00e0-vis des USA en Russie",
       x = "", y = "",
       caption = "Source: sondages de l'institut Levada (1990-2023)",
       color = ""
@@ -393,7 +391,7 @@ oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::scale_color_manual(values = c("#e66b0f", "#0b6b8b")) +
     theme +
     ggplot2::labs(
-      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>négative</span>** vis-à-vis de l'UE en Russie",
+      title = "Attitude **<span style='color:#0b6b8b'>positive</span>** et **<span style='color:#e66b0f'>n\u00e9gative</span>** vis-\u00e0-vis de l'UE en Russie",
       x = "", y = "",
       caption = "Source: sondages de l'institut Levada (2003-2023)",
       color = ""
@@ -431,7 +429,7 @@ oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) 
                        hjust = "right",
                        ggplot2::aes(label = pays),
                        x = -1) +
-    ggplot2::labs(x = 'Dépenses militaires (mia)') +
+    ggplot2::labs(x = 'D\u00e9penses militaires (mia)') +
     ggplot2::labs(y = '') +
     ggplot2::labs(caption = 'Source: SIPRI') +
     ggeo::ggeotheme("islamic_samarquand") +

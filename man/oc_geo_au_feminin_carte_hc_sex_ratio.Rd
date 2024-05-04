@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Géographie au féminin: carte interactive du sex-ratio à la naissance
 }
+\examples{
+oc_geo_au_feminin_carte_hc_sex_ratio()
+}

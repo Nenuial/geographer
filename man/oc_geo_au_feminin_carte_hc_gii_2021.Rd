@@ -12,3 +12,6 @@ A highcharts map
 \description{
 Carte interactive du Gender Inequality Index 2021
 }
+\examples{
+oc_geo_au_feminin_carte_hc_gii_2021()
+}

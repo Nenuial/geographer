@@ -15,3 +15,6 @@ A ggplot2 graph
 \description{
 World population graph
 }
+\examples{
+df_demography_graph_world_population_current()
+}

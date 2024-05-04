@@ -6,6 +6,8 @@
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' df_demography_graph_world_population_historical()
 df_demography_graph_world_population_historical <- function(theme = ggplot2::theme_minimal()) {
   ggplot2::ggplot() +
     ggplot2::geom_line(
@@ -25,7 +27,7 @@ df_demography_graph_world_population_historical <- function(theme = ggplot2::the
     ) +
     ggplot2::coord_cartesian(ylim = c(0, 300000000)) +
     ggplot2::labs(
-      title = geotools::translate_enfr("World population 10'000 BCE to 1200 CE", "Population mondiale de 10'000 av. JC à 1200 ap. JC"),
+      title = geotools::translate_enfr("World population 10'000 BCE to 1200 CE", "Population mondiale de 10'000 av. JC \u00e0 1200 ap. JC"),
       x = "",
       y = "Population (millions)"
     ) +
@@ -45,6 +47,8 @@ df_demography_graph_world_population_historical <- function(theme = ggplot2::the
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' df_demography_graph_world_population_current()
 df_demography_graph_world_population_current <- function(theme = ggplot2::theme_minimal()) {
   ggplot2::ggplot() +
     ggplot2::geom_line(
@@ -96,7 +100,7 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
       plot.title = ggplot2::element_text(hjust = .5)
     ) +
     ggplot2::labs(
-      title = geotools::translate_enfr("World population 1200 to 2100", "Population mondiale de 1200 à 2100"),
+      title = geotools::translate_enfr("World population 1200 to 2100", "Population mondiale de 1200 \u00e0 2100"),
       x = "",
       y = geotools::translate_enfr("Population (billions)", "Population (milliards)")
     )
@@ -110,6 +114,8 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @examples
+#' df_demography_graph_world_population_growth()
 df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_minimal()) {
   ggplot2::ggplot() +
     ggplot2::geom_line(
@@ -136,25 +142,24 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
     )
 }
 
-#' DF Demography: World population patchwork composition
-#'
-#' World population graph with historical, current and future
-#' numbers as well as growth rates.
-#'
-#' @param theme A ggplot2 theme
-#'
-#' @return A ggplot2 graph
-#' @export
-df_demography_graph_world_population <- function(theme = ggplot2::theme_minimal()) {
-  require(patchwork)
-
-  df_demography_graph_world_population_historical(theme) +
-    df_demography_graph_world_population_current(theme) +
-    df_demography_graph_world_population_growth(theme) +
-    patchwork::plot_layout(ncol = 1) +
-    patchwork::plot_annotation(tag_levels = "a", tag_suffix = ".") &
-    ggplot2::theme(
-      plot.tag = ggplot2::element_text(size = 12),
-      plot.tag.position = "topleft"
-    )
-}
+# For future me. Requires patchwork.
+# #' DF Demography: World population patchwork composition
+# #'
+# #' World population graph with historical, current and future
+# #' numbers as well as growth rates.
+# #'
+# #' @param theme A ggplot2 theme
+# #'
+# #' @return A ggplot2 graph
+# #' @export
+# df_demography_graph_world_population <- function(theme = ggplot2::theme_minimal()) {
+#   df_demography_graph_world_population_historical(theme) +
+#     df_demography_graph_world_population_current(theme) +
+#     df_demography_graph_world_population_growth(theme) +
+#     patchwork::plot_layout(ncol = 1) +
+#     patchwork::plot_annotation(tag_levels = "a", tag_suffix = ".") &
+#     ggplot2::theme(
+#       plot.tag = ggplot2::element_text(size = 12),
+#       plot.tag.position = "topleft"
+#     )
+# }

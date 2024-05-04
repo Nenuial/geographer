@@ -15,3 +15,6 @@ A ggplot2 graph
 \description{
 OC Géographie au féminin: taux d'avortement en Suisse
 }
+\examples{
+oc_geo_au_feminin_graph_suisse_avortements()
+}
