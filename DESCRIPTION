@@ -49,6 +49,7 @@ Imports:
     purrr,
     rlang,
     rnaturalearth,
+    rnaturalearthhires,
     scales,
     santoku,
     sf,

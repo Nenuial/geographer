@@ -4,8 +4,7 @@
 #'
 #' @return A leaflet map with the country borders
 #' @export
-#' @examplesIf interactive()
-#' # Not run: needs rnaturalearthhires
+#' @examples
 #' gph_basemap("France")
 #' gph_basemap("Switzerland")
 #'
