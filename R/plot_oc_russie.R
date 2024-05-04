@@ -149,7 +149,7 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
 #' @return A ggplot2 graph
 #' @export
 #' @examplesIf interactive()
-#' # Not run: need credentials for HMD database
+#' # Not run: needs credentials for HMD database
 #' oc_russie_graph_esperance_65_femmes()
 oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "female") %>%
@@ -179,7 +179,8 @@ oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()
 #'
 #' @return A ggplot2 graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: needs credentials for HMD database
 #' oc_russie_graph_esperance_65_hommes()
 oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()) {
   geodata::gdt_hmd_lex(c("Russia", "Italy", "Portugal"), age = 65, type = "male") %>%
