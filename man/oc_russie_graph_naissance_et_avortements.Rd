@@ -16,5 +16,9 @@ A ggplot2 graph
 Graphique des naissances en comparaison aux avortements.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: needs patchwork to assemble the plot and only
+# works if the package is loaded
 oc_russie_graph_naissance_et_avortements()
+\dontshow{\}) # examplesIf}
 }

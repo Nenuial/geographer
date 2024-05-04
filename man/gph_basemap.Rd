@@ -13,10 +13,10 @@ gph_basemap(country)
 A leaflet map with the country borders
 }
 \description{
-Get a basemap for a country
+This function uses leaflet to render the basemap
 }
 \examples{
-gph_basemap("France")
 gph_basemap("Switzerland")
+gph_basemap("United Kingdom")
 
 }

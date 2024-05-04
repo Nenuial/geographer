@@ -67,7 +67,9 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: needs patchwork to assemble the plot and only
+#' # works if the package is loaded
 #' oc_russie_graph_naissance_et_avortements()
 oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_minimal()) {
   avortements <- oc_russie_graph_avortements()
