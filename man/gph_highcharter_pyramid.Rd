@@ -2,24 +2,11 @@
 % Please edit documentation in R/geo_demography.R
 \name{gph_highcharter_pyramid}
 \alias{gph_highcharter_pyramid}
-\title{Create highcharter population pyramid}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 gph_highcharter_pyramid(country, year)
 }
-\arguments{
-\item{country}{A string with the country name}
-
-\item{year}{An integer for the year}
-}
-\value{
-A highcharter graph
-}
 \description{
-Create highcharter population pyramid
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
-\examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Not run: need a valid IDB API key
-gph_highcharter_pyramid("Switzerland", 2020)
-\dontshow{\}) # examplesIf}
-}
+\keyword{internal}

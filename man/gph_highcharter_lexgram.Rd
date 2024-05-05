@@ -2,30 +2,11 @@
 % Please edit documentation in R/geo_demography.R
 \name{gph_highcharter_lexgram}
 \alias{gph_highcharter_lexgram}
-\title{Create lexgram for country}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
-gph_highcharter_lexgram(country, men = "blue", women = "red", all = "black")
-}
-\arguments{
-\item{country}{A string with the country name}
-
-\item{men}{Color for men line}
-
-\item{women}{Color for women line}
-
-\item{all}{Color for average line}
-}
-\value{
-A highcharts graph
+gph_highcharter_lexgram(country)
 }
 \description{
-Provides basic ggplot2 graph with the following data on it :
-\describe{
-\item{lex}{the total life expectancy (black dotted)}
-\item{lex_male}{the male life expectancy (blue)}
-\item{ley_female}{the male life expectancy (red)}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
-}
-\examples{
-gph_highcharter_lexgram("Switzerland")
-}
+\keyword{internal}

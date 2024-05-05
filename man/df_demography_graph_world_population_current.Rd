@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_df_demography.R
 \name{df_demography_graph_world_population_current}
 \alias{df_demography_graph_world_population_current}
-\title{DF Demography: World population}
+\title{World population}
 \usage{
 df_demography_graph_world_population_current(theme = ggplot2::theme_minimal())
 }

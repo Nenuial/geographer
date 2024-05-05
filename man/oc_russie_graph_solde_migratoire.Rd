@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_russie.R
 \name{oc_russie_graph_solde_migratoire}
 \alias{oc_russie_graph_solde_migratoire}
-\title{OC Russie: graphique du solde migratoire}
+\title{Solde migratoire}
 \usage{
 oc_russie_graph_solde_migratoire(theme = ggplot2::theme_minimal())
 }

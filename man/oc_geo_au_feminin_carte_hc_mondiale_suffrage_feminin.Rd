@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin}
 \alias{oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin}
-\title{OC Géo au féminin: carte mondiale du suffrage féminin}
+\title{Suffrage féminin mondial}
 \usage{
 oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin()
 }

@@ -1,4 +1,4 @@
-#' OC Russie: carte de l'indice de fécondité
+#' Indice de fécondité en Russie
 #'
 #' Une carte de l'indice de fécondité en 2019
 #' au niveau régional en Russie.
@@ -13,8 +13,8 @@
 #' @export
 #' @examples
 #' oc_russie_carte_fecondite()
-oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = F) {
-  if(greyscale) {
+oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
+  if (greyscale) {
     fill_scale <- ggplot2::scale_fill_stepsn(
       n.breaks = 7,
       colours = paletteer::paletteer_c("pals::kovesi.linear_grey_10_95_c0", 50, direction = -1)
@@ -26,15 +26,16 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
     )
   }
 
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_fecondite %>%
+      geodata::oc_russie_2019_fecondite |>
         dplyr::filter(year == 2019),
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = tfr),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
@@ -53,7 +54,7 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
     )
 }
 
-#' OC Russie: carte du taux de natalité
+#' Taux de natalité en Russie
 #'
 #' Une carte du taux de natalité en 2019
 #' au niveau régional en Russie.
@@ -68,15 +69,16 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
 #' @examples
 #' oc_russie_carte_natalite()
 oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_natalite_mortalite %>%
+      geodata::oc_russie_2019_natalite_mortalite |>
         dplyr::filter(indicator == "cbr", type == "per1000"),
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = data),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     ggplot2::scale_fill_viridis_b(n.breaks = 7, direction = -1) +
     ggplot2::guides(
@@ -95,7 +97,7 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
     )
 }
 
-#' OC Russie: carte du taux de mortalité
+#' Taux de mortalité en Russie
 #'
 #' Une carte du taux de mortalité en 2019
 #' au niveau régional en Russie.
@@ -110,15 +112,16 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
 #' @examples
 #' oc_russie_carte_mortalite()
 oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_natalite_mortalite %>%
+      geodata::oc_russie_2019_natalite_mortalite |>
         dplyr::filter(indicator == "cdr", type == "per1000"),
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = data),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     ggplot2::scale_fill_viridis_b(n.breaks = 7, option = "inferno", direction = -1) +
     ggplot2::guides(
@@ -137,7 +140,7 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
     )
 }
 
-#' OC Russie: carte de l'accroissement naturel
+#' Accroissement naturel en Russie
 #'
 #' Une carte de l'accroissement naturel en 2019
 #' au niveau régional en Russie.
@@ -152,16 +155,16 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
 #' @export
 #' @examples
 #' oc_russie_carte_accroissement()
-oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = F) {
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_natalite_mortalite %>%
+      geodata::oc_russie_2019_natalite_mortalite |>
         dplyr::filter(indicator == "rni", type == "per1000"),
       by = "adm1_code"
-    ) %>%
+    ) |>
     dplyr::mutate(data_cut = santoku::chop(data, c(-5, 0, 5, 10, 15))) -> data_plot
 
-  if(greyscale) {
+  if (greyscale) {
     fill_scale <- ggplot2::scale_fill_manual(
       values = paletteer::paletteer_c("pals::kovesi.linear_grey_10_95_c0", n = 6, direction = -1),
       breaks = levels(data_plot$data_cut),
@@ -182,10 +185,11 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
     )
   }
 
-  data_plot %>%
+  data_plot |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = data_cut),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     fill_scale +
     ggplot2::guides(
@@ -204,7 +208,7 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
     )
 }
 
-#' OC Russie: carte de l'évolution démographique
+#' Évolution démographique en Russie
 #'
 #' Une carte de l'évolution démographique Russe
 #' entre 1990 et 2020.
@@ -217,17 +221,18 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
 #' @examples
 #' oc_russie_carte_evolution_population()
 oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
-  data <- geodata::oc_russie_2020_evolution_population %>%
+  data <- geodata::oc_russie_2020_evolution_population |>
     dplyr::mutate(solde_cut = santoku::chop(solde, c(-250, -40, -20, -10, 0, 10, 20, 40, 80)))
 
-  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") %>%
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
       data,
       by = "adm1_code"
-    ) %>%
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = solde_cut),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
@@ -255,7 +260,7 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
     )
 }
 
-#' OC Russie: carte du taux de mariage
+#' Taux de mariage en Russie
 #'
 #' Une carte des mariages pour 1000 habitants
 #' par régions en 2019.
@@ -274,7 +279,8 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
     ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = mariages),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
@@ -287,7 +293,7 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
     )
 }
 
-#' OC Russie: carte du taux de divorce
+#' Taux de divorce en Russie
 #'
 #' Une carte des divorces pour 1000 habitants
 #' par régions en 2019.
@@ -306,7 +312,8 @@ oc_russie_carte_divorces <- function(theme = ggplot2::theme_minimal()) {
     ) |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = divorces),
-                     color = "black", size = .1) +
+      color = "black", linewidth = .1
+    ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
     ggplot2::theme(legend.position = "bottom") +

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_df_demography.R
 \name{df_demography_graph_world_population_historical}
 \alias{df_demography_graph_world_population_historical}
-\title{DF Demography: Historical world population plot}
+\title{Historical world population plot}
 \usage{
 df_demography_graph_world_population_historical(
   theme = ggplot2::theme_minimal()

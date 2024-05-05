@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_carte_hc_femmes_parlement}
 \alias{oc_geo_au_feminin_carte_hc_femmes_parlement}
-\title{Géographie au féminin: carte interactive du nombre de femmes au parlement}
+\title{Représentation politique}
 \usage{
 oc_geo_au_feminin_carte_hc_femmes_parlement()
 }
@@ -10,7 +10,7 @@ oc_geo_au_feminin_carte_hc_femmes_parlement()
 A highcharts map
 }
 \description{
-Géographie au féminin: carte interactive du nombre de femmes au parlement
+Carte interactive du nombre de femmes au parlement.
 }
 \examples{
 oc_geo_au_feminin_carte_hc_femmes_parlement()

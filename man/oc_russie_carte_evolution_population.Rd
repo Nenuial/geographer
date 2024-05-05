@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_evolution_population}
 \alias{oc_russie_carte_evolution_population}
-\title{OC Russie: carte de l'évolution démographique}
+\title{Évolution démographique en Russie}
 \usage{
 oc_russie_carte_evolution_population(
   theme = ggplot2::theme_minimal(),

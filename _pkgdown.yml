@@ -23,7 +23,8 @@ reference:
   description: |
     These functions provide ways of visualizing the world in different ways.
   contents:
-  - gph_basemap
+  - gph_base_map
+  - gph_base_tmap
   - gph_wb_world_map
   - gph_historical_world_map
   - gph_mini_globe
@@ -33,19 +34,19 @@ reference:
     These functions provide visualizations for demography indicators.
   contents:
   - gph_demogram
-  - gph_highcharter_demogram
+  - gph_hc_demogram
   - gph_lexgram
-  - gph_highcharter_lexgram
+  - gph_hc_lexgram
   - gph_pyramid
   - gph_pyramid_relative
-  - gph_highcharter_pyramid
+  - gph_hc_pyramid
 
 - title: Swiss visualization
   description: |
     These functions provide visualizations for Switzerland.
   contents:
   - gph_map_swiss_votes
-  - gph_highcharter_map_swiss_votes
+  - gph_hc_map_swiss_votes
   - gph_map_swiss_relief
   - gph_map_swiss_lakes
 

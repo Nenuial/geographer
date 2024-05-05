@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_natalite}
 \alias{oc_russie_carte_natalite}
-\title{OC Russie: carte du taux de natalité}
+\title{Taux de natalité en Russie}
 \usage{
 oc_russie_carte_natalite(theme = ggplot2::theme_minimal(), barwidth = 40)
 }

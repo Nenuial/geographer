@@ -145,14 +145,6 @@ ignore_unused_imports <- function() {
   rnaturalearthhires::countries10
 }
 
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
-#' @importFrom magrittr %<>%
-#' @export
-magrittr::`%<>%`
-
 #' @importFrom ggplot2 %+%
 #' @export
 ggplot2::`%+%`

@@ -1,4 +1,4 @@
-#' OC Suisse: carte du suffrage féminin
+#' Suffrage féminin
 #'
 #' Une carte de l'introduction du suffrage féminin
 #' au niveau cantonal en Suisse.
@@ -12,31 +12,32 @@
 #' @examples
 #' oc_suisse_carte_suffrage_feminin()
 oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
-  geodata::oc_suisse_suffrage_feminin %>%
-    dplyr::mutate(id = geotools::gtl_swiss_canton_id(Canton)) %>%
-    dplyr::mutate(Annee = forcats::as_factor(Annee)) %>%
+  geodata::oc_suisse_suffrage_feminin |>
+    dplyr::mutate(id = geotools::gtl_swiss_canton_id(Canton)) |>
+    dplyr::mutate(Annee = forcats::as_factor(Annee)) |>
     dplyr::left_join(
       themakart::thema_map("inst", "kant"),
       by = "id"
     ) -> plot_data
 
-  plot_data  %>%
+  plot_data |>
     ggplot2::ggplot() +
     gph_map_swiss_relief() +
     ggplot2::geom_sf(ggplot2::aes(fill = Annee, geometry = geometry),
-                     color = "white", size = 0.1) +
+      color = "white", size = 0.1
+    ) +
     gph_map_swiss_lakes() +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
       values = prismatic::clr_alpha(
-        paletteer::paletteer_d("ggthemes::Classic_Cyclic",  11),
+        paletteer::paletteer_d("ggthemes::Classic_Cyclic", 11),
         alpha = .8
       ),
       breaks = levels(plot_data$Annee),
       limits = levels(plot_data$Annee)
     ) +
     ggplot2::guides(
-      fill = ggplot2::guide_legend(nrow = 2, byrow = T)
+      fill = ggplot2::guide_legend(nrow = 2, byrow = TRUE)
     ) +
     ggplot2::labs(
       title = "Introduction du suffrage f\u00e9minin en Suisse",
@@ -50,7 +51,7 @@ oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::theme(legend.position = "bottom")
 }
 
-#' OC Suisse: carte du vote sur le suffrage féminin au valais
+#' Suffrage féminin au valais
 #'
 #' Une carte du résultat de la votation sur le suffrage féminin
 #' au canton du Valais le 12 avril 1970.
@@ -64,19 +65,20 @@ oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
 #' @examples
 #' oc_suisse_carte_1970_suffrage_feminin_valais()
 oc_suisse_carte_1970_suffrage_feminin_valais <- function(theme = ggplot2::theme_minimal()) {
-  geodata::oc_suisse_1970_04_12_suffrage_feminin_vs %>%
-    dplyr::mutate(per_oui = vote_oui / (vote_oui + vote_non) * 100) %>%
-    dplyr::mutate(per_oui = santoku::chop(per_oui, c(0,70,72,74,76,78,100)))%>%
+  geodata::oc_suisse_1970_04_12_suffrage_feminin_vs |>
+    dplyr::mutate(per_oui = vote_oui / (vote_oui + vote_non) * 100) |>
+    dplyr::mutate(per_oui = santoku::chop(per_oui, c(0, 70, 72, 74, 76, 78, 100))) |>
     dplyr::left_join(
       themakart::thema_map("inst", "bezk", 2000),
       by = "id"
     ) -> plot_data
 
-  plot_data  %>%
+  plot_data |>
     ggplot2::ggplot() +
     gph_map_swiss_relief() +
     ggplot2::geom_sf(ggplot2::aes(fill = per_oui, geometry = geometry),
-                     color = "white", size = 0.1) +
+      color = "white", size = 0.1
+    ) +
     gph_map_swiss_lakes() +
     ggplot2::scale_fill_manual(
       values = prismatic::clr_alpha(

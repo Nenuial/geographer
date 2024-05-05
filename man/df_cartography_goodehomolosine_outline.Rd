@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_df_cartography.R
 \name{df_cartography_goodehomolosine_outline}
 \alias{df_cartography_goodehomolosine_outline}
-\title{DF Cartography: Goode Homolosine outline}
+\title{Goode Homolosine outline}
 \usage{
 df_cartography_goodehomolosine_outline()
 }

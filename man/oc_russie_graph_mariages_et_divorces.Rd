@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_russie.R
 \name{oc_russie_graph_mariages_et_divorces}
 \alias{oc_russie_graph_mariages_et_divorces}
-\title{OC Russie: graphique des mariages et divorces}
+\title{Mariages et divorces}
 \usage{
 oc_russie_graph_mariages_et_divorces(theme = ggplot2::theme_minimal())
 }
@@ -13,7 +13,7 @@ oc_russie_graph_mariages_et_divorces(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-Graphique des mariages en comparaison avec les divorces
+Graphiques des mariages et divorces en Russie
 }
 \examples{
 oc_russie_graph_mariages_et_divorces()

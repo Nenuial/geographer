@@ -1,4 +1,4 @@
-#' OC Ecocitoyenneté : consommation d'énergie par source
+#' Consommation d'énergie par source
 #'
 #' @param theme A ggplot2 theme
 #'
@@ -9,7 +9,10 @@
 oc_ecocitoyennete_graph_energy_per_source <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_ecocitoyennete_energy_consumption_per_source |>
     dplyr::mutate(source = stringr::str_replace(source, " per capita", "")) |>
-    dplyr::mutate(source = forcats::fct_inorder(source) |> forcats::fct_rev()) |>
+    dplyr::mutate(
+      source = forcats::fct_inorder(source) |>
+        forcats::fct_rev()
+    ) |>
     dplyr::filter(entity %in% c("World", "Switzerland")) |>
     ggplot2::ggplot(ggplot2::aes(x = year, y = amount, fill = source)) +
     ggplot2::geom_area() +
@@ -18,7 +21,7 @@ oc_ecocitoyennete_graph_energy_per_source <- function(theme = ggplot2::theme_min
       guide = ggplot2::guide_legend(reverse = TRUE)
     ) +
     ggplot2::scale_y_continuous(labels = ggeo::ggeo_label_sci_10) +
-    ggplot2::facet_wrap(~ entity, ) +
+    ggplot2::facet_wrap(~entity, ) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(

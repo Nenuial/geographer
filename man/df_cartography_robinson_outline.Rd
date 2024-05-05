@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_df_cartography.R
 \name{df_cartography_robinson_outline}
 \alias{df_cartography_robinson_outline}
-\title{DF Cartography: Goode Homolosine outline}
+\title{Robinson outline}
 \usage{
 df_cartography_robinson_outline()
 }
@@ -10,6 +10,6 @@ df_cartography_robinson_outline()
 A sf object
 }
 \description{
-Generate Goode Homolosine special outline shape
+Robinson special outline shape
 }
 \keyword{internal}

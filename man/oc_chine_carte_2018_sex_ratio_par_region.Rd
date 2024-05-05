@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_chine.R
 \name{oc_chine_carte_2018_sex_ratio_par_region}
 \alias{oc_chine_carte_2018_sex_ratio_par_region}
-\title{OC Chine: carte du rapport homme/femmes par régions}
+\title{Sex-ratio par régions en Chine}
 \usage{
 oc_chine_carte_2018_sex_ratio_par_region(theme = ggplot2::theme_minimal())
 }

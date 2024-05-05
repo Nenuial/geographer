@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_suisse.R
 \name{oc_suisse_graph_2021_immigration_italienne}
 \alias{oc_suisse_graph_2021_immigration_italienne}
-\title{OC Suisse: graphique de l'immigration italienne}
+\title{Immigration italienne en Suisse}
 \usage{
 oc_suisse_graph_2021_immigration_italienne(theme = ggplot2::theme_minimal())
 }
@@ -10,12 +10,12 @@ oc_suisse_graph_2021_immigration_italienne(theme = ggplot2::theme_minimal())
 \item{theme}{A ggplot2 theme}
 }
 \value{
-ggplot2 graph
+A ggplot2 graph
 }
 \description{
-Une carte de l'introduction
+Un graphique avec l'évolution de l'immigration
+italienne en Suisse de 1981 jusqu'en 2021.
 }
 \examples{
 oc_suisse_graph_2021_immigration_italienne()
 }
-\concept{oc suisse population immigration}

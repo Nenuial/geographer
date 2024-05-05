@@ -36,7 +36,6 @@ Imports:
     leaflet,
     lifecycle,
     lubridate,
-    magrittr,
     mapsf,
     mapview,
     MetBrewer,
@@ -59,6 +58,7 @@ Imports:
     themakart,
     tibble,
     tidyr,
+    tmap,
     viridis,
     wbstats,
     wesanderson,
@@ -72,10 +72,11 @@ Remotes:
     Nenuial/geotools,
     Nenuial/themakart,
     politanch/swissdd,
+    r-tmap/tmap@v4,
     ropensci/rnaturalearthhires,
     ropensci/rrricanes
 RoxygenNote: 7.3.1
 Depends: 
-    R (>= 4.0)
+    R (>= 4.1)
 Roxygen: list(markdown = TRUE)
 Config/Needs/website: nenuial/geopkg

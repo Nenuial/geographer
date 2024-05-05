@@ -1,16 +1,20 @@
 # Démographie ---------------------------------------------------------------------------------
 
-#' OC Israël-Palestine: graphique des migrations
+#' Migrations
 #'
-#' Graphique de l'immigration en Israël
-#' de 1949 à 2017.
+#' Graphiques sur le thème de l'immigration
+#' en Israël.
 #'
 #' @param theme A ggplot2 theme
 #'
-#' @return A ggplot2 graph
+#' @name oc_israel_palestine_graphs_migration
+#' @return A graph
 #' @export
 #' @examples
 #' oc_israel_palestine_graph_migration_israel()
+#' oc_israel_palestine_hc_migration_israel()
+#' oc_israel_palestine_graph_population_nae()
+#' oc_israel_palestine_hc_immigration_sioniste()
 oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_immigration_israel |>
     ggplot2::ggplot(ggplot2::aes(year, immigration)) +
@@ -25,15 +29,8 @@ oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_mi
     theme
 }
 
-#' OC Israël-Palestine: graphique dynamique des migrations
-#'
-#' Graphique de l'immigration en Israël
-#' de 1949 à 2017.
-#'
-#' @return A highcharts graph
+#' @rdname oc_israel_palestine_graphs_migration
 #' @export
-#' @examples
-#' oc_israel_palestine_hc_migration_israel()
 oc_israel_palestine_hc_migration_israel <- function() {
   geodata::oc_israel_palestine_immigration_israel -> data
 
@@ -58,25 +55,17 @@ oc_israel_palestine_hc_migration_israel <- function() {
     )
 }
 
-#' OC Israël-Palestine: graphique de la
-#' population néé à l'étranger
-#'
-#' Graphique avec la population néé à l'étranger
-#' par pays de naissance d'après le recensement 2018.
-#'
-#' @param theme A ggplot2 theme
-#'
-#' @return A ggplot2 graph
+#' @rdname oc_israel_palestine_graphs_migration
 #' @export
-#' @examples
-#' oc_israel_palestine_graph_population_nae()
 oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_israel_palestine_2008_population_nae |>
     dplyr::arrange(-population) |>
     dplyr::mutate(country = forcats::fct_inorder(country)) |>
     dplyr::group_by(continent) |>
-    dplyr::mutate(country = forcats::fct_lump_n(country, 3, w = population,
-                                                other_level = paste("Other", dplyr::first(continent)))) |>
+    dplyr::mutate(country = forcats::fct_lump_n(country, 3,
+      w = population,
+      other_level = paste("Other", dplyr::first(continent))
+    )) |>
     dplyr::ungroup() |>
     dplyr::group_by(country, continent) |>
     dplyr::summarise(population = sum(population), .groups = "keep") |>
@@ -89,7 +78,7 @@ oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_mini
       labels = ggeo::ggeo_label_sci_10
     ) +
     ggplot2::scale_fill_manual(
-      values = paletteer::paletteer_d("IslamicArt::jerusalem")[c(1,2,8,3,5)]
+      values = paletteer::paletteer_d("IslamicArt::jerusalem")[c(1, 2, 8, 3, 5)]
     ) +
     theme +
     ggplot2::theme(
@@ -103,24 +92,22 @@ oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_mini
     )
 }
 
-#' OC Israël-Palestine: graphique dynamique
-#' de l'immigration juive en Palestine
-#' avant 1948
-#'
-#' @return A highcharts graph
+#' @rdname oc_israel_palestine_graphs_migration
 #' @export
-#' @examples
-#' oc_israel_palestine_hc_immigration_sioniste()
 oc_israel_palestine_hc_immigration_sioniste <- function() {
   geodata::oc_israel_palestine_immigration_juive_avant_1948 -> data
 
   highcharter::highchart() |>
     highcharter::hc_title(text = "Immigration juive avant 1948") |>
     highcharter::hc_subtitle(text = "chiffres approximatifs") |>
-    highcharter::hc_caption(text = "Source: <a href='https://www.bpb.de/themen/migration-integration/laenderprofile/english-version-country-profiles/58400/historical-development-of-jewish-immigration/'>BPD, 2008</a>") |>
+    highcharter::hc_caption(
+      text = "Source:
+      <a href='https://www.bpb.de/themen/migration-integration/laenderprofile/
+      english-version-country-profiles/58400/historical-development-of-jewish-immigration/'>BPD, 2008</a>"
+    ) |>
     highcharter::hc_legend(enabled = FALSE) |>
     highcharter::hc_xAxis(
-      type= 'category'
+      type = "category"
     ) |>
     highcharter::hc_add_series(
       data = data,

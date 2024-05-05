@@ -2,7 +2,7 @@
 % Please edit documentation in R/geo_map_swiss.R
 \name{gph_highcharter_map_swiss_votes}
 \alias{gph_highcharter_map_swiss_votes}
-\title{Plot latest swiss votation using highcharts}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 gph_highcharter_map_swiss_votes(
   geolevel = c("canton", "district", "municipality"),
@@ -11,21 +11,7 @@ gph_highcharter_map_swiss_votes(
   language = "FR"
 )
 }
-\arguments{
-\item{geolevel}{One of "canton", "district" or "municipality"}
-
-\item{votedates}{The date of the vote}
-
-\item{id}{The vote id}
-
-\item{language}{One of "DE", "FR", "IT" or "RM"}
-}
-\value{
-A highcharter map
-}
 \description{
-Plot latest swiss votation using highcharts
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
-\examples{
-gph_highcharter_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
-}
+\keyword{internal}

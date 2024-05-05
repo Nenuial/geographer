@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_suisse.R
 \name{oc_suisse_carte_1970_suffrage_feminin_valais}
 \alias{oc_suisse_carte_1970_suffrage_feminin_valais}
-\title{OC Suisse: carte du vote sur le suffrage féminin au valais}
+\title{Suffrage féminin au valais}
 \usage{
 oc_suisse_carte_1970_suffrage_feminin_valais(theme = ggplot2::theme_minimal())
 }

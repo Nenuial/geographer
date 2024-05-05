@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_accroissement}
 \alias{oc_russie_carte_accroissement}
-\title{OC Russie: carte de l'accroissement naturel}
+\title{Accroissement naturel en Russie}
 \usage{
 oc_russie_carte_accroissement(
   theme = ggplot2::theme_minimal(),

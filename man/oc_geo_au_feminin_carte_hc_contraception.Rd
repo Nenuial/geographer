@@ -2,8 +2,7 @@
 % Please edit documentation in R/map_oc_geo_au_feminin.R
 \name{oc_geo_au_feminin_carte_hc_contraception}
 \alias{oc_geo_au_feminin_carte_hc_contraception}
-\title{Géographie au féminin: carte intéractive de
-la prévalence de la contraception}
+\title{Contraception}
 \usage{
 oc_geo_au_feminin_carte_hc_contraception()
 }
@@ -11,8 +10,8 @@ oc_geo_au_feminin_carte_hc_contraception()
 A highcharts map
 }
 \description{
-Géographie au féminin: carte intéractive de
-la prévalence de la contraception
+Carte mondiale intéractive de la prévalence de la
+contraception.
 }
 \examples{
 oc_geo_au_feminin_carte_hc_contraception()

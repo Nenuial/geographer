@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_mortalite}
 \alias{oc_russie_carte_mortalite}
-\title{OC Russie: carte du taux de mortalité}
+\title{Taux de mortalité en Russie}
 \usage{
 oc_russie_carte_mortalite(theme = ggplot2::theme_minimal(), barwidth = 40)
 }

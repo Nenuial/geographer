@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_divorces}
 \alias{oc_russie_carte_divorces}
-\title{OC Russie: carte du taux de divorce}
+\title{Taux de divorce en Russie}
 \usage{
 oc_russie_carte_divorces(theme = ggplot2::theme_minimal())
 }

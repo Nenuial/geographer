@@ -1,4 +1,4 @@
-#' DF Demography: Historical world population plot
+#' Historical world population plot
 #'
 #' World population graph from 10'000 BCE to 1200 CE
 #'
@@ -27,7 +27,10 @@ df_demography_graph_world_population_historical <- function(theme = ggplot2::the
     ) +
     ggplot2::coord_cartesian(ylim = c(0, 300000000)) +
     ggplot2::labs(
-      title = geotools::gtl_translate_enfr("World population 10'000 BCE to 1200 CE", "Population mondiale de 10'000 av. JC \u00e0 1200 ap. JC"),
+      title = geotools::gtl_translate_enfr(
+        "World population 10'000 BCE to 1200 CE",
+        "Population mondiale de 10'000 av. JC \u00e0 1200 ap. JC"
+      ),
       x = "",
       y = "Population (millions)"
     ) +
@@ -39,7 +42,7 @@ df_demography_graph_world_population_historical <- function(theme = ggplot2::the
     )
 }
 
-#' DF Demography: World population
+#' World population
 #'
 #' World population graph
 #'
@@ -78,13 +81,17 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
     ) +
     ggplot2::scale_color_manual(
       breaks = c("historical", "current", "un_low", "un_medium", "un_high"),
-      values = c("historical" = "black", "current" = "blue",
-                 "un_low" = "green", "un_medium" = "orange", "un_high" = "red"),
-      labels = c("historical" = geotools::gtl_translate_enfr("historical", "historique"),
-                 "current" = geotools::gtl_translate_enfr("current", "actuel"),
-                 "un_low" = geotools::gtl_translate_enfr("low estimate", "estimation basse"),
-                 "un_medium" = geotools::gtl_translate_enfr("medium estimate", "estimation moyenne"),
-                 "un_high" = geotools::gtl_translate_enfr("high estimate", "estimation haute"))
+      values = c(
+        "historical" = "black", "current" = "blue",
+        "un_low" = "green", "un_medium" = "orange", "un_high" = "red"
+      ),
+      labels = c(
+        "historical" = geotools::gtl_translate_enfr("historical", "historique"),
+        "current" = geotools::gtl_translate_enfr("current", "actuel"),
+        "un_low" = geotools::gtl_translate_enfr("low estimate", "estimation basse"),
+        "un_medium" = geotools::gtl_translate_enfr("medium estimate", "estimation moyenne"),
+        "un_high" = geotools::gtl_translate_enfr("high estimate", "estimation haute")
+      )
     ) +
     ggplot2::guides(
       color = ggplot2::guide_legend(title = NULL)
@@ -106,7 +113,7 @@ df_demography_graph_world_population_current <- function(theme = ggplot2::theme_
     )
 }
 
-#' DF Demography: World population growth rate
+#' World population growth rate
 #'
 #' World population growth rate graph
 #'
@@ -143,7 +150,7 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
 }
 
 # For future me. Requires patchwork.
-# #' DF Demography: World population patchwork composition
+# #' World population patchwork composition
 # #'
 # #' World population graph with historical, current and future
 # #' numbers as well as growth rates.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_russie.R
 \name{oc_russie_graph_demo_exa}
 \alias{oc_russie_graph_demo_exa}
-\title{OC Russie: demogram pour l'exa 2022}
+\title{Demogram (exa 2022)}
 \usage{
 oc_russie_graph_demo_exa(theme = ggplot2::theme_minimal())
 }

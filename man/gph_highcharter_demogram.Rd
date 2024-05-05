@@ -2,24 +2,11 @@
 % Please edit documentation in R/geo_demography.R
 \name{gph_highcharter_demogram}
 \alias{gph_highcharter_demogram}
-\title{Create demogram for country}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 \usage{
 gph_highcharter_demogram(country)
 }
-\arguments{
-\item{country}{A string with the country name}
-}
-\value{
-A highcharter graph
-}
 \description{
-Provides basic ggplot2 graph with the following data on it :
-\describe{
-\item{population}{the population curve (blue)}
-\item{birth_rate}{the birth rate curve (grey)}
-\item{death_rate}{the death_rate curve (black)}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
-}
-\examples{
-gph_highcharter_demogram("Switzerland")
-}
+\keyword{internal}

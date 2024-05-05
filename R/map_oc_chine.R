@@ -1,4 +1,4 @@
-#' OC Chine: carte du rapport homme/femmes par régions
+#' Sex-ratio par régions en Chine
 #'
 #' Une carte du rapport du nombre d'hommes
 #' par rapport aux femmes par régions pour 2018.
@@ -17,13 +17,14 @@ oc_chine_carte_2018_sex_ratio_par_region <- function(theme = ggplot2::theme_mini
       by = "adm1_code"
     ) |>
     dplyr::mutate(
-      data = santoku::chop(ratio, c(1,1.05,1.1,1.15), extend = T, drop = F)
+      data = santoku::chop(ratio, c(1, 1.05, 1.1, 1.15), extend = TRUE, drop = FALSE)
     ) -> plot_data
 
   plot_data |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = data),
-                     color = "black", size = .1) +
+      color = "black", size = .1
+    ) +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
       values = viridis::viridis(5),

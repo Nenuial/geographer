@@ -24,14 +24,18 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 
   geo_data |>
     dplyr::left_join(plot_data$vote_data, by = plot_data$join_id) |>
-    dplyr::mutate(value = santoku::chop(jaStimmenInProzent, c(0,10,20,30,40,50,60,70,80,90,100))) |>
+    dplyr::mutate(value = santoku::chop(jaStimmenInProzent, c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))) |>
     ggplot2::ggplot() +
-    ggplot2::geom_raster(data = themakart::thema_relief() |> dplyr::mutate(x = x - 2000000, y = y - 1000000),
-                         ggplot2::aes_string(x = "x", y = "y",
-                                             fill = NULL,
-                                             alpha = "value")) +
-    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none")+
-    ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", size = .1) +
+    ggplot2::geom_raster(
+      data = themakart::thema_relief() |> dplyr::mutate(x = x - 2000000, y = y - 1000000),
+      ggplot2::aes_string(
+        x = "x", y = "y",
+        fill = NULL,
+        alpha = "value"
+      )
+    ) +
+    ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none") +
+    ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", linewidth = .1) +
     gph_map_swiss_lakes(source = swissdd::get_geodata("lakes")) +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
@@ -39,10 +43,14 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
         paletteer::paletteer_c("pals::ocean.curl", direction = -1, 10),
         alpha = .8
       ),
-      breaks = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"),
-      limits = c("[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-                 "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)")
+      breaks = c(
+        "[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
+        "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"
+      ),
+      limits = c(
+        "[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
+        "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"
+      )
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
@@ -67,6 +75,15 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
     )
 }
 
+#' `r lifecycle::badge("deprecated")`
+#' @export
+#' @keywords internal
+gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"),
+                                            votedates, id, language = "FR") {
+  lifecycle::deprecate_warn("1.0.0", "gph_highcharter_map_swiss_votes()", "gph_hc_demogram()")
+  gph_hc_map_swiss_votes(geolevel, votedates, id, language)
+}
+
 #' Plot latest swiss votation using highcharts
 #'
 #' @inherit gph_map_swiss_votes
@@ -74,8 +91,8 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 #' @return A highcharter map
 #' @export
 #' @examples
-#' gph_highcharter_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
-gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
+#' gph_hc_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
+gph_hc_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
   # Check input
   geolevel <- match.arg(geolevel)
 
@@ -98,14 +115,14 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
       borderWidth = .5,
       borderColor = "white",
       joinBy = plot_data$join_id,
-      showInLegend= F
+      showInLegend = FALSE
     ) |>
     highcharter::hc_add_series(
       mapData = geodata::gdt_opendata_swiss_geodata_json("lakes"),
       borderWidth = .5,
       borderColor = "white",
       negativeColor = "lightblue",
-      showInLegend = F
+      showInLegend = FALSE
     ) |>
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue("function () {{
@@ -125,7 +142,7 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
         list(color = "#1B5163", from = 80, to = 90),
         list(color = "#151D44", from = 90, to = 100)
       ),
-      showInLegend = F
+      showInLegend = FALSE
     )
 }
 
@@ -134,27 +151,28 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
 #' @inherit gph_map_swiss_votes
 #'
 #' @keywords internal
-gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipality"), votedates, filter_id, language = "FR") {
+gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipality"),
+                                 votedates, filter_id, language = "FR") {
   vote_data <- swissdd::get_nationalvotes(geolevel = geolevel, votedates = votedates, language = language) |>
     dplyr::filter(id == filter_id) |>
-    dplyr::mutate(value = round(jaStimmenInProzent,2))
+    dplyr::mutate(value = round(jaStimmenInProzent, 2))
 
   pretty_date <- withr::with_locale(
     new = c("LC_TIME" = "fr_CH.UTF-8"),
     format(as.Date(vote_data[[1, "votedate"]]), "%d %B %Y")
   )
-  pretty_title <- glue::glue('Votation du {pretty_date}')
+  pretty_title <- glue::glue("Votation du {pretty_date}")
   pretty_subtitle <- vote_data[[1, "name"]]
 
   join_id <- dplyr::case_when(
-    geolevel == "canton"       ~ "canton_id",
-    geolevel == "district"     ~ "district_id",
+    geolevel == "canton" ~ "canton_id",
+    geolevel == "district" ~ "district_id",
     geolevel == "municipality" ~ "mun_id"
   )
 
   name_field <- dplyr::case_when(
-    geolevel == "canton"       ~ "canton_name",
-    geolevel == "district"     ~ "district_name",
+    geolevel == "canton" ~ "canton_name",
+    geolevel == "district" ~ "district_name",
     geolevel == "municipality" ~ "mun_name"
   )
 
@@ -178,12 +196,18 @@ gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipalit
 #'   gph_map_swiss_lakes()
 gph_map_swiss_relief <- function() {
   list(
-    ggplot2::geom_sf(data = themakart::thema_map("inst", "suis", 1848, "gf"),
-                     fill = "white", size = .1),
-    ggplot2::geom_raster(data = themakart::thema_relief(),
-                         ggplot2::aes_string(x = "x", y = "y",
-                                             fill = NULL,
-                                             alpha = "value")),
+    ggplot2::geom_sf(
+      data = themakart::thema_map("inst", "suis", 1848, "gf"),
+      fill = "white", linewidth = .1
+    ),
+    ggplot2::geom_raster(
+      data = themakart::thema_relief(),
+      ggplot2::aes_string(
+        x = "x", y = "y",
+        fill = NULL,
+        alpha = "value"
+      )
+    ),
     ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none")
   )
 }

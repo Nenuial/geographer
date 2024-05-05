@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_russie.R
 \name{oc_russie_graph_fertilite_europe}
 \alias{oc_russie_graph_fertilite_europe}
-\title{OC Russie: graphique de l'indice de fécondité}
+\title{Indice de fécondité}
 \usage{
 oc_russie_graph_fertilite_europe(theme = ggplot2::theme_minimal())
 }

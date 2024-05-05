@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_ecocitoyennete.R
 \name{oc_ecocitoyennete_graph_energy_per_source}
 \alias{oc_ecocitoyennete_graph_energy_per_source}
-\title{OC Ecocitoyenneté : consommation d'énergie par source}
+\title{Consommation d'énergie par source}
 \usage{
 oc_ecocitoyennete_graph_energy_per_source(theme = ggplot2::theme_minimal())
 }
@@ -13,7 +13,7 @@ oc_ecocitoyennete_graph_energy_per_source(theme = ggplot2::theme_minimal())
 A ggplot2 graph
 }
 \description{
-OC Ecocitoyenneté : consommation d'énergie par source
+Consommation d'énergie par source
 }
 \examples{
 oc_ecocitoyennete_graph_energy_per_source()

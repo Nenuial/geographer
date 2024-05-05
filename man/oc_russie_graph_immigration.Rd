@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_oc_russie.R
 \name{oc_russie_graph_immigration}
 \alias{oc_russie_graph_immigration}
-\title{OC Russie: graphique de l'immigration}
+\title{Immigration}
 \usage{
 oc_russie_graph_immigration(theme = ggplot2::theme_minimal())
 }

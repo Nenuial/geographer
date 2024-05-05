@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_fecondite}
 \alias{oc_russie_carte_fecondite}
-\title{OC Russie: carte de l'indice de fécondité}
+\title{Indice de fécondité en Russie}
 \usage{
 oc_russie_carte_fecondite(
   theme = ggplot2::theme_minimal(),

@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_df_cartography.R
 \name{df_cartography_goodehomolosine_cutout}
 \alias{df_cartography_goodehomolosine_cutout}
-\title{DF Cartography: Goode Homolosine cutout}
+\title{Goode Homolosine cutout}
 \usage{
 df_cartography_goodehomolosine_cutout()
 }

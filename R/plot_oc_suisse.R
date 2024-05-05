@@ -1,17 +1,17 @@
-#' OC Suisse: graphique de l'immigration italienne
+#' Immigration italienne en Suisse
 #'
-#' Une carte de l'introduction
+#' Un graphique avec l'évolution de l'immigration
+#' italienne en Suisse de 1981 jusqu'en 2021.
 #'
 #' @param theme A ggplot2 theme
 #'
-#' @return ggplot2 graph
-#' @concept oc suisse population immigration
+#' @return A ggplot2 graph
 #'
 #' @export
 #' @examples
 #' oc_suisse_graph_2021_immigration_italienne()
 oc_suisse_graph_2021_immigration_italienne <- function(theme = ggplot2::theme_minimal()) {
-  geodata::oc_suisse_2021_immigration_italienne %>%
+  geodata::oc_suisse_2021_immigration_italienne |>
     ggplot2::ggplot(ggplot2::aes(x = year)) +
     ggplot2::geom_line(ggplot2::aes(y = population), color = "blue") +
     ggplot2::geom_col(ggplot2::aes(y = immigration * 10), fill = "orange") +
@@ -25,7 +25,7 @@ oc_suisse_graph_2021_immigration_italienne <- function(theme = ggplot2::theme_mi
       ),
       labels = scales::number_format(scale = .001)
     ) +
-    ggplot2::scale_x_continuous(expand = c(0,0)) +
+    ggplot2::scale_x_continuous(expand = c(0, 0)) +
     theme +
     ggplot2::theme(
       axis.title.y = ggplot2::element_text(color = "blue"),

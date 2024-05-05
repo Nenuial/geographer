@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_oc_suisse.R
 \name{oc_suisse_carte_suffrage_feminin}
 \alias{oc_suisse_carte_suffrage_feminin}
-\title{OC Suisse: carte du suffrage féminin}
+\title{Suffrage féminin}
 \usage{
 oc_suisse_carte_suffrage_feminin(theme = ggplot2::theme_minimal())
 }
