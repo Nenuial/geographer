@@ -17,5 +17,8 @@ An animated ggplot2
 entre 2000 et 2020.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Not run: needs ffmpeg
 oc_russie_graph_depense_militaire()
+\dontshow{\}) # examplesIf}
 }

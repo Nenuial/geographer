@@ -29,18 +29,21 @@ Create world maps for an indicator
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Not run: saves the plots on file
 indicators <- list(
-  list(code      = c("population" = "EN.POP.DNST"),
-       operation = expr(population),
-       title     = geotools::gtl_translate_enfr(
-                     "Population density", "Densité de population"
-                   ),
-       file      = "density",
-       palette   = list(palette = "viridis::viridis",
-                        type = "cont", dir = -1),
-       breaks    = c(10,25,50,75,100,150,300,1000),
-       center    = -1,
-       unit      = "pp/km²",
-       years     = c(2019)
+  list(
+    code = c("population" = "EN.POP.DNST"),
+    operation = expr(population),
+    title = geotools::gtl_translate_enfr(
+      "Population density", "Densité de population"
+    ),
+    file = "density",
+    palette = list(
+      palette = "viridis::viridis",
+      type = "cont", dir = -1
+    ),
+    breaks = c(10, 25, 50, 75, 100, 150, 300, 1000),
+    center = -1,
+    unit = "pp/km²",
+    years = c(2019)
   )
 )
 

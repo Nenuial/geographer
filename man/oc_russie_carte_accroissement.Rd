@@ -7,7 +7,7 @@
 oc_russie_carte_accroissement(
   theme = ggplot2::theme_minimal(),
   barwidth = 40,
-  greyscale = F
+  greyscale = FALSE
 )
 }
 \arguments{

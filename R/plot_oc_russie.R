@@ -439,7 +439,8 @@ oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
 #' @return An animated ggplot2
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
+#' # Not run: needs ffmpeg
 #' oc_russie_graph_depense_militaire()
 oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_depenses_militaires |>
