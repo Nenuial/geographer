@@ -178,6 +178,7 @@ df_cartography_project_equalearth <- function() {
   gph_project_world(geotools::gtl_crs_proj("eqearth"))
 }
 
+# nolint start: commented_code_linter
 # Remove from package because require() is a warning in
 # R CMD Check. Remains here for future me.
 # #' DF Cartography: Patchwork of rectangular projections
@@ -221,3 +222,4 @@ df_cartography_project_equalearth <- function() {
 #     df_cartography_project_equalearth() +
 #     patchwork::plot_layout(ncol = 2, widths = c(1, 1))
 # }
+# nolint end

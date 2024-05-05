@@ -6,7 +6,5 @@ linters: linters_with_defaults(
       allow_trailing = TRUE,
       allow_pipe_assign = FALSE
     ),
-    object_length_linter(length = 100L),
-    object_usage_linter = NULL,
-    commented_code_linter = NULL
+    object_length_linter(length = 100L)
   )

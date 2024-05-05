@@ -1,3 +1,4 @@
+# nolint start: commented_code_linter
 # This is just some stuff that needs finishing…
 #
 # geodata::oc_russie_2020_population_municipale |>
@@ -26,3 +27,4 @@
 #     )
 #   ) +
 #   ggplot2::coord_sf(crs = geotools::gtl_crs_proj("Russia"), datum = NA)
+# nolint end

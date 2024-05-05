@@ -110,7 +110,7 @@ gph_mini_globe_render <- function(country_codes, coords) {
   # Fix other broken polygons
   broken <- which(!sf::st_is_valid(visible))
   for (land in broken) {
-    result <- tryCatch(
+    result <- tryCatch( # nolint: object_usage_linter
       {
         visible[land, ] <- sf::st_make_valid(visible[land, ]) |>
           sf::st_collection_extract()

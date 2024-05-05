@@ -149,6 +149,7 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
     )
 }
 
+# nolint start: commented_code_linter
 # For future me. Requires patchwork.
 # #' World population patchwork composition
 # #'
@@ -170,3 +171,4 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
 #       plot.tag.position = "topleft"
 #     )
 # }
+# nolint end

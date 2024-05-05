@@ -45,7 +45,7 @@ gph_wb_world_map <- function(indicator) {
   df |>
     dplyr::pull(cut) |>
     levels() |>
-    length() -> palette_length
+    length() -> palette_length # nolint: object_usage_linter
 
   indicator |>
     dplyr::pull(year) |>

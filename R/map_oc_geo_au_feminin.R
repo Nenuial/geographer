@@ -926,10 +926,6 @@ oc_geo_au_feminin_carte_hc_mondiale_suffrage_feminin <- function() {
         name = "EqualEarth"
       )
     ) |>
-    # highcharter::hc_tooltip(
-    #   format = "<b>{point.name}</b>:<br>",
-    #   formatter = highcharter::JS("function(){ return this.point.value; }")
-    # ) |>
     highcharter::hc_add_series(
       name = "Ann\u00e9e",
       mapData = map,
@@ -1015,6 +1011,7 @@ oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minim
   mapsf::mf_map(map)
   mapsf::mf_map(map, var = "Girls_undergone_FGM", type = "prop")
 
+  # nolint start: commented_code_linter
   # ggplot2::ggplot(ggplot2::aes(fill = Legal_status)) +
   # ggplot2::geom_sf(color = "#fffeea", size = .1) +
   # ggplot2::geom_sf(mapping = ggplot2::aes(geometry = centroid, size = Girls_undergone_FGM)) +
@@ -1022,6 +1019,7 @@ oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minim
   #                   xlim = c(-1450000, 3223000),
   #                   ylim = c(4220000, 8120000)) +
   # ggplot2::scale_size_continuous(breaks = c(1000, 10000, 100000))
+  # nolint end
 }
 
 #' Viols

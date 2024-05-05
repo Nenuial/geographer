@@ -386,6 +386,7 @@ oc_geo_au_feminin_graph_suisse_votations_avortement <- function(theme = ggplot2:
 # Sex-ratio -----------------------------------------------------------------------------------
 
 # TODO
+# nolint start: commented_code_linter
 # oc_geo_au_feminin_graph_rapport_hommes_femmes_2020 <- function(theme = ggplot2::theme_minimal()) {
 #   geodata::oc_geo_au_feminin_wpp2019_sex_ratio |>
 #     dplyr::filter(
@@ -405,6 +406,7 @@ oc_geo_au_feminin_graph_suisse_votations_avortement <- function(theme = ggplot2:
 #     dplyr::filter(Region == "Geographic region") |>
 #     dplyr::rename(value = SRB)
 # }
+# nolint end
 
 
 # Violences -----------------------------------------------------------------------------------
@@ -802,6 +804,7 @@ oc_geo_au_feminin_hc_programmation_16_24_ans <- function() {
     )
 }
 
+# nolint start: commented_code_linter
 # oc_geo_au_feminin_carte_mesure_inegalite_2023 <- function() {
 #   TODO: Create a map for the student's inequality measure
 #   wbstats::wb_data("SP.POP.TOTL", start_date = 2020, end_date = 2020) -> data
@@ -811,3 +814,4 @@ oc_geo_au_feminin_hc_programmation_16_24_ans <- function() {
 #     recipes::prep() |>
 #     recipes::bake(new_data = NULL) -> data_clean
 # }
+# nolint end
