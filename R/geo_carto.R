@@ -8,7 +8,7 @@
 carto_ne_get_boundbox <- function() {
   lifecycle::deprecate_warn(
     "1.0.0", "carto_ne_get_boundbox()",
-    "gph_get_boundbox()"
+    "gph_boundbox()"
   )
 
   gph_boundbox()
