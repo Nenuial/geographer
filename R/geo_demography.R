@@ -167,9 +167,9 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue",
 #' `r lifecycle::badge("deprecated")`
 #' @export
 #' @keywords internal
-gph_highcharter_lexgram <- function(country) {
+gph_highcharter_lexgram <- function(country, men = "blue", women = "red", all = "black") {
   lifecycle::deprecate_warn("1.0.0", "gph_highcharter_lexgram()", "gph_hc_lexgram()")
-  gph_hc_lexgram(country)
+  gph_hc_lexgram(country, men, women, all)
 }
 
 #' Create lexgram for country
