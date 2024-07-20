@@ -99,9 +99,10 @@ oc_russie_graph_naissance_et_avortements <- function(theme = ggplot2::theme_mini
 
   avortements <- oc_russie_graph_avortements()
   naissances <- oc_russie_graph_naissances() + ggplot2::labs(caption = "")
-  naissances %/% avortements +
-    patchwork::plot_annotation(title = "Naissances et avortements") %&%
-    theme %+% ggplot2::theme(plot.title.position = "plot")
+  naissances %/%
+    avortements +
+    patchwork::plot_annotation(title = "Naissances et avortements") %&% theme +
+    ggplot2::theme(plot.title.position = "plot")
 }
 
 #' Solde migratoire
