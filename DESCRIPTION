@@ -75,7 +75,7 @@ Remotes:
     r-tmap/tmap@v4,
     ropensci/rnaturalearthhires,
     ropensci/rrricanes
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2.9000
 Depends: 
     R (>= 4.1)
 Roxygen: list(markdown = TRUE)
