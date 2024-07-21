@@ -3,6 +3,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Nenuial/geographer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Nenuial/geographer/actions/workflows/R-CMD-check.yaml)
 [![geographer status badge](https://nenuial.r-universe.dev/badges/geographer)](https://nenuial.r-universe.dev/geographer)
+[![DOI](https://zenodo.org/badge/152313504.svg)](https://zenodo.org/doi/10.5281/zenodo.12790259)
 <!-- badges: end -->
 
 The geographer package is the main package in my GeoVerse. It features different visualisations used
