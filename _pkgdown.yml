@@ -106,6 +106,7 @@ reference:
 - subtitle: Plots
   contents:
   - starts_with("oc_russie_graph")
+  - starts_with("oc_russie_hc")
 
 - title: OC Suisse
   description: |
