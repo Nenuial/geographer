@@ -505,3 +505,39 @@ oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) 
     width = 1600, height = 800, res = 150
   )
 }
+
+
+# Religion ---------------------------------------------------------------
+
+#' Religion en Russie
+#'
+#' @returns A graph
+#' @export
+#'
+#' @source <https://www.levada.ru/en/2023/06/02/religious-beliefs/>
+#'
+#' @examples
+#' oc_russie_hc_religion()
+oc_russie_hc_religion <- function() {
+  categories <- c("Total", "18-24", "25-39", "40-54", "55 et plus")
+  very_important <- c(14, 10, 13, 13, 16)
+  rather_important <- c(26, 24, 25, 28, 27)
+  not_too_important <- c(33, 39, 31, 33, 33)
+  none <- c(26, 26, 30, 25, 23)
+  cant_say <- c(1, 1, 1, 1, 1)
+
+  # Create the chart
+  highcharter::highchart() |>
+    highcharter::hc_chart(type = "bar") |>
+    highcharter::hc_title(text = "Quel rôle joue la religion dans votre vie ?") |>
+    highcharter::hc_subtitle(text = "En % de répondants par catégorie, avril 2023.") |>
+    highcharter::hc_xAxis(categories = categories) |>
+    highcharter::hc_yAxis(min = 0, title = list(text = "Pourcentage")) |>
+    highcharter::hc_plotOptions(series = list(stacking = "percent")) |>
+    highcharter::hc_add_series(name = "Très important", data = very_important, color = "#4c5283") |>
+    highcharter::hc_add_series(name = "Plutôt important", data = rather_important, color = "#6998c1") |>
+    highcharter::hc_add_series(name = "Pas trop important", data = not_too_important, color = "#9fc5e7") |>
+    highcharter::hc_add_series(name = "Pas du tout", data = none, color = "#c0d9eb") |>
+    highcharter::hc_add_series(name = "Ne peux pas dire", data = cant_say, color = "#9e9e9e") |>
+    highcharter::hc_tooltip(shared = TRUE, valueSuffix = "%")
+}

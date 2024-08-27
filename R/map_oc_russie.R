@@ -1,3 +1,5 @@
+# Démographie ------------------------------------------------------------
+
 #' Indice de fécondité en Russie
 #'
 #' Une carte de l'indice de fécondité en 2019
