@@ -2,9 +2,12 @@
 % Please edit documentation in R/geo_map_world.R
 \name{gph_wb_world_map}
 \alias{gph_wb_world_map}
+\alias{gph_wb_world_hc}
 \title{Create world maps for an indicator}
 \usage{
 gph_wb_world_map(indicator)
+
+gph_wb_world_hc(indicator)
 }
 \arguments{
 \item{indicator}{A list of lists.
@@ -31,7 +34,7 @@ Create world maps for an indicator
 indicators <- list(
   list(
     code = c("population" = "EN.POP.DNST"),
-    operation = expr(population),
+    operation = rlang::expr(population),
     title = geotools::gtl_translate_enfr(
       "Population density", "Densité de population"
     ),

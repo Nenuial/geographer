@@ -22,7 +22,7 @@
 #' indicators <- list(
 #'   list(
 #'     code = c("population" = "EN.POP.DNST"),
-#'     operation = expr(population),
+#'     operation = rlang::expr(population),
 #'     title = geotools::gtl_translate_enfr(
 #'       "Population density", "Densité de population"
 #'     ),
@@ -53,19 +53,75 @@ gph_wb_world_map <- function(indicator) {
       title = indicator$title,
       year = .x,
       unit = indicator$unit,
-      palette = ggeo::return_palette(
+      palette = ggeo::ggeopal_center(
         palette_length,
         indicator$center,
         indicator$palette
       ),
       caption = geotools::gtl_translate_enfr("World Bank", "Banque Mondiale")
     )) |>
-    patchwork::align_plots() |>
+    patchwork::align_patches() |>
     purrr::walk(
       ~ ggeo::ggeosave(
         glue::glue("{indicator$file}_{.x$labels$subtitle}"),
         plot = .x, height = 31, width = 64
       )
+    )
+}
+
+#' @export
+#' @rdname gph_wb_world_map
+gph_wb_world_hc <- function(indicator) {
+  df <- gph_wb_data(indicator)
+
+  palette <- function(..., pal_center = indicator$center, pal_palette = indicator$palette) {
+    ggeo::ggeopal_center(
+      ...,
+      pal_center,
+      pal_palette
+    )
+  }
+
+  df |>
+    dplyr::pull(cut) |>
+    levels() |>
+    length() -> palette_length # nolint: object_usage_linter
+
+  map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_title(text = indicator$title) |>
+    #highcharter::hc_subtitle(text = indicator$subtitle) |>
+    highcharter::hc_caption(
+      text = indicator$caption
+    ) |>
+    highcharter::hc_mapView(
+      maxZoom = 30,
+      projection = list(
+        name = "EqualEarth"
+      )
+    ) |>
+    highcharter::hc_add_series(
+      name = indicator$title,
+      mapData = map,
+      data = df |> dplyr::select(country, iso3c, value = data),
+      value = "value",
+      joinBy = c("iso.a3", "iso3c"),
+      nullColor = "#838a8f",
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      showInLegend = FALSE
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_color_axis(
+        santoku::chop(df$data, breaks = indicator$breaks), palette
+      ),
+      showInLegend = TRUE
+    ) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.point.country + '</b><br/>' +
+          this.point.value + ' {indicator$unit}' }}"))
     )
 }
 
