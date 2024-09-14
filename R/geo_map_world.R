@@ -91,7 +91,7 @@ gph_wb_world_hc <- function(indicator) {
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = indicator$title) |>
-    #highcharter::hc_subtitle(text = indicator$subtitle) |>
+    # highcharter::hc_subtitle(text = indicator$subtitle) |>
     highcharter::hc_caption(
       text = indicator$caption
     ) |>
