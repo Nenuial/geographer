@@ -529,13 +529,13 @@ oc_russie_hc_religion <- function() {
   # Create the chart
   highcharter::highchart() |>
     highcharter::hc_chart(type = "bar") |>
-    highcharter::hc_title(text = "Quel rôle joue la religion dans votre vie ?") |>
-    highcharter::hc_subtitle(text = "En % de répondants par catégorie, avril 2023.") |>
+    highcharter::hc_title(text = "Quel r\u00F4le joue la religion dans votre vie ?") |>
+    highcharter::hc_subtitle(text = "En % de r\u00E9pondants par cat\u00E9gorie, avril 2023.") |>
     highcharter::hc_xAxis(categories = categories) |>
     highcharter::hc_yAxis(min = 0, title = list(text = "Pourcentage")) |>
     highcharter::hc_plotOptions(series = list(stacking = "percent")) |>
-    highcharter::hc_add_series(name = "Très important", data = very_important, color = "#4c5283") |>
-    highcharter::hc_add_series(name = "Plutôt important", data = rather_important, color = "#6998c1") |>
+    highcharter::hc_add_series(name = "Tr\u00E8s important", data = very_important, color = "#4c5283") |>
+    highcharter::hc_add_series(name = "Plut\u00F4t important", data = rather_important, color = "#6998c1") |>
     highcharter::hc_add_series(name = "Pas trop important", data = not_too_important, color = "#9fc5e7") |>
     highcharter::hc_add_series(name = "Pas du tout", data = none, color = "#c0d9eb") |>
     highcharter::hc_add_series(name = "Ne peux pas dire", data = cant_say, color = "#9e9e9e") |>
