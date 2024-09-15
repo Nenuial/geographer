@@ -30,8 +30,8 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
 
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_fecondite |>
-        dplyr::filter(year == 2019),
+      geodata::oc_russie_2023_fecondite |>
+        dplyr::filter(year == 2023),
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
@@ -50,9 +50,9 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
     ) +
     ggplot2::labs(
       title = "Indice de f\u00e9condit\u00e9",
-      subtitle = "par r\u00e9gions en 2019",
+      subtitle = "par r\u00e9gions en 2023",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2024)"
     )
 }
 
@@ -95,7 +95,7 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
       title = "Taux de natalit\u00e9",
       subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2020)"
     )
 }
 
@@ -138,7 +138,7 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
       title = "Taux de mortalit\u00e9",
       subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2020)"
     )
 }
 
@@ -160,11 +160,11 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
 oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2019_natalite_mortalite |>
-        dplyr::filter(indicator == "rni", type == "per1000"),
+      geodata::oc_russie_2023_accroissement |>
+        dplyr::filter(year == 2023),
       by = "adm1_code"
     ) |>
-    dplyr::mutate(data_cut = santoku::chop(data, c(-5, 0, 5, 10, 15))) -> data_plot
+    dplyr::mutate(data_cut = santoku::chop(rni, c(-5, 0, 5, 10, 15))) -> data_plot
 
   if (greyscale) {
     fill_scale <- ggplot2::scale_fill_manual(
@@ -204,9 +204,9 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       title = "Taux d'accroissement naturel",
-      subtitle = "par r\u00e9gions en 2019",
+      subtitle = "par r\u00e9gions en 2023",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2024)"
     )
 }
 
@@ -258,7 +258,7 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
       title = "\u00c9volution de la population russe",
       subtitle = "de 1990 \u00e0 2020, par r\u009gions",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2020)"
     )
 }
 
@@ -291,7 +291,7 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
       title = "Mariages",
       subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2020)"
     )
 }
 
@@ -324,6 +324,6 @@ oc_russie_carte_divorces <- function(theme = ggplot2::theme_minimal()) {
       title = "Divorces",
       subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Donn\u009es: Rosstat (2020)"
+      caption = "Source: Rosstat (2020)"
     )
 }
