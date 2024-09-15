@@ -29,7 +29,7 @@ oc_russie_graph_mariages_et_divorces <- function(theme = ggplot2::theme_minimal(
       subtitle = "en Russie entre 1990 et 2019",
       color = "",
       x = "", y = "",
-      caption = "Donn\u00e9es: Rosstat (2021)"
+      caption = "Source: Rosstat (2021)"
     )
 }
 
@@ -62,7 +62,7 @@ oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       subtitle = "Naissances (total)",
       x = "", y = "",
-      caption = "Donn\u00e9es: Rosstat (2021)"
+      caption = "Source: Rosstat (2021)"
     )
 }
 
@@ -87,7 +87,7 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       subtitle = "Avortements (pour 100 naissances)",
       x = "", y = "",
-      caption = "Donn\u00e9es: Rosstat (2021)"
+      caption = "Source: Rosstat (2021)"
     )
 }
 
@@ -130,7 +130,7 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
       title = "Solde migratoire net",
       subtitle = "en Russie",
       x = "", y = "",
-      caption = "Donn\u00e9es: UN WPP (2019)"
+      caption = "Source: UN WPP (2019)"
     )
 }
 
@@ -170,7 +170,7 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
       title = "\u00c9volution de l'indice de f\u00e9condit\u00e9",
       subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie<b></span>, compar\u00e9 au reste de l'Europe",
       x = "", y = "",
-      caption = "Donn\u00e9es: Banque Mondiale (2021)"
+      caption = "Source: Banque Mondiale (2021)"
     )
 }
 
@@ -198,7 +198,7 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
       indicator = c(lex = "SP.DYN.LE00.IN"),
       country = _,
       start_date = 1960,
-      end_date = 2018
+      end_date = 2022
     ) |>
     tidyr::drop_na(lex) |>
     dplyr::mutate(country = countrycode::countrycode(iso3c, "iso3c", "un.name.fr", warn = FALSE)) |>
@@ -216,7 +216,7 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
       title = "\u00c9volution de l'esp\u00e9rance de vie",
       subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie</b></span>, compar\u00e9 au reste de l'Europe",
       x = "", y = "",
-      caption = "Donn\u00e9es: Banque Mondiale (2021)"
+      caption = "Source: Banque Mondiale (2021)"
     )
 }
 
@@ -236,7 +236,7 @@ oc_russie_graph_esperance_65_femmes <- function(theme = ggplot2::theme_minimal()
       subtitle = "des femmes de 65 ans",
       x = "", y = "",
       color = "",
-      caption = "Donn\u00e9es: HMD (2021)"
+      caption = "Source: HMD (2021)"
     )
 }
 
@@ -256,7 +256,7 @@ oc_russie_graph_esperance_65_hommes <- function(theme = ggplot2::theme_minimal()
       subtitle = "des hommes de 65 ans",
       x = "", y = "",
       color = "",
-      caption = "Donn\u00e9es: HMD (2021)"
+      caption = "Source: HMD (2021)"
     )
 }
 
