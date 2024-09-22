@@ -29,6 +29,7 @@ utils::globalVariables(c(
   "Canton",
   "cohort",
   "Color",
+  "Commune",
   "continent",
   "country",
   "country_name",
@@ -59,6 +60,7 @@ utils::globalVariables(c(
   "gwcode",
   "iccs",
   "id",
+  "ID",
   "indicator",
   "immigration",
   "ISO",
@@ -80,6 +82,7 @@ utils::globalVariables(c(
   "MidPeriod",
   "migration",
   "military_expenditure",
+  "mun_id",
   "name",
   "npts",
   "oui",
@@ -101,6 +104,7 @@ utils::globalVariables(c(
   "Region",
   "region_iso3c",
   "region_un",
+  "Religion",
   "religion",
   "Reponse",
   "Representation",
@@ -145,6 +149,7 @@ ignore_unused_imports <- function() {
   IslamicArt::islamic_pal
   pals::alphabet
   rnaturalearthhires::countries10
+  ggthemes::bank_slopes
 }
 
 #' @importFrom ggplot2 %+%
