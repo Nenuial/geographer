@@ -30,6 +30,7 @@ Imports:
     ggplot2,
     ggrepel,
     ggtext,
+    ggthemes,
     glue,
     highcharter,
     IslamicArt,
