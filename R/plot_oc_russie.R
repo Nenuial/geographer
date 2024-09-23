@@ -511,7 +511,7 @@ oc_russie_graph_depense_militaire <- function(theme = ggplot2::theme_minimal()) 
 
 #' Religion en Russie
 #'
-#' @returns A graph
+#' @returns A highcharts graph
 #' @export
 #'
 #' @source <https://www.levada.ru/en/2023/06/02/religious-beliefs/>
@@ -540,4 +540,43 @@ oc_russie_hc_religion <- function() {
     highcharter::hc_add_series(name = "Pas du tout", data = none, color = "#c0d9eb") |>
     highcharter::hc_add_series(name = "Ne peux pas dire", data = cant_say, color = "#9e9e9e") |>
     highcharter::hc_tooltip(shared = TRUE, valueSuffix = "%")
+}
+
+
+# Economie ---------------------------------------------------------------
+
+#' PIB par habitant comparé entre la Russie et la Suisse
+#'
+#' @returns A highcharts graph
+#' @export
+#'
+#' @examples
+#' oc_russie_hc_pib_vs_suisse()
+oc_russie_hc_pib_vs_suisse <- function() {
+  wbstats::wb_data(
+    indicator = c("value" = "NY.GDP.PCAP.CD"),
+    start_date = 1990,
+    end_date = 2020,
+    country = c("Russian federation", "Switzerland")
+  ) |>
+    dplyr::mutate(value = round(value, 2)) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_chart(type = "line") |>
+    highcharter::hc_add_series(
+      name = "Russie",
+      data = data |>
+        dplyr::filter(country == "Russian Federation") |>
+        dplyr::select(x = date, y = value),
+      color = "#657062",
+      value = "value"
+    ) |>
+    highcharter::hc_add_series(
+      name = "Suisse",
+      data = data |>
+        dplyr::filter(country == "Switzerland") |>
+        dplyr::select(x = date, y = value),
+      color = "#d14e3e"
+    ) |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE)
 }
