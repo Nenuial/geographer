@@ -266,5 +266,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
         ),
         showInLegend = FALSE
       )
+    ) |>
+    highcharter::hc_caption(
+      text = "Source : <a href='https://www.bfs.admin.ch/bfs/fr/home.html' target='_blank'>OFS (2000)</a>"
     )
 }
