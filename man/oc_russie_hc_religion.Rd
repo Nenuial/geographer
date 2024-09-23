@@ -10,7 +10,7 @@
 oc_russie_hc_religion()
 }
 \value{
-A graph
+A highcharts graph
 }
 \description{
 Religion en Russie
