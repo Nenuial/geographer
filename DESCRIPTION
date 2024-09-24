@@ -78,6 +78,6 @@ Remotes:
     ropensci/rrricanes
 RoxygenNote: 7.3.2
 Depends: 
-    R (>= 4.1)
+    R (>= 3.5)
 Roxygen: list(markdown = TRUE)
 Config/Needs/website: nenuial/geopkg

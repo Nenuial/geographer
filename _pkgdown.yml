@@ -117,6 +117,7 @@ reference:
 - subtitle: Plots
   contents:
   - starts_with("oc_suisse_graph")
+  - starts_with("oc_suisse_hc")
 
 - title: GIS Projections
   description: |

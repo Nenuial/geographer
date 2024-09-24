@@ -37,3 +37,41 @@ oc_suisse_graph_2021_immigration_italienne <- function(theme = ggplot2::theme_mi
       x = ""
     )
 }
+
+#' Nationalité en Suisse en 2023
+#'
+#' Graphique des principales nationalité en Suisse en 2023
+#' hors Suisses.
+#'
+#' @returns A highcharts graph
+#' @export
+#'
+#' @examples
+#' oc_suisse_hc_2023_nationalite()
+oc_suisse_hc_2023_nationalite <- function() {
+  geodata::oc_suisse_2023_nationalite |>
+    dplyr::filter(Nationalite == "Nationalit\u00e9 - total") |>
+    dplyr::pull(Population) -> population_totale
+
+  geodata::oc_suisse_2023_nationalite |>
+    dplyr::filter(Nationalite != "Nationalit\u00e9 - total") |>
+    dplyr::filter(Nationalite != "Suisse") |>
+    dplyr::mutate(percent = round(Population / population_totale * 100, 2)) |>
+    dplyr::arrange(dplyr::desc(percent)) |>
+    dplyr::slice(1:10) |>
+    highcharter::hchart(
+      type = "column",
+      highcharter::hcaes(x = Nationalite, y = percent),
+      name = "Population"
+    ) |>
+    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text} %")) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_plotOptions(
+      column = list(colorByPoint = TRUE)
+    ) |>
+    highcharter::hc_colors(palettetown::ichooseyou("salamence", 9)) |>
+    highcharter::hc_title(text = "Ethnies principales") |>
+    highcharter::hc_subtitle(text = "en Suisse en 2023 (hors Suisses)") |>
+    highcharter::hc_caption(text = "Source: OFS (2023)") |>
+    highcharter::hc_tooltip(valueSuffix = "%")
+}
