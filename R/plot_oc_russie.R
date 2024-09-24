@@ -626,6 +626,7 @@ oc_russie_hc_pib_vs_suisse <- function() {
         dplyr::select(x = date, y = value),
       color = "#d14e3e"
     ) |>
+    highcharter::hc_title(text = "PIB par habitant") |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
     highcharter::hc_caption(
       text = "Source: <a href='https://data.worldbank.org/indicator/NY.GDP.PCAP.CD'>World Bank</a>"
