@@ -140,12 +140,12 @@ oc_suisse_carte_hc_2020_religion <- function() {
 
   swiss |>
     dplyr::left_join(data, dplyr::join_by(mun_id == ID)) |>
-    dplyr::filter(Religion == "Eglise \u00e9evang\u00e9elique r\u00e9eform\u00e9ee") |>
+    dplyr::filter(Religion == "Eglise \u00e9vang\u00e9lique r\u00e9form\u00e9e") |>
     geojsonio::geojson_json() -> map_protestant
 
   swiss |>
     dplyr::left_join(data, dplyr::join_by(mun_id == ID)) |>
-    dplyr::filter(Religion == "Autres Eglises et communaut\u00e9es protestantes") |>
+    dplyr::filter(Religion == "Autres Eglises et communaut\u00e9s protestantes") |>
     geojsonio::geojson_json() -> map_autre
 
   swiss |>
@@ -186,16 +186,16 @@ oc_suisse_carte_hc_2020_religion <- function() {
     ) |>
     highcharter::hc_add_series(
       mapData = map_protestant,
-      data = data |> dplyr::filter(Religion == "Eglise \u00e9evang\u00e9elique r\u00e9eform\u00e9ee"),
+      data = data |> dplyr::filter(Religion == "Eglise \u00e9vang\u00e9lique r\u00e9form\u00e9e"),
       joinBy = c("mun_id", "ID"),
-      name = "Protestant \u00e9evang\u00e9elique",
-      color = "#729e93",
+      name = "Protestant \u00e9vang\u00e9lique",
+      color = "#fd8f24",
       value = "value",
       colorAxis = 1
     ) |>
     highcharter::hc_add_series(
       mapData = map_autre,
-      data = data |> dplyr::filter(Religion == "Autres Eglises et communaut\u00e9es protestantes"),
+      data = data |> dplyr::filter(Religion == "Autres Eglises et communaut\u00e9s protestantes"),
       joinBy = c("mun_id", "ID"),
       name = "Autres protestants",
       color = "#475286",
@@ -237,7 +237,7 @@ oc_suisse_carte_hc_2020_religion <- function() {
         dataClasses = geotools::gtl_hc_color_axis(
           santoku::chop(
             data |>
-              dplyr::filter(Religion == "Eglise \u00e9evang\u00e9elique r\u00e9eform\u00e9ee") |>
+              dplyr::filter(Religion == "Eglise \u00e9vang\u00e9lique r\u00e9form\u00e9e") |>
               dplyr::pull(value),
             c(25, 50, 75, 100)
           ), palette_protestant
@@ -248,7 +248,7 @@ oc_suisse_carte_hc_2020_religion <- function() {
         dataClasses = geotools::gtl_hc_color_axis(
           santoku::chop(
             data |>
-              dplyr::filter(Religion == "Autres Eglises et communaut\u00e9es protestantes") |>
+              dplyr::filter(Religion == "Autres Eglises et communaut\u00e9s protestantes") |>
               dplyr::pull(value),
             c(25, 50, 75, 100)
           ), palette_autre
