@@ -401,6 +401,8 @@ oc_russie_carte_hc_religion <- function() {
       name = "Background",
       mapData = russia |> geojsonio::geojson_json(),
       showInLegend = FALSE,
+      borderColor = "transparent",
+      borderWidth = 0.1,
       data = c()
     ) |>
     highcharter::hc_add_series(
@@ -409,6 +411,8 @@ oc_russie_carte_hc_religion <- function() {
       joinBy = "adm1_code",
       name = "Orthodoxe",
       color = "#699cb6",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       value = "value"
     ) |>
     highcharter::hc_add_series(
@@ -418,6 +422,8 @@ oc_russie_carte_hc_religion <- function() {
       name = "Islam",
       color = "#729e93",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 1
     ) |>
     highcharter::hc_add_series(
@@ -427,6 +433,8 @@ oc_russie_carte_hc_religion <- function() {
       name = "D\u00e9iste",
       color = "#475286",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 2
     ) |>
     highcharter::hc_add_series(
@@ -436,6 +444,8 @@ oc_russie_carte_hc_religion <- function() {
       name = "Bouddhisme",
       color = "#fae3a0",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 3
     ) |>
     highcharter::hc_add_series(
@@ -445,6 +455,8 @@ oc_russie_carte_hc_religion <- function() {
       name = "Ath\u00e9e",
       color = "#a59da2",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 4
     ) |>
     highcharter::hc_mapView(
