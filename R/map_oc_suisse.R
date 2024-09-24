@@ -174,6 +174,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       name = "Background",
       mapData = swiss |> geojsonio::geojson_json(),
       showInLegend = FALSE,
+      borderColor = "transparent",
+      borderWidth = 0.1,
       data = c()
     ) |>
     highcharter::hc_add_series(
@@ -182,6 +184,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       joinBy = c("mun_id", "ID"),
       name = "Catholique",
       color = "#406975",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       value = "value"
     ) |>
     highcharter::hc_add_series(
@@ -191,6 +195,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       name = "Protestant \u00e9vang\u00e9lique",
       color = "#fd8f24",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 1
     ) |>
     highcharter::hc_add_series(
@@ -200,6 +206,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       name = "Autres protestants",
       color = "#475286",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 2
     ) |>
     highcharter::hc_add_series(
@@ -209,6 +217,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       name = "Ath\u00e9e",
       color = "#a59da2",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       colorAxis = 4
     ) |>
     highcharter::hc_add_series(
@@ -219,6 +229,8 @@ oc_suisse_carte_hc_2020_religion <- function() {
       showInLegend = FALSE,
       color = "#8ec6e9",
       nullColor = "#8ec6e9",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       data = c()
     ) |>
     highcharter::hc_colorAxis(
