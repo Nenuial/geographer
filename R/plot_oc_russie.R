@@ -346,6 +346,54 @@ oc_russie_graph_demo_exa <- function(theme = ggplot2::theme_minimal()) {
     )
 }
 
+#' Ethnies en Russie
+#'
+#' Graphique des 10 ethnies les plus fréquentes (hors Russes)
+#'
+#' @returns A highcharts graph
+#' @export
+#'
+#' @examples
+#' oc_russie_hc_ethnies()
+oc_russie_hc_ethnies <- function() {
+  geodata::oc_russie_2020_population_composition |>
+    dplyr::filter(
+      type_pop == "Population urbaine et rurale",
+      sexe == "hommes et femmes",
+      ethnie == "Population enti\u00e8re"
+    ) |>
+    dplyr::pull(population) -> population_totale
+
+  geodata::oc_russie_2020_population_composition |>
+    dplyr::filter(
+      type_pop == "Population urbaine et rurale",
+      sexe == "hommes et femmes"
+    ) |>
+    dplyr::filter(
+      ethnie != "Population enti\u00e8re",
+      ethnie != "Indiquer la nationalit\u00e9",
+      ethnie != "Russes"
+    ) |>
+    dplyr::mutate(percent = round(population / population_totale * 100, 2)) |>
+    dplyr::arrange(dplyr::desc(percent)) |>
+    dplyr::slice(1:10) |>
+    highcharter::hchart(
+      type = "column",
+      highcharter::hcaes(x = ethnie, y = percent),
+      name = "Population"
+    ) |>
+    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text} %")) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_plotOptions(
+      column = list(colorByPoint = TRUE)
+    ) |>
+    highcharter::hc_colors(palettetown::ichooseyou("salamence", 9)) |>
+    highcharter::hc_title(text = "Ethnies principales") |>
+    highcharter::hc_subtitle(text = "en Russie en 2020 (hors Russes)") |>
+    highcharter::hc_caption(text = "Source: Rosstat (2020)") |>
+    highcharter::hc_tooltip(valueSuffix = "%")
+}
+
 
 # Attitude envers l'étranger ------------------------------------------------------------------
 
