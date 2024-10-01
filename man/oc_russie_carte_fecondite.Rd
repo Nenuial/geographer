@@ -2,6 +2,7 @@
 % Please edit documentation in R/map_oc_russie.R
 \name{oc_russie_carte_fecondite}
 \alias{oc_russie_carte_fecondite}
+\alias{oc_russie_carte_hc_fecondite}
 \title{Indice de fécondité en Russie}
 \usage{
 oc_russie_carte_fecondite(
@@ -9,6 +10,8 @@ oc_russie_carte_fecondite(
   barwidth = 40,
   greyscale = FALSE
 )
+
+oc_russie_carte_hc_fecondite()
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
@@ -18,13 +21,14 @@ oc_russie_carte_fecondite(
 \item{greyscale}{Boolean: whether to create a grey scale map}
 }
 \value{
-A ggplot2 map
+A map
 }
 \description{
-Une carte de l'indice de fécondité en 2019
+Une carte de l'indice de fécondité en 2023
 au niveau régional en Russie.
 }
 \examples{
 oc_russie_carte_fecondite()
+oc_russie_carte_hc_fecondite()
 }
 \concept{oc russie fertilité}
