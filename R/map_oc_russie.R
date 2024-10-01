@@ -2,19 +2,20 @@
 
 #' Indice de fécondité en Russie
 #'
-#' Une carte de l'indice de fécondité en 2019
+#' Une carte de l'indice de fécondité en 2023
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
 #' @param barwidth Width of legend bar
 #' @param greyscale Boolean: whether to create a grey scale map
 #'
-#' @return A ggplot2 map
+#' @return A map
 #' @concept oc russie fertilité
 #'
 #' @export
 #' @examples
 #' oc_russie_carte_fecondite()
+#' oc_russie_carte_hc_fecondite()
 oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
   if (greyscale) {
     fill_scale <- ggplot2::scale_fill_stepsn(
@@ -53,6 +54,49 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
       subtitle = "par r\u00e9gions en 2023",
       fill = "",
       caption = "Source: Rosstat (2024)"
+    )
+}
+
+#' @rdname oc_russie_carte_fecondite
+#' @export
+oc_russie_carte_hc_fecondite <- function() {
+  geodata::oc_russie_2023_fecondite |>
+    dplyr::filter(year == 2023) |>
+    dplyr::rename(value = tfr) -> data
+
+  palette_fecondite <- function(...) {
+    wesanderson::wes_palette("Zissou1", ..., type = "continuous")
+  }
+
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") -> russia
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Indice de f\u00e9condit\u00e9",
+      mapData = russia |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      joinBy = "adm1_code",
+      value = "value",
+      nullColor = "#838a8f",
+      data = data
+    ) |>
+    highcharter::hc_mapView(
+      maxZoom = 30,
+      projection = list(
+        name = "Orthographic",
+        rotation = c(-90, -80)
+      )
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_color_axis(
+        santoku::chop(
+          data$value,
+          c(1.2, 1.5, 1.8, 2.1)
+        ), palette_fecondite
+      ),
+      showInLegend = TRUE
     )
 }
 
@@ -144,19 +188,20 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
 
 #' Accroissement naturel en Russie
 #'
-#' Une carte de l'accroissement naturel en 2019
+#' Une carte de l'accroissement naturel en 2023
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
 #' @param barwidth Width of legend bar
 #' @param greyscale Boolean: whether to create a grey scale map
 #'
-#' @return A ggplot2 map
+#' @return A map
 #' @concept oc russie mortalité
 #'
 #' @export
 #' @examples
 #' oc_russie_carte_accroissement()
+#' oc_russie_carte_hc_accroissement()
 oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
@@ -207,6 +252,49 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
       subtitle = "par r\u00e9gions en 2023",
       fill = "",
       caption = "Source: Rosstat (2024)"
+    )
+}
+
+#' @rdname oc_russie_carte_accroissement
+#' @export
+oc_russie_carte_hc_accroissement <- function() {
+  geodata::oc_russie_2023_accroissement |>
+    dplyr::filter(year == 2023) |>
+    dplyr::rename(value = rni) -> data
+
+  palette_accroissement <- function(...) {
+    paletteer::paletteer_c("pals::ocean.curl", direction = -1, 10)[4:9]
+  }
+
+  rnaturalearth::ne_states(country = "Russia", returnclass = "sf") -> russia
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Accroissement naturel",
+      mapData = russia |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      joinBy = "adm1_code",
+      value = "value",
+      nullColor = "#838a8f",
+      data = data
+    ) |>
+    highcharter::hc_mapView(
+      maxZoom = 30,
+      projection = list(
+        name = "Orthographic",
+        rotation = c(-90, -80)
+      )
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_color_axis(
+        santoku::chop(
+          data$value,
+          c(-5, 0, 5, 10, 15)
+        ), palette_accroissement
+      ),
+      showInLegend = TRUE
     )
 }
 
