@@ -114,7 +114,7 @@ gph_wb_world_hc <- function(indicator) {
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = geotools::gtl_hc_color_axis(
-        santoku::chop(df$data, breaks = indicator$breaks), palette
+        santoku::chop(df$data, breaks = indicator$breaks, drop = FALSE), palette
       ),
       showInLegend = TRUE
     ) |>
