@@ -149,6 +149,48 @@ df_demography_graph_world_population_growth <- function(theme = ggplot2::theme_m
     )
 }
 
+#' Graph of the Human Development Index
+#'
+#' Every country of the world with the Human Development Index
+#' from 1990 to 2021.
+#'
+#' @returns A hicharter graph
+#' @export
+#'
+#' @examples
+#' df_demography_hc_world_hdi()
+df_demography_hc_world_hdi <- function() {
+  geodata::gdt_un_hdr_composite |>
+    dplyr::filter(!stringr::str_detect(iso3, "^ZZ")) |>
+    dplyr::filter(indicator == "hdi") -> hdi_data
+
+  highcharter::highchart() |>
+    highcharter::hc_add_series(
+      data = hdi_data,
+      "line",
+      name = "HDI",
+      showInLegend = FALSE,
+      dashStyle = "solid",
+      color = "grey",
+      lineWidth = .6,
+      tooltip = list(valueSuffix = ""),
+      highcharter::hcaes(x = year, y = value, group = iso3)
+    ) |>
+    ## Remove the symbols from the lines
+    highcharter::hc_plotOptions(
+      series = list(
+        marker = list(enabled = FALSE)
+      )
+    ) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+            return '<b>' + this.series.name + '</b>: ' + this.point.value + '<br/>' +
+            '<b>Country</b>: ' + this.point.country + '<br/>' +
+            '<b>Year</b>: ' + this.point.year;
+          }}"))
+    )
+}
+
 # nolint start: commented_code_linter
 # For future me. Requires patchwork.
 # #' World population patchwork composition
