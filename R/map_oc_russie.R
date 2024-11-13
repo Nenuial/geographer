@@ -615,3 +615,272 @@ oc_russie_carte_hc_religion <- function() {
       text = "Source : <a href='https://sreda.org/arena' target='_blank'>SREDA (2012)</a>"
     )
 }
+
+
+# Géopolitique -----------------------------------------------------------
+
+#' Adhésion à l'OTAN
+#'
+#' Carte de l'adhésion à l'OTAN par années
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @returns A ggplot2 map
+#' @export
+#'
+#' @examples
+#' oc_russie_carte_adhesion_otan()
+#' oc_russie_carte_hc_adhesion_otan()
+oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
+  geodata::gdt_nato_membership() |>
+    dplyr::mutate(
+      gwcode = countrycode::countrycode(
+        iso3,
+        origin = "iso3c", destination = "cown",
+        custom_match = c("DDR" = 265, "DEU" = 260)
+      )
+    ) |>
+    dplyr::mutate(
+      gwcode = as.integer(gwcode)
+    ) |>
+    dplyr::mutate(
+      pays = countrycode::countrycode(
+        iso3,
+        origin = "iso3c", destination = "country.name.fr",
+        custom_match = c(
+          "DDR" = "Allemagne de l'Est",
+          "DEU" = "Allemagne"
+        )
+      )
+    ) -> otan
+
+  cshapes::cshp(date = lubridate::ymd("2019-12-01")) |>
+    dplyr::left_join(
+      otan,
+      by = "gwcode"
+    ) |>
+    sf::st_as_sf() |>
+    sf::st_transform(crs = 3035) |>
+    dplyr::mutate(
+      CENTROID = purrr::map(geometry, sf::st_centroid),
+      COORDS = purrr::map(CENTROID, sf::st_coordinates),
+      COORDS_X = purrr::map_dbl(COORDS, 1),
+      COORDS_Y = purrr::map_dbl(COORDS, 2)
+    ) |>
+    dplyr::filter(!(gwcode %in% c(260, 265))) -> map_data_current
+
+  cshapes::cshp(date = lubridate::ymd("1989-12-01")) |>
+    dplyr::left_join(
+      otan,
+      by = "gwcode"
+    ) |>
+    sf::st_as_sf() |>
+    sf::st_transform(crs = 3035) |>
+    dplyr::mutate(
+      CENTROID = purrr::map(geometry, sf::st_centroid),
+      COORDS = purrr::map(CENTROID, sf::st_coordinates),
+      COORDS_X = purrr::map_dbl(COORDS, 1),
+      COORDS_Y = purrr::map_dbl(COORDS, 2)
+    ) |>
+    dplyr::filter(gwcode %in% c(260, 265)) -> map_data_germany
+
+  map_data_current |>
+    dplyr::bind_rows(map_data_germany) -> map_data
+
+  map_data |>
+    ggplot2::ggplot() +
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = extension),
+      color = "black", linewidth = .1
+    ) +
+    ggplot2::geom_sf(
+      data = map_data |> dplyr::filter(gwcode == 365),
+      fill = "#c03728",
+      color = "black",
+      linewidth = .1
+    ) +
+    ggrepel::geom_label_repel(
+      data = map_data |> dplyr::filter(gwcode == 365),
+      x = 6500000,
+      y = 4500000,
+      label = "Russie",
+      fill = "#c03728",
+      color = "#FFF",
+      size = 3,
+      force = 2,
+      min.segment.length = 0,
+      point.padding = NA,
+      show.legend = FALSE
+    ) +
+    ggrepel::geom_label_repel(
+      mapping = ggplot2::aes(
+        x = COORDS_X,
+        y = COORDS_Y,
+        label = pays,
+        fill = extension,
+        color = extension
+      ),
+      size = 3,
+      force = 2,
+      min.segment.length = 0,
+      point.padding = NA,
+      show.legend = FALSE
+    ) +
+    ggplot2::coord_sf(
+      xlim = c(2700000, 7000000),
+      ylim = c(1500000, 5500000),
+      datum = NA
+    ) +
+    theme +
+    ggplot2::theme(
+      legend.position = "bottom"
+    ) +
+    ggplot2::scale_fill_manual(
+      values = paletteer::paletteer_c(
+        "pals::ocean.deep", 12
+      ),
+      na.translate = FALSE
+    ) +
+    ggplot2::scale_color_manual(
+      values = c(
+        rep.int("#FFF", 6),
+        rep.int("#000", 6)
+      )
+    ) +
+    ggplot2::guides(
+      fill = ggplot2::guide_legend(
+        nrows = 4, ncol = 3,
+      )
+    ) +
+    ggplot2::labs(
+      title = "Extension de l'OTAN",
+      fill = "",
+      x = "", y = "",
+      caption = "Source: OTAN (2024)"
+    )
+}
+
+#' @rdname oc_russie_carte_adhesion_otan
+#' @export
+oc_russie_carte_hc_adhesion_otan <- function() {
+  palette <- function(...) {
+    paletteer::paletteer_c("pals::ocean.deep", 12) -> colors
+
+    return(colors)
+  }
+
+  geodata::gdt_nato_membership() |>
+    dplyr::mutate(
+      gwcode = countrycode::countrycode(
+        iso3,
+        origin = "iso3c", destination = "cown",
+        custom_match = c("DDR" = 265, "DEU" = 260)
+      )
+    ) |>
+    dplyr::mutate(
+      gwcode = as.integer(gwcode)
+    ) |>
+    dplyr::mutate(
+      pays = countrycode::countrycode(
+        iso3,
+        origin = "iso3c", destination = "country.name.fr",
+        custom_match = c(
+          "DDR" = "Allemagne de l'Est",
+          "DEU" = "Allemagne"
+        )
+      )
+    ) -> otan
+
+  cshapes::cshp(date = lubridate::ymd("2019-12-01")) |>
+    dplyr::left_join(
+      otan,
+      by = "gwcode"
+    ) |>
+    sf::st_as_sf() |>
+    dplyr::mutate(
+      CENTROID = purrr::map(geometry, sf::st_centroid),
+      COORDS = purrr::map(CENTROID, sf::st_coordinates),
+      COORDS_X = purrr::map_dbl(COORDS, 1),
+      COORDS_Y = purrr::map_dbl(COORDS, 2)
+    ) |>
+    dplyr::filter(!(gwcode %in% c(260, 265))) -> map_data_current
+
+  cshapes::cshp(date = lubridate::ymd("1989-12-01")) |>
+    dplyr::left_join(
+      otan,
+      by = "gwcode"
+    ) |>
+    sf::st_as_sf() |>
+    dplyr::mutate(
+      CENTROID = purrr::map(geometry, sf::st_centroid),
+      COORDS = purrr::map(CENTROID, sf::st_coordinates),
+      COORDS_X = purrr::map_dbl(COORDS, 1),
+      COORDS_Y = purrr::map_dbl(COORDS, 2)
+    ) |>
+    dplyr::filter(gwcode %in% c(260, 265)) -> map_data_germany
+
+  map_data_current |>
+    dplyr::bind_rows(map_data_germany) |>
+    dplyr::mutate(
+      continent = countrycode::countrycode(
+        gwcode,
+        origin = "cown", destination = "continent",
+        custom_match = c("260" = "Europe", "265" = "Europe")
+      )
+    ) |>
+    dplyr::filter(continent == "Europe") -> map_data
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Background",
+      mapData = map_data |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      data = c()
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(gwcode == 365) |>
+        geojsonio::geojson_json(),
+      data = map_data |>
+        dplyr::filter(gwcode == 365) |>
+        dplyr::mutate(value = 99),
+      joinBy = "gwcode",
+      name = "Russie",
+      color = "#c03728",
+      enableMouseTracking = FALSE,
+      showInLegend = FALSE
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(gwcode != 365) |>
+        dplyr::select(gwcode, geometry) |>
+        geojsonio::geojson_json(),
+      data = map_data |>
+        dplyr::mutate(value = as.integer(extension)),
+      joinBy = "gwcode",
+      name = "OTAN",
+      value = "value",
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_discrete_color_axis(
+        map_data$extension,
+        palette
+      ),
+      showInLegend = TRUE
+    ) |>
+    highcharter::hc_mapView(
+      projection = list(
+        name = "Orthographic",
+        rotation = c(0, -20)
+      ),
+      zoom = 4.2
+    ) |>
+    highcharter::hc_caption(
+      text = "Source: OTAN (2024)"
+    ) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.point.pays + '</b>: ' +
+          this.point.extension }}"))
+    )
+}

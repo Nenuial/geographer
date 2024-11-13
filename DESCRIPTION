@@ -1,7 +1,7 @@
 Package: geographer
 Type: Package
 Title: Geography Vizualisations
-Version: 1.0.0
+Version: 1.2.0
 Authors@R: 
     person("Pascal", "Burkhard", , "pascal.burkhard@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-5504-5084"))

@@ -143,8 +143,10 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' @return A ggplot2 graph
 #' @export
+#' @name oc_russie_graphs_fertilite_europe
 #' @examples
 #' oc_russie_graph_fertilite_europe()
+#' oc_russie_hc_fertilite_europe()
 oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
   wbstats::wb_countries() |>
     dplyr::filter(region_iso3c == "ECS") |>
@@ -174,6 +176,56 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
     )
 }
 
+
+#' @rdname oc_russie_graphs_fertilite_europe
+#' @return A highcharts graph
+#' @export
+oc_russie_hc_fertilite_europe <- function() {
+  wbstats::wb_countries() |>
+    dplyr::filter(region_iso3c == "ECS") |>
+    dplyr::pull(iso3c) |>
+    wbstats::wb_data(
+      indicator = c(lex = "SP.DYN.TFRT.IN"),
+      country = _,
+      start_date = 1960,
+      end_date = 2022
+    ) |>
+    dplyr::mutate(country = countrycode::countrycode(iso3c, "iso3c", "un.name.fr", warn = FALSE)) -> fertility_data
+
+  highcharter::highchart() |>
+    highcharter::hc_add_series(
+      data = fertility_data |>
+        dplyr::filter(iso3c != "RUS"),
+      type = "line",
+      name = "Fertility Rate",
+      color = "#d7d7d7",
+      enableMouseTracking = FALSE,
+      showInLegend = FALSE,
+      highcharter::hcaes(x = date, y = lex, group = iso3c)
+    ) |>
+    highcharter::hc_add_series(
+      data = fertility_data |>
+        dplyr::filter(iso3c == "RUS"),
+      type = "line",
+      name = "Indice de f\u00e9condit\u00e9",
+      color = "#41afeb",
+      showInLegend = FALSE,
+      highcharter::hcaes(x = date, y = lex)
+    ) |>
+    highcharter::hc_plotOptions(
+      series = list(
+        marker = list(enabled = FALSE)
+      )
+    ) |>
+    highcharter::hc_title(text = "\u00c9volution de l'indice de f\u00e9condit\u00e9") |>
+    highcharter::hc_subtitle(
+      text = "en <span style='color:#41afeb; font-weight:bold;'>Russie</span>,compar\u00e9 au reste de l'Europe"
+    ) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(title = list(text = "")) |>
+    highcharter::hc_caption(text = "Source: World Bank (2024)")
+}
+
 #' Espérance de vie russe
 #'
 #' Graphiques qui montrent l'évolution de l'espérance de vie
@@ -186,7 +238,8 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
 #' @export
 #' @examples
 #' oc_russie_graph_esperance_europe()
-#' @examplesIf interactive()
+#' oc_russie_hc_esperance_europe()
+#' @examplesIf FALSE
 #' # Not run: needs credentials for HMD database
 #' oc_russie_graph_esperance_65_femmes()
 #' oc_russie_graph_esperance_65_hommes()
@@ -218,6 +271,56 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
       x = "", y = "",
       caption = "Source: Banque Mondiale (2021)"
     )
+}
+
+#' @rdname oc_russie_graphs_esperance_de_vie
+#' @export
+oc_russie_hc_esperance_europe <- function() {
+  wbstats::wb_countries() |>
+    dplyr::filter(region_iso3c == "ECS") |>
+    dplyr::pull(iso3c) |>
+    wbstats::wb_data(
+      indicator = c(lex = "SP.DYN.LE00.IN"),
+      country = _,
+      start_date = 1960,
+      end_date = 2022
+    ) |>
+    tidyr::drop_na(lex) |>
+    dplyr::mutate(lex = round(lex, 2)) |>
+    dplyr::mutate(country = countrycode::countrycode(iso3c, "iso3c", "un.name.fr", warn = FALSE)) -> lex_data
+
+  highcharter::highchart() |>
+    highcharter::hc_add_series(
+      data = lex_data |>
+        dplyr::filter(iso3c != "RUS"),
+      type = "line",
+      name = "Esp\u00e9rance de vie",
+      color = "#d7d7d7",
+      enableMouseTracking = FALSE,
+      showInLegend = FALSE,
+      highcharter::hcaes(x = date, y = lex, group = iso3c)
+    ) |>
+    highcharter::hc_add_series(
+      data = lex_data |>
+        dplyr::filter(iso3c == "RUS"),
+      type = "line",
+      name = "Esp\u00e9rance de vie",
+      color = "#41afeb",
+      showInLegend = FALSE,
+      highcharter::hcaes(x = date, y = lex)
+    ) |>
+    highcharter::hc_plotOptions(
+      series = list(
+        marker = list(enabled = FALSE)
+      )
+    ) |>
+    highcharter::hc_title(text = "Esp\u00e9rance de vie") |>
+    highcharter::hc_subtitle(
+      text = "en <span style='color:#41afeb; font-weight:bold;'>Russie</span>, compar\u00e9 au reste de l'Europe"
+    ) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis(title = list(text = "")) |>
+    highcharter::hc_caption(text = "Source: World Bank (2024)")
 }
 
 #' @rdname oc_russie_graphs_esperance_de_vie

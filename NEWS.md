@@ -1,3 +1,11 @@
+# geographer 1.2.0
+
+* Visualizations for OC Russie
+
+# geographer 1.1.0
+
+* Demography visualization for OC Russie
+
 # geographer 1.0.0
 
 * Release package
