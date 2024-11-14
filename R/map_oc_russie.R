@@ -739,7 +739,8 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
       values = paletteer::paletteer_c(
         "pals::ocean.deep", 12
       ),
-      na.translate = FALSE
+      breaks = ~ .x[!is.na(.x)],
+      na.value = "#CCCCCC"
     ) +
     ggplot2::scale_color_manual(
       values = c(
@@ -761,8 +762,10 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
 }
 
 #' @rdname oc_russie_carte_adhesion_otan
+#' @param layout Layout of the legend, either 'horizontal', 'vertical' or 'proximate'
+#' @param zoom Map zoom (defaults to 3.5)
 #' @export
-oc_russie_carte_hc_adhesion_otan <- function() {
+oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
   palette <- function(...) {
     paletteer::paletteer_c("pals::ocean.deep", 12) -> colors
 
@@ -835,7 +838,9 @@ oc_russie_carte_hc_adhesion_otan <- function() {
       name = "Background",
       mapData = map_data |> geojsonio::geojson_json(),
       showInLegend = FALSE,
-      data = c()
+      data = c(),
+      borderColor = "transparent",
+      borderWidth = 0.1
     ) |>
     highcharter::hc_add_series(
       mapData = map_data |>
@@ -847,6 +852,8 @@ oc_russie_carte_hc_adhesion_otan <- function() {
       joinBy = "gwcode",
       name = "Russie",
       color = "#c03728",
+      borderColor = "transparent",
+      borderWidth = 0.1,
       enableMouseTracking = FALSE,
       showInLegend = FALSE
     ) |>
@@ -860,6 +867,8 @@ oc_russie_carte_hc_adhesion_otan <- function() {
       joinBy = "gwcode",
       name = "OTAN",
       value = "value",
+      borderColor = "transparent",
+      borderWidth = 0.1
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = geotools::gtl_hc_discrete_color_axis(
@@ -873,7 +882,11 @@ oc_russie_carte_hc_adhesion_otan <- function() {
         name = "Orthographic",
         rotation = c(0, -20)
       ),
-      zoom = 4.2
+      zoom = zoom
+    ) |>
+    highcharter::hc_legend(
+      layout = layout,
+      align = "right"
     ) |>
     highcharter::hc_caption(
       text = "Source: OTAN (2024)"

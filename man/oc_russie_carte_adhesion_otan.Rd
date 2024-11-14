@@ -7,10 +7,14 @@
 \usage{
 oc_russie_carte_adhesion_otan(theme = ggplot2::theme_minimal())
 
-oc_russie_carte_hc_adhesion_otan()
+oc_russie_carte_hc_adhesion_otan(layout = "proximate", zoom = 3.5)
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{layout}{Layout of the legend, either 'horizontal', 'vertical' or 'proximate'}
+
+\item{zoom}{Map zoom (defaults to 3.5)}
 }
 \value{
 A ggplot2 map

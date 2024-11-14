@@ -1,3 +1,7 @@
+# geographer (development version)
+
+* Fixes for the NATO membership visualization
+
 # geographer 1.2.0
 
 * Visualizations for OC Russie
