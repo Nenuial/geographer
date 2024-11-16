@@ -40,6 +40,7 @@ reference:
   - gph_pyramid
   - gph_pyramid_relative
   - gph_hc_pyramid
+  - gph_hc_pyramid_relative
 
 - title: Swiss visualization
   description: |

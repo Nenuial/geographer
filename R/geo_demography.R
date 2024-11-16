@@ -361,7 +361,7 @@ gph_highcharter_pyramid <- function(country, year) {
 #'
 #' @return A highcharter graph
 #' @export
-#' @examplesIf interactive()
+#' @examplesIf FALSE
 #' # Not run: need a valid IDB API key
 #' gph_hc_pyramid("Switzerland", 2020)
 gph_hc_pyramid <- function(country, year) {
@@ -447,5 +447,104 @@ gph_hc_pyramid <- function(country, year) {
           return '<b>' + this.series.name + ', age ' + this.point.category + ', ' +
           ({year} - this.point.category) + '</b><br/>' +
           'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0); }}"))
+    )
+}
+
+#' Create highcharter population pyramid with relative values
+#'
+#' @param country A string with the country name
+#' @param year An integer for the year
+#'
+#' @return A highcharter graph
+#' @export
+#' @examplesIf FALSE
+#' # Not run: need a valid IDB API key
+#' gph_hc_pyramid_relative("Switzerland", 2020)
+gph_hc_pyramid_relative <- function(country, year) {
+  country -> country_name
+  geodata::gdt_idb_pyramid_5y(country, year) |>
+    dplyr::mutate(population = ifelse(gender == "male", population * -1, population)) |>
+    dplyr::mutate(cohort = forcats::fct_inorder(cohort)) -> data
+
+  total_population <- sum(abs(data$population))
+
+  data |>
+    tidyr::pivot_wider(names_from = "gender", values_from = "population") |>
+    dplyr::mutate(
+      male_percent = male / total_population * 100,
+      female_percent = female / total_population * 100
+    ) |>
+    dplyr::arrange(dplyr::desc(sort)) -> plot_data
+
+  ceiling(
+    max(c(max(abs(plot_data$male_percent)), max(plot_data$female_percent))) * 2
+  ) / 2 -> pop_max
+
+  if (geotools::gtl_opt_short_language() == "fr") {
+    countrycode::countrycode(
+      country, "country.name", "un.name.fr",
+      custom_match = c(
+        "Kosovo" = "Kosovo",
+        "Gaza" = "Gaza",
+        "West Bank" = "Cisjordanie"
+      )
+    ) -> country_name
+  }
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = glue::glue("{country_name}")) |>
+    highcharter::hc_subtitle(text = glue::glue("{year}")) |>
+    highcharter::hc_plotOptions(
+      series = list(
+        stacking = "normal",
+        pointPadding = .1,
+        groupPadding = 0
+      )
+    ) -> hc
+
+  list(
+    list(
+      title = list(text = geotools::gtl_translate_enfr("Year", "Ann\u00e9e")),
+      categories = data |> dplyr::pull(cohort) |> rev()
+    ),
+    list(
+      opposite = TRUE,
+      categories = data |> dplyr::pull(cohort) |> rev(),
+      linkedTo = 0
+    )
+  ) -> hc$x$hc_opts$xAxis
+
+  hc |>
+    highcharter::hc_add_series(
+      data = plot_data,
+      type = "bar",
+      name = geotools::gtl_translate_enfr("Male", "Hommes"),
+      color = "#4f93b8",
+      borderWidth = 0,
+      highcharter::hcaes(cohort, male_percent)
+    ) |>
+    highcharter::hc_add_series(
+      data = plot_data,
+      type = "bar",
+      name = geotools::gtl_translate_enfr("Female", "Femmes"),
+      color = "#ad8cae",
+      borderWidth = 0,
+      highcharter::hcaes(cohort, female_percent)
+    ) |>
+    highcharter::hc_yAxis(
+      max = pop_max,
+      min = pop_max * -1,
+      labels = list(
+        formatter = shinyjqui::JS("function () { this.value = Math.abs(this.value)
+                                                   return this.axis.defaultLabelFormatter.call(this) + ' %' }")
+      )
+    ) |>
+    highcharter::hc_tooltip(
+      formatter = shinyjqui::JS(glue::glue("function () {{
+          return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+          'Population: ' + Highcharts.numberFormat(Math.abs(
+            this.point[this.series.name.toLowerCase()]
+          ), 0) + '<br/>' +
+          'Pop relative: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + ' %'; }}"))
     )
 }

@@ -1,6 +1,7 @@
 # geographer (development version)
 
 * Fixes for the NATO membership visualization
+* Add relative dynamic population pyramids
 
 # geographer 1.2.0
 
