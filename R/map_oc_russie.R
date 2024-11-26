@@ -828,7 +828,13 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
       continent = countrycode::countrycode(
         gwcode,
         origin = "cown", destination = "continent",
-        custom_match = c("260" = "Europe", "265" = "Europe")
+        custom_match = c(
+          "260" = "Europe",
+          "265" = "Europe",
+          "340" = "Europe",
+          "347" = "Europe",
+          "640" = "Europe"
+        )
       )
     ) |>
     dplyr::filter(continent == "Europe") -> map_data
