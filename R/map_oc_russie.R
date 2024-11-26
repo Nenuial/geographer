@@ -903,3 +903,244 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
           this.point.extension }}"))
     )
 }
+
+
+# Ukraine ----------------------------------------------------------------
+
+#' Cartes des élections présidentielles ukrainiennes
+#'
+#' Cartes des élections présidentielles ukrainiennes
+#' en 2010, 2014 et 2019.
+#'
+#' @name oc_russie_carte_hc_elections_ukraine
+#'
+#' @returns A higcharts map
+#' @export
+#'
+#' @examples
+#' oc_russie_carte_hc_elections_ukraine_2010()
+#' oc_russie_carte_hc_elections_ukraine_2014()
+#' oc_russie_carte_hc_elections_ukraine_2019()
+oc_russie_carte_hc_elections_ukraine_2010 <- function() {
+  geodata::oc_russie_2010_elections_ukraine |>
+    dplyr::rename(
+      adm1_code = CODE,
+      value = PERCENT
+    ) -> vote_data
+
+  palette_timo <- function(...) {
+    paletteer::paletteer_c("ggthemes::Purple", ...)
+  }
+
+  palette_yanu <- function(...) {
+    paletteer::paletteer_c("ggthemes::Blue-Teal", ...)
+  }
+
+  rnaturalearth::ne_states(
+    "Ukraine",
+    returnclass = "sf"
+  ) |>
+    dplyr::left_join(vote_data, by = "adm1_code") |>
+    sf::st_transform(crs = 3035) -> map_data
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Background",
+      mapData = map_data |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      data = c(),
+      borderColor = "transparent",
+      borderWidth = 0.1
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(CANDIDATE == "Y. Tymoshenko") |>
+        geojsonio::geojson_json(),
+      data = vote_data |> dplyr::filter(CANDIDATE == "Y. Tymoshenko"),
+      joinBy = "adm1_code",
+      name = "Tymoshenko",
+      color = "#ff009d",
+      value = "value",
+      nullColor = "transparent",
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      colorAxis = 0
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(CANDIDATE == "V. Yanukovych") |>
+        geojsonio::geojson_json(),
+      data = vote_data |> dplyr::filter(CANDIDATE == "V. Yanukovych"),
+      joinBy = "adm1_code",
+      name = "Yanukovych",
+      color = "#0099ff",
+      value = "value",
+      nullColor = "transparent",
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      colorAxis = 1
+    ) |>
+    highcharter::hc_colorAxis(
+      list(
+        dataClasses = geotools::gtl_hc_color_axis(
+          santoku::chop(
+            vote_data |>
+              dplyr::filter(CANDIDATE == "Y. Tymoshenko") |>
+              dplyr::pull(value),
+            c(50, 60, 70, 80, 90, 100)
+          ), palette_timo
+        ),
+        showInLegend = FALSE
+      ),
+      list(
+        dataClasses = geotools::gtl_hc_color_axis(
+          santoku::chop(
+            vote_data |>
+              dplyr::filter(CANDIDATE == "V. Yanukovych") |>
+              dplyr::pull(value),
+            c(50, 60, 70, 80, 90, 100)
+          ), palette_yanu
+        ),
+        showInLegend = FALSE
+      )
+    )
+}
+
+#' @rdname oc_russie_carte_hc_elections_ukraine
+#' @export
+oc_russie_carte_hc_elections_ukraine_2014 <- function() {
+  geodata::oc_russie_2014_elections_ukraine |>
+    dplyr::rename(
+      adm1_code = CODE,
+      value = PERCENT
+    ) -> vote_data
+
+  palette_poro <- function(...) {
+    paletteer::paletteer_c("ggthemes::Red", ...)
+  }
+
+  rnaturalearth::ne_states(
+    "Ukraine",
+    returnclass = "sf"
+  ) |>
+    sf::st_transform(crs = 3035) -> map_data
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Background",
+      mapData = map_data |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      data = c(),
+      borderColor = "transparent",
+      borderWidth = 0.1
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |> geojsonio::geojson_json(),
+      data = vote_data,
+      joinBy = "adm1_code",
+      name = "Poroshenko",
+      color = "#ff3131",
+      value = "value",
+      nullColor = "transparent",
+      borderColor = "transparent",
+      borderWidth = 0.1
+    ) |>
+    highcharter::hc_colorAxis(
+      dataClasses = geotools::gtl_hc_color_axis(
+        santoku::chop(
+          vote_data |>
+            dplyr::pull(value),
+          c(30, 40, 50, 60, 70, 80, 90, 100)
+        ), palette_poro
+      ),
+      showInLegend = FALSE
+    )
+}
+
+#' @rdname oc_russie_carte_hc_elections_ukraine
+#' @export
+oc_russie_carte_hc_elections_ukraine_2019 <- function() {
+  geodata::oc_russie_2019_elections_ukraine |>
+    dplyr::rename(
+      adm1_code = CODE,
+      value = PERCENT
+    ) -> vote_data
+
+
+  palette_poro <- function(...) {
+    paletteer::paletteer_c("ggthemes::Red", ...)
+  }
+
+  palette_zele <- function(...) {
+    paletteer::paletteer_c("ggthemes::Green", ...)
+  }
+
+  rnaturalearth::ne_states(
+    "Ukraine",
+    returnclass = "sf"
+  ) |>
+    sf::st_transform(crs = 3035) |>
+    dplyr::left_join(vote_data, by = "adm1_code") -> map_data
+
+  highcharter::highchart(type = "map") |>
+    highcharter::hc_add_series(
+      name = "Background",
+      mapData = map_data |> geojsonio::geojson_json(),
+      showInLegend = FALSE,
+      data = c(),
+      borderColor = "transparent",
+      borderWidth = 0.1
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(CANDIDATE == "V. Zelensky") |>
+        geojsonio::geojson_json(),
+      data = vote_data |> dplyr::filter(CANDIDATE == "V. Zelensky"),
+      joinBy = "adm1_code",
+      name = "Zelensky",
+      color = "#00a105",
+      value = "value",
+      nullColor = "transparent",
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      colorAxis = 0
+    ) |>
+    highcharter::hc_add_series(
+      mapData = map_data |>
+        dplyr::filter(CANDIDATE == "P. Poroshenko") |>
+        geojsonio::geojson_json(),
+      data = vote_data |> dplyr::filter(CANDIDATE == "P. Poroshenko"),
+      joinBy = "adm1_code",
+      name = "Poroshenko",
+      color = "#ff3131",
+      value = "value",
+      nullColor = "transparent",
+      borderColor = "transparent",
+      borderWidth = 0.1,
+      colorAxis = 1
+    ) |>
+    highcharter::hc_colorAxis(
+      list(
+        dataClasses = geotools::gtl_hc_color_axis(
+          santoku::chop(
+            vote_data |>
+              dplyr::filter(CANDIDATE == "V. Zelensky") |>
+              dplyr::pull(value),
+            c(50, 60, 70, 80, 90, 100)
+          ), palette_zele
+        ),
+        showInLegend = FALSE
+      ),
+      list(
+        dataClasses = geotools::gtl_hc_color_axis(
+          santoku::chop(
+            vote_data |>
+              dplyr::filter(CANDIDATE == "P. Poroshenko") |>
+              dplyr::pull(value),
+            c(50, 60, 70, 80, 90, 100)
+          ), palette_poro
+        ),
+        showInLegend = FALSE
+      )
+    )
+}
