@@ -28,6 +28,8 @@ reference:
   - gph_wb_world_map
   - gph_historical_world_map
   - gph_mini_globe
+  - gph_country_area_tree
+  - gph_country_population_tree
 
 - title: Demography visualization
   description: |

@@ -73,6 +73,7 @@ utils::globalVariables(c(
   "indicator",
   "immigration",
   "ISO",
+  "iso2c",
   "iso3",
   "iso3c",
   "jaStimmenInProzent",
