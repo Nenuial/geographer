@@ -1,17 +1,17 @@
-Package: geographer
 Type: Package
+Package: geographer
 Title: Geography Vizualisations
 Version: 1.2.0.9000
 Authors@R: 
     person("Pascal", "Burkhard", , "pascal.burkhard@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-5504-5084"))
-Description: Provides function and objects to establish vizualisations for my 
-  Geography lessons.
+Description: Provides function and objects to establish vizualisations for
+    my Geography lessons.
+License: MIT + file LICENSE
 URL: https://geographer.nenuial.org
 BugReports: http://github.com/nenuial/geographer/issues/
-License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+Depends: 
+    R (>= 3.5)
 Imports: 
     almanac,
     countrycode,
@@ -19,11 +19,11 @@ Imports:
     dplyr,
     eurostat,
     forcats,
-    gganimate,
     geodata,
     geofacet,
     geojsonio,
     geotools,
+    gganimate,
     ggeo,
     ggfx,
     gghighlight,
@@ -38,6 +38,7 @@ Imports:
     lifecycle,
     lubridate,
     mapsf,
+    maptiles,
     mapview,
     MetBrewer,
     ochRe,
@@ -50,8 +51,8 @@ Imports:
     rlang,
     rnaturalearth,
     rnaturalearthhires,
-    scales,
     santoku,
+    scales,
     sf,
     shinyjqui,
     stringr,
@@ -69,15 +70,15 @@ Remotes:
     jbkunst/highcharter,
     lambdamoses/IslamicArt,
     Nenuial/geodata,
-    Nenuial/ggeo,
     Nenuial/geotools,
+    Nenuial/ggeo,
     Nenuial/themakart,
     politanch/swissdd,
-    r-tmap/tmap@v4,
+    r-tmap/tmap,
     ropensci/rnaturalearthhires,
     ropensci/rrricanes
-RoxygenNote: 7.3.2
-Depends: 
-    R (>= 3.5)
-Roxygen: list(markdown = TRUE)
 Config/Needs/website: nenuial/geopkg
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
