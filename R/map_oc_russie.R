@@ -767,9 +767,7 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
 #' @export
 oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
   palette <- function(...) {
-    paletteer::paletteer_c("pals::ocean.deep", 12) -> colors
-
-    return(colors)
+    paletteer::paletteer_c("pals::ocean.deep", 12)
   }
 
   geodata::gdt_nato_membership() |>

@@ -865,7 +865,7 @@ oc_geo_au_feminin_carte_hc_sex_ratio <- function() {
     paletteer::paletteer_c("grDevices::RdBu", n = 12) |>
       rev() -> colors
 
-    return(colors[c(6:12)])
+    colors[c(6:12)]
   }
 
   highcharter::highchart(type = "map") |>
@@ -1004,7 +1004,6 @@ oc_geo_au_feminin_carte_excision_europe <- function(theme = ggplot2::theme_minim
   sf::sf_use_s2(FALSE)
 
   rnaturalearth::ne_countries(scale = 50, returnclass = "sf") |>
-    # dplyr::mutate(centroid = sf::st_centroid(geometry, of_largest_polygon = T)) |>
     dplyr::left_join(geodata::oc_geo_au_feminin_2020_fgm_indirect_data, by = c("adm0_a3" = "iso")) |>
     dplyr::filter(region_un == "Europe", adm0_a3 != "RUS") -> map
 

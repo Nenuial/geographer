@@ -21,7 +21,7 @@ carto_ne_get_boundbox <- function() {
 #' @examples
 #' gph_boundbox()
 gph_boundbox <- function() {
-  return(internal$boundbox)
+  internal$boundbox
 }
 
 
