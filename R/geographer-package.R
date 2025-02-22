@@ -128,6 +128,7 @@ utils::globalVariables(c(
   "school",
   "solde",
   "solde_cut",
+  "sex_ratio",
   "sexe",
   "Sexe",
   "sovereignt",

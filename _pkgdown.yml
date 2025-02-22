@@ -73,6 +73,11 @@ reference:
 - subtitle: Maps
   contents:
   - starts_with("oc_chine_carte")
+- subtitle: Plots
+  contents:
+  - starts_with("oc_chine_graph")
+  - starts_with("oc_chine_hc")
+
 
 - title: OC Ecocitoyenneté
   description: |
