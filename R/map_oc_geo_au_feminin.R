@@ -232,7 +232,7 @@ oc_geo_au_feminin_carte_taux_avortement <- function(
 
   rnaturalearth::ne_countries(returnclass = "sf") |>
     dplyr::filter(sovereignt != "Antarctica") |>
-    dplyr::left_join(data, by = c("adm0_a3" = "iso3")) -> plot_data
+    dplyr::left_join(data, by = c("iso_a3_eh" = "iso3")) -> plot_data
 
   plot_data |>
     ggplot2::ggplot(ggplot2::aes(fill = value)) +
