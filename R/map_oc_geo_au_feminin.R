@@ -769,7 +769,7 @@ oc_geo_au_feminin_carte_hc_wbl <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Women, Business and the Law") |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://donnees.banquemondiale.org/indicateur/SG.LAW.INDX'
+      text = "Source : <a href='https://databank.worldbank.org/source/wdi-database-archives'
                             target='_blank'>Banque Mondiale (2022)</a>"
     ) |>
     geotools::gtl_hc_map_view(
