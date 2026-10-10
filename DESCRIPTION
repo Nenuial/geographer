@@ -75,7 +75,8 @@ Remotes:
     politanch/swissdd,
     ropensci/rnaturalearthhires,
     ropensci/rrricanes,
-    hughjonesd/santoku
+    hughjonesd/santoku,
+    davisvaughan/almanac
 Config/Needs/website: nenuial/geopkg
 Encoding: UTF-8
 LazyData: true
