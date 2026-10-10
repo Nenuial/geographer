@@ -746,6 +746,7 @@ oc_geo_au_feminin_graph_difference_salariale_brut_par_formation <- function(
   theme = ggplot2::theme_minimal()
 ) {
   tibble::tribble(
+    # nolint start: commas_linter
     ~Formation                                                                                , ~Homme , ~Femme ,
     "Haute \u00e9cole universitaire (UNI, EPF)"                                               ,  10767 ,   8683 ,
     "Haute \u00e9cole sp\u00e9cialis\u00e9e (HES),\n Haute \u00e9cole p\u00e9dagogique (HEP)" ,   9648 ,   7959 ,
@@ -755,6 +756,7 @@ oc_geo_au_feminin_graph_difference_salariale_brut_par_formation <- function(
     "Apprentissage complet (CFC)"                                                             ,   6293 ,   5612 ,
     "Formation acquise en entreprise"                                                         ,   5543 ,   4619 ,
     "Sans formation professionnelle compl\u00e8te"                                            ,   5209 ,   4395
+    # nolint end
   ) |>
     tidyr::pivot_longer(-Formation, names_to = "Sexe", values_to = "Salaire") |>
     dplyr::arrange(c(Salaire)) |>
@@ -775,6 +777,7 @@ oc_geo_au_feminin_graph_difference_salariale_pourcent_par_formation <- function(
   theme = ggplot2::theme_minimal()
 ) {
   tibble::tribble(
+    # nolint start: commas_linter
     ~Formation                                                                                , ~Pourcent ,
     "Haute \u00e9cole universitaire (UNI, EPF)"                                               , 19.4      ,
     "Haute \u00e9cole sp\u00e9cialis\u00e9e (HES),\n Haute \u00e9cole p\u00e9dagogique (HEP)" , 17.5      ,
@@ -784,6 +787,7 @@ oc_geo_au_feminin_graph_difference_salariale_pourcent_par_formation <- function(
     "Apprentissage complet (CFC)"                                                             , 10.8      ,
     "Formation acquise en entreprise"                                                         , 16.7      ,
     "Sans formation professionnelle compl\u00e8te"                                            , 15.6      ,
+    # nolint end
   ) |>
     dplyr::arrange(c(Pourcent)) |>
     dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
@@ -800,11 +804,13 @@ oc_geo_au_feminin_graph_difference_salariale_brut_par_position <- function(
   theme = ggplot2::theme_minimal()
 ) {
   tibble::tribble(
+    # nolint start: commas_linter
     ~Formation                                    , ~Homme , ~Femme ,
     "Cadre sup\u00e9rieur et moyen"               ,  10878 ,   8861 ,
     "Cadre inf\u00e9rieur"                        ,   8760 ,   7580 ,
     "Responsable de\nl'ex\u00e9cution de travaux" ,   7238 ,   6481 ,
     "Sans fonction\nde cadre"                     ,   6121 ,   5607 ,
+    # nolint end
   ) |>
     tidyr::pivot_longer(-Formation, names_to = "Sexe", values_to = "Salaire") |>
     dplyr::arrange(c(Salaire)) |>
@@ -825,11 +831,13 @@ oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position <- function(
   theme = ggplot2::theme_minimal()
 ) {
   tibble::tribble(
+    # nolint start: commas_linter
     ~Formation                                    , ~Pourcent ,
     "Cadre sup\u00e9rieur et moyen"               , 18.5      ,
     "Cadre inf\u00e9rieur"                        , 13.5      ,
     "Responsable de\nl'ex\u00e9cution de travaux" , 10.5      ,
     "Sans fonction\nde cadre"                     ,  8.4      ,
+    # nolint end
   ) |>
     dplyr::arrange(c(Pourcent)) |>
     dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>

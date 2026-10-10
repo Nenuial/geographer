@@ -11,10 +11,11 @@ License: MIT + file LICENSE
 URL: https://geographer.nenuial.org
 BugReports: http://github.com/nenuial/geographer/issues/
 Depends: 
-    R (>= 3.5)
+    R (>= 4.2)
 Imports: 
     almanac,
     countrycode,
+    crul,
     cshapes,
     dplyr,
     eurostat,

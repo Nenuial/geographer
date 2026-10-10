@@ -100,12 +100,12 @@ oc_israel_palestine_graph_population_nae <- function(
       legend.position = "bottom"
     ) +
     ggplot2::labs(
-      title = "Population n\u00c9\u00c9 \u00e0 l'\u00c9tranger",
+      title = "Population n\u00e9e \u00e0 l'\u00e9tranger",
       subtitle = "par pays de naissance",
       x = "",
       y = "Population",
       fill = "",
-      caption = "Donn\u00c9es: CBS Isra\u00ebl (2008)"
+      caption = "Donn\u00e9es: CBS Isra\u00ebl (2008)"
     )
 }
 
@@ -150,14 +150,17 @@ oc_israel_palestine_graph_gaza_victimes <- function(
   theme = ggplot2::theme_minimal()
 ) {
   tibble::tribble(
-    ~Lieu                 , ~Morts , ~Blessés ,
-    "Bande de Gaza"       ,  67183 ,    169841 ,
-    "Cisjordanie"         ,    984 ,      9916 ,
-    "Israël"             ,   1200 ,      5431 ,
-    "Soldats israéliens" ,    466 ,      2956
+    # nolint start: commas_linter
+    ~Lieu                      , ~Morts , ~Blesses ,
+    "Bande de Gaza"            ,  67183 ,   169841 ,
+    "Cisjordanie"              ,    984 ,     9916 ,
+    "Isra\u00ebl"             ,   1200 ,     5431 ,
+    "Soldats isra\u00e9liens" ,    466 ,     2956
+    # nolint end
   ) |>
+    dplyr::rename("Bless\u00e9s" = "Blesses") |>
     tidyr::pivot_longer(
-      cols = c(Morts, Blessés),
+      cols = -Lieu,
       names_to = "Type",
       values_to = "Nombre"
     ) |>
@@ -172,10 +175,10 @@ oc_israel_palestine_graph_gaza_victimes <- function(
     ) +
     # custom colors for fill
     ggplot2::scale_fill_manual(
-      values = c("Morts" = "#3f74d6", "Blessés" = "#15263c")
+      values = c("Morts" = "#3f74d6", "Bless\u00e9s" = "#15263c")
     ) +
     ggplot2::labs(
-      title = "Victimes suite à l'attaque du Hamas contre Israël et des contre-attaques d'Israël",
+      title = "Victimes suite \u00e0 l'attaque du Hamas contre Isra\u00ebl et des contre-attaques d'Isra\u00ebl",
       subtitle = "du 7 octobre 2023 au 25 septembre 2025",
       x = "",
       y = "",
@@ -188,21 +191,24 @@ oc_israel_palestine_graph_gaza_victimes <- function(
 #' @export
 oc_israel_palestine_hc_gaza_victimes <- function() {
   tibble::tribble(
-    ~Lieu                 , ~Morts , ~Blessés ,
-    "Bande de Gaza"       ,  67183 ,    169841 ,
-    "Cisjordanie"         ,    984 ,      9916 ,
-    "Israël"             ,   1200 ,      5431 ,
-    "Soldats israéliens" ,    466 ,      2956
+    # nolint start: commas_linter
+    ~Lieu                      , ~Morts , ~Blesses ,
+    "Bande de Gaza"            ,  67183 ,   169841 ,
+    "Cisjordanie"              ,    984 ,     9916 ,
+    "Isra\u00ebl"             ,   1200 ,     5431 ,
+    "Soldats isra\u00e9liens" ,    466 ,     2956
+    # nolint end
   ) |>
+    dplyr::rename("Bless\u00e9s" = "Blesses") |>
     tidyr::pivot_longer(
-      cols = c(Morts, Blessés),
+      cols = -Lieu,
       names_to = "Type",
       values_to = "Nombre"
     ) -> data
 
   highcharter::highchart() |>
     highcharter::hc_title(
-      text = "Victimes suite à l'attaque du Hamas contre Israël et des contre-attaques d'Israël"
+      text = "Victimes suite \u00e0 l'attaque du Hamas contre Isra\u00ebl et des contre-attaques d'Isra\u00ebl"
     ) |>
     highcharter::hc_subtitle(
       text = "du 7 octobre 2023 au 25 septembre 2025"
@@ -212,7 +218,7 @@ oc_israel_palestine_hc_gaza_victimes <- function() {
     highcharter::hc_add_series(
       data = data,
       "column",
-      name = c("Blessés", "Morts"),
+      name = c("Bless\u00e9s", "Morts"),
       highcharter::hcaes(x = Lieu, y = Nombre, group = Type)
     ) |>
     highcharter::hc_colors(c("#3f74d6", "#15263c"))

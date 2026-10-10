@@ -241,14 +241,14 @@ gph_swiss_votes_data <- function(
     geolevel == "municipality" ~ "mun_name"
   )
 
-  return(list(
+  list(
     vote_data = vote_data,
     pretty_date = pretty_date,
     pretty_title = pretty_title,
     pretty_subtitle = pretty_subtitle,
     join_id = join_id,
     name_field = name_field
-  ))
+  )
 }
 
 #' Swiss relief background for maps
