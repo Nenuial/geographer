@@ -1,4 +1,4 @@
-# Démographie ---------------------------------------------------------------------------------
+# Démographie ------------------------------------------------------------
 
 #' Migrations
 #'
@@ -15,7 +15,9 @@
 #' oc_israel_palestine_hc_migration_israel()
 #' oc_israel_palestine_graph_population_nae()
 #' oc_israel_palestine_hc_immigration_sioniste()
-oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_minimal()) {
+oc_israel_palestine_graph_migration_israel <- function(
+  theme = ggplot2::theme_minimal()
+) {
   geodata::oc_israel_palestine_immigration_israel |>
     ggplot2::ggplot(ggplot2::aes(year, immigration)) +
     ggplot2::geom_line() +
@@ -23,7 +25,8 @@ oc_israel_palestine_graph_migration_israel <- function(theme = ggplot2::theme_mi
     ggplot2::scale_y_continuous(labels = scales::label_number(big.mark = "'")) +
     ggplot2::labs(
       title = "Immigration en Isra\u00ebl depuis 1948",
-      x = "", y = "",
+      x = "",
+      y = "",
       caption = "Source: CBS, Isra\u00ebl"
     ) +
     theme
@@ -57,21 +60,33 @@ oc_israel_palestine_hc_migration_israel <- function() {
 
 #' @rdname oc_israel_palestine_graphs_migration
 #' @export
-oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_minimal()) {
+oc_israel_palestine_graph_population_nae <- function(
+  theme = ggplot2::theme_minimal()
+) {
   geodata::oc_israel_palestine_2008_population_nae |>
     dplyr::arrange(-population) |>
     dplyr::mutate(country = forcats::fct_inorder(country)) |>
     dplyr::group_by(continent) |>
-    dplyr::mutate(country = forcats::fct_lump_n(country, 3,
-      w = population,
-      other_level = paste("Other", dplyr::first(continent))
-    )) |>
+    dplyr::mutate(
+      country = forcats::fct_lump_n(
+        country,
+        3,
+        w = population,
+        other_level = paste("Other", dplyr::first(continent))
+      )
+    ) |>
     dplyr::ungroup() |>
     dplyr::group_by(country, continent) |>
     dplyr::summarise(population = sum(population), .groups = "keep") |>
     dplyr::ungroup() |>
-    dplyr::mutate(country = forcats::fct_rev(forcats::fct_reorder(country, population, max))) |>
-    ggplot2::ggplot(ggplot2::aes(x = country, y = population, fill = continent)) +
+    dplyr::mutate(
+      country = forcats::fct_rev(forcats::fct_reorder(country, population, max))
+    ) |>
+    ggplot2::ggplot(ggplot2::aes(
+      x = country,
+      y = population,
+      fill = continent
+    )) +
     ggplot2::geom_col() +
     ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 3)) +
     ggplot2::scale_y_continuous(
@@ -85,10 +100,12 @@ oc_israel_palestine_graph_population_nae <- function(theme = ggplot2::theme_mini
       legend.position = "bottom"
     ) +
     ggplot2::labs(
-      title = "Population n\u00c9\u00c9 \u00e0 l'\u00c9tranger",
+      title = "Population n\u00e9e \u00e0 l'\u00e9tranger",
       subtitle = "par pays de naissance",
-      x = "", y = "Population",
-      fill = "", caption = "Donn\u00c9es: CBS Isra\u00ebl (2008)"
+      x = "",
+      y = "Population",
+      fill = "",
+      caption = "Donn\u00e9es: CBS Isra\u00ebl (2008)"
     )
 }
 
@@ -117,4 +134,92 @@ oc_israel_palestine_hc_immigration_sioniste <- function() {
       dashStyle = "solid",
       highcharter::hcaes(x = period, y = immigration)
     )
+}
+
+
+# Géopolitique -----------------------------------------------------------
+
+#' Victimes
+#'
+#' @param theme A ggplot2 theme
+#'
+#' @returns A graph
+#'
+#' @export
+oc_israel_palestine_graph_gaza_victimes <- function(
+  theme = ggplot2::theme_minimal()
+) {
+  tibble::tribble(
+    # nolint start: commas_linter
+    ~Lieu, ~Morts, ~Blesses,
+    "Bande de Gaza", 67183, 169841,
+    "Cisjordanie", 984, 9916,
+    "Isra\u00ebl", 1200, 5431,
+    "Soldats isra\u00e9liens", 466, 2956
+    # nolint end
+  ) |>
+    dplyr::rename("Bless\u00e9s" = "Blesses") |>
+    tidyr::pivot_longer(
+      cols = -Lieu,
+      names_to = "Type",
+      values_to = "Nombre"
+    ) |>
+    ggplot2::ggplot(ggplot2::aes(Lieu, Nombre, fill = Type)) +
+    # columns side by side
+    ggplot2::geom_col(position = ggplot2::position_dodge2(width = 0.9)) +
+    # add label with number on top of bars
+    ggplot2::geom_text(
+      ggplot2::aes(label = Nombre),
+      position = ggplot2::position_dodge2(width = 0.9),
+      vjust = -0.5
+    ) +
+    # custom colors for fill
+    ggplot2::scale_fill_manual(
+      values = c("Morts" = "#3f74d6", "Bless\u00e9s" = "#15263c")
+    ) +
+    ggplot2::labs(
+      title = "Victimes suite \u00e0 l'attaque du Hamas contre Isra\u00ebl et des contre-attaques d'Isra\u00ebl",
+      subtitle = "du 7 octobre 2023 au 25 septembre 2025",
+      x = "",
+      y = "",
+      caption = "Source: UN OCHA"
+    ) +
+    theme
+}
+
+#' @rdname oc_israel_palestine_graph_gaza_victimes
+#' @export
+oc_israel_palestine_hc_gaza_victimes <- function() {
+  tibble::tribble(
+    # nolint start: commas_linter
+    ~Lieu, ~Morts, ~Blesses,
+    "Bande de Gaza", 67183, 169841,
+    "Cisjordanie", 984, 9916,
+    "Isra\u00ebl", 1200, 5431,
+    "Soldats isra\u00e9liens", 466, 2956
+    # nolint end
+  ) |>
+    dplyr::rename("Bless\u00e9s" = "Blesses") |>
+    tidyr::pivot_longer(
+      cols = -Lieu,
+      names_to = "Type",
+      values_to = "Nombre"
+    ) -> data
+
+  highcharter::highchart() |>
+    highcharter::hc_title(
+      text = "Victimes suite \u00e0 l'attaque du Hamas contre Isra\u00ebl et des contre-attaques d'Isra\u00ebl"
+    ) |>
+    highcharter::hc_subtitle(
+      text = "du 7 octobre 2023 au 25 septembre 2025"
+    ) |>
+    highcharter::hc_caption(text = "Source: UN OCHA") |>
+    highcharter::hc_xAxis(type = "category") |>
+    highcharter::hc_add_series(
+      data = data,
+      "column",
+      name = c("Bless\u00e9s", "Morts"),
+      highcharter::hcaes(x = Lieu, y = Nombre, group = Type)
+    ) |>
+    highcharter::hc_colors(c("#3f74d6", "#15263c"))
 }

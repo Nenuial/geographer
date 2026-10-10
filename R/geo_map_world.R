@@ -49,22 +49,27 @@ gph_wb_world_map <- function(indicator) {
 
   indicator |>
     dplyr::pull(year) |>
-    purrr::map(~ gph_map_world(df |> dplyr::filter(date == .x),
-      title = indicator$title,
-      year = .x,
-      unit = indicator$unit,
-      palette = ggeo::ggeopal_center(
-        palette_length,
-        indicator$center,
-        indicator$palette
-      ),
-      caption = geotools::gtl_translate_enfr("World Bank", "Banque Mondiale")
-    )) |>
+    purrr::map(
+      ~ gph_map_world(
+        df |> dplyr::filter(date == .x),
+        title = indicator$title,
+        year = .x,
+        unit = indicator$unit,
+        palette = ggeo::ggeopal_center(
+          palette_length,
+          indicator$center,
+          indicator$palette
+        ),
+        caption = geotools::gtl_translate_enfr("World Bank", "Banque Mondiale")
+      )
+    ) |>
     patchwork::align_patches() |>
     purrr::walk(
       ~ ggeo::ggeosave(
         glue::glue("{indicator$file}_{.x$labels$subtitle}"),
-        plot = .x, height = 31, width = 64
+        plot = .x,
+        height = 31,
+        width = 64
       )
     )
 }
@@ -74,7 +79,11 @@ gph_wb_world_map <- function(indicator) {
 gph_wb_world_hc <- function(indicator) {
   df <- gph_wb_data(indicator)
 
-  palette <- function(..., pal_center = indicator$center, pal_palette = indicator$palette) {
+  palette <- function(
+    ...,
+    pal_center = indicator$center,
+    pal_palette = indicator$palette
+  ) {
     ggeo::ggeopal_center(
       ...,
       pal_center,
@@ -87,14 +96,14 @@ gph_wb_world_hc <- function(indicator) {
     levels() |>
     length() -> palette_length # nolint: object_usage_linter
 
-  map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
+  map <- geodata::gdt_world_topojson()
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = indicator$title) |>
     highcharter::hc_caption(
       text = indicator$caption
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
         name = "EqualEarth"
@@ -113,14 +122,17 @@ gph_wb_world_hc <- function(indicator) {
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = geotools::gtl_hc_color_axis(
-        santoku::chop(df$data, breaks = indicator$breaks, drop = FALSE), palette
+        santoku::chop(df$data, breaks = indicator$breaks, drop = FALSE),
+        palette
       ),
       showInLegend = TRUE
     ) |>
     highcharter::hc_tooltip(
-      formatter = shinyjqui::JS(glue::glue("function () {{
+      formatter = shinyjqui::JS(glue::glue(
+        "function () {{
           return '<b>' + this.point.country + '</b><br/>' +
-          this.point.value + ' {indicator$unit}' }}"))
+          this.point.value + ' {indicator$unit}' }}"
+      ))
     )
 }
 
@@ -174,12 +186,17 @@ gph_map_world <- function(df, title, year, unit, palette, caption) {
       theme = geo_pkg_options("theme"),
       mode = geo_pkg_options("mode")
     ) +
-    ggplot2::coord_sf(crs = "+proj=eqearth +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs", datum = NA) +
+    ggplot2::coord_sf(
+      crs = "+proj=eqearth +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
+      datum = NA
+    ) +
     ggplot2::labs(
       title = stringr::str_to_upper(title),
       subtitle = year,
       fill = "",
-      caption = glue::glue("{geotools::gtl_translate_enfr('Data:', 'Donn\u00e9es :')} {caption}")
+      caption = glue::glue(
+        "{geotools::gtl_translate_enfr('Data:', 'Donn\u00e9es :')} {caption}"
+      )
     )
 }
 
@@ -198,10 +215,12 @@ gph_wb_data <- function(indicator) {
     dplyr::mutate(data = !!indicator$operation) |>
     dplyr::mutate(
       data = !!indicator$operation,
-      cut = santoku::chop(data,
+      cut = santoku::chop(
+        data,
         breaks = indicator$breaks,
         labels = santoku::lbl_dash(),
-        extend = TRUE, drop = FALSE
+        extend = TRUE,
+        drop = FALSE
       ) |>
         forcats::fct_relabel(geotools::gtl_relabel_dash)
     )

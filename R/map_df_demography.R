@@ -17,14 +17,14 @@ df_demography_map_hc_world_hdi <- function(year) {
     viridis::viridis(direction = -1, alpha = .8, ...)
   }
 
-  map <- geojsonio::geojson_read("https://code.highcharts.com/mapdata/custom/world-highres2.topo.json")
+  map <- geodata::gdt_world_topojson()
 
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Human Development Index") |>
     highcharter::hc_caption(
       text = "Source: United Nations Development Programme"
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
         name = "EqualEarth"
@@ -43,7 +43,12 @@ df_demography_map_hc_world_hdi <- function(year) {
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = geotools::gtl_hc_color_axis(
-        santoku::chop(hdi_data$value, breaks = c(0, 0.5, 0.6, 0.7, 0.8, 0.9, 1), drop = FALSE), palette
+        santoku::chop(
+          hdi_data$value,
+          breaks = c(0, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+          drop = FALSE
+        ),
+        palette
       ),
       showInLegend = TRUE
     )

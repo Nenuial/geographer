@@ -12,8 +12,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ggplot2}{\code{\link[ggplot2:gg-add]{\%+\%}}}
+  \item{ggplot2}{\code{\link[ggplot2:\%+\%]{\%+\%}}}
 
-  \item{rlang}{\code{\link[rlang:injection-operator]{!!}}}
+  \item{rlang}{\code{\link[rlang:!!]{!!()}}}
 }}
 

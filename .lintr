@@ -2,7 +2,7 @@ linters: linters_with_defaults(
     line_length_linter(120),
     assignment_linter(
       operator = c("<-", "<<-", "->"),
-      allow_trailing = TRUE,
+      allow_trailing = TRUE
     ),
     object_length_linter(length = 100L)
   )

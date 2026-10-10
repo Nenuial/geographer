@@ -29,7 +29,7 @@ Each list should contain:
 Create world maps for an indicator
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: saves the plots on file
 indicators <- list(
   list(

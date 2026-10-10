@@ -16,11 +16,19 @@
 #' @examples
 #' oc_russie_carte_fecondite()
 #' oc_russie_carte_hc_fecondite()
-oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
+oc_russie_carte_fecondite <- function(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40,
+  greyscale = FALSE
+) {
   if (greyscale) {
     fill_scale <- ggplot2::scale_fill_stepsn(
       n.breaks = 7,
-      colours = paletteer::paletteer_c("pals::kovesi.linear_grey_10_95_c0", 50, direction = -1)
+      colours = paletteer::paletteer_c(
+        "pals::kovesi.linear_grey_10_95_c0",
+        50,
+        direction = -1
+      )
     )
   } else {
     fill_scale <- ggplot2::scale_fill_stepsn(
@@ -36,8 +44,10 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = tfr),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = tfr),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
@@ -45,7 +55,8 @@ oc_russie_carte_fecondite <- function(theme = ggplot2::theme_minimal(), barwidth
     fill_scale +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = FALSE,
+        even.steps = TRUE,
+        show.limits = FALSE,
         barwidth = barwidth
       )
     ) +
@@ -82,7 +93,7 @@ oc_russie_carte_hc_fecondite <- function() {
       nullColor = "#838a8f",
       data = data
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
         name = "Orthographic",
@@ -94,7 +105,8 @@ oc_russie_carte_hc_fecondite <- function() {
         santoku::chop(
           data$value,
           c(1.2, 1.5, 1.8, 2.1)
-        ), palette_fecondite
+        ),
+        palette_fecondite
       ),
       showInLegend = TRUE
     )
@@ -114,7 +126,10 @@ oc_russie_carte_hc_fecondite <- function() {
 #' @export
 #' @examples
 #' oc_russie_carte_natalite()
-oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
+oc_russie_carte_natalite <- function(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40
+) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
       geodata::oc_russie_2019_natalite_mortalite |>
@@ -122,14 +137,17 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = data),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = data),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     ggplot2::scale_fill_viridis_b(n.breaks = 7, direction = -1) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = FALSE,
+        even.steps = TRUE,
+        show.limits = FALSE,
         barwidth = barwidth
       )
     ) +
@@ -157,7 +175,10 @@ oc_russie_carte_natalite <- function(theme = ggplot2::theme_minimal(), barwidth 
 #' @export
 #' @examples
 #' oc_russie_carte_mortalite()
-oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
+oc_russie_carte_mortalite <- function(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40
+) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
       geodata::oc_russie_2019_natalite_mortalite |>
@@ -165,14 +186,21 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = data),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = data),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
-    ggplot2::scale_fill_viridis_b(n.breaks = 7, option = "inferno", direction = -1) +
+    ggplot2::scale_fill_viridis_b(
+      n.breaks = 7,
+      option = "inferno",
+      direction = -1
+    ) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = FALSE,
+        even.steps = TRUE,
+        show.limits = FALSE,
         barwidth = barwidth
       )
     ) +
@@ -202,21 +230,35 @@ oc_russie_carte_mortalite <- function(theme = ggplot2::theme_minimal(), barwidth
 #' @examples
 #' oc_russie_carte_accroissement()
 #' oc_russie_carte_hc_accroissement()
-oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barwidth = 40, greyscale = FALSE) {
+oc_russie_carte_accroissement <- function(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40,
+  greyscale = FALSE
+) {
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
       geodata::oc_russie_2023_accroissement |>
         dplyr::filter(year == 2023),
       by = "adm1_code"
     ) |>
-    dplyr::mutate(data_cut = santoku::chop(rni, c(-5, 0, 5, 10, 15))) -> data_plot
+    dplyr::mutate(
+      data_cut = santoku::chop(rni, c(-5, 0, 5, 10, 15))
+    ) -> data_plot
 
   if (greyscale) {
     fill_scale <- ggplot2::scale_fill_manual(
-      values = paletteer::paletteer_c("pals::kovesi.linear_grey_10_95_c0", n = 6, direction = -1),
+      values = paletteer::paletteer_c(
+        "pals::kovesi.linear_grey_10_95_c0",
+        n = 6,
+        direction = -1
+      ),
       breaks = levels(data_plot$data_cut),
       limits = levels(data_plot$data_cut),
-      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "\u2030"),
+      labels = scales::percent_format(
+        scale = 1,
+        accuracy = 1,
+        suffix = "\u2030"
+      ),
       na.value = "#CCCCCC"
     )
   } else {
@@ -227,21 +269,28 @@ oc_russie_carte_accroissement <- function(theme = ggplot2::theme_minimal(), barw
       ),
       breaks = levels(data_plot$data_cut),
       limits = levels(data_plot$data_cut),
-      labels = scales::percent_format(scale = 1, accuracy = 1, suffix = "\u2030"),
+      labels = scales::percent_format(
+        scale = 1,
+        accuracy = 1,
+        suffix = "\u2030"
+      ),
       na.value = "#CCCCCC"
     )
   }
 
   data_plot |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = data_cut),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = data_cut),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     fill_scale +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = FALSE,
+        even.steps = TRUE,
+        show.limits = FALSE,
         barwidth = barwidth
       )
     ) +
@@ -280,7 +329,7 @@ oc_russie_carte_hc_accroissement <- function() {
       nullColor = "#838a8f",
       data = data
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
         name = "Orthographic",
@@ -292,7 +341,8 @@ oc_russie_carte_hc_accroissement <- function() {
         santoku::chop(
           data$value,
           c(-5, 0, 5, 10, 15)
-        ), palette_accroissement
+        ),
+        palette_accroissement
       ),
       showInLegend = TRUE
     )
@@ -310,9 +360,17 @@ oc_russie_carte_hc_accroissement <- function() {
 #' @export
 #' @examples
 #' oc_russie_carte_evolution_population()
-oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(), barwidth = 40) {
+oc_russie_carte_evolution_population <- function(
+  theme = ggplot2::theme_minimal(),
+  barwidth = 40
+) {
   data <- geodata::oc_russie_2020_evolution_population |>
-    dplyr::mutate(solde_cut = santoku::chop(solde, c(-250, -40, -20, -10, 0, 10, 20, 40, 80)))
+    dplyr::mutate(
+      solde_cut = santoku::chop(
+        solde,
+        c(-250, -40, -20, -10, 0, 10, 20, 40, 80)
+      )
+    )
 
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
@@ -320,8 +378,10 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = solde_cut),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = solde_cut),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
@@ -338,7 +398,8 @@ oc_russie_carte_evolution_population <- function(theme = ggplot2::theme_minimal(
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, show.limits = FALSE,
+        even.steps = TRUE,
+        show.limits = FALSE,
         barwidth = barwidth
       )
     ) +
@@ -368,8 +429,10 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = mariages),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = mariages),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
@@ -401,13 +464,19 @@ oc_russie_carte_divorces <- function(theme = ggplot2::theme_minimal()) {
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
-    ggplot2::geom_sf(ggplot2::aes(fill = divorces),
-      color = "black", linewidth = .1
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = divorces),
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::coord_sf(crs = geotools::gtl_crs_regional("Russia"), datum = NA) +
     theme +
     ggplot2::theme(legend.position = "bottom") +
-    ggplot2::scale_fill_viridis_b(n.breaks = 7, direction = -1, option = "inferno") +
+    ggplot2::scale_fill_viridis_b(
+      n.breaks = 7,
+      direction = -1,
+      option = "inferno"
+    ) +
     ggplot2::labs(
       title = "Divorces",
       subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
@@ -547,7 +616,7 @@ oc_russie_carte_hc_religion <- function() {
       borderWidth = 0.1,
       colorAxis = 4
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
         name = "Orthographic",
@@ -562,7 +631,8 @@ oc_russie_carte_hc_religion <- function() {
               dplyr::filter(religion == "Orthodoxe") |>
               dplyr::pull(value),
             c(25, 35, 45, 55, 65, 75, 85)
-          ), palette_orthodoxe
+          ),
+          palette_orthodoxe
         ),
         showInLegend = FALSE
       ),
@@ -573,7 +643,8 @@ oc_russie_carte_hc_religion <- function() {
               dplyr::filter(religion == "Islam") |>
               dplyr::pull(value),
             c(25, 35, 45, 55, 65, 75, 85)
-          ), palette_islam
+          ),
+          palette_islam
         ),
         showInLegend = FALSE
       ),
@@ -584,7 +655,8 @@ oc_russie_carte_hc_religion <- function() {
               dplyr::filter(religion == "Deiste") |>
               dplyr::pull(value),
             c(25, 35, 45, 55, 65, 75, 85)
-          ), palette_deiste
+          ),
+          palette_deiste
         ),
         showInLegend = FALSE
       ),
@@ -595,7 +667,8 @@ oc_russie_carte_hc_religion <- function() {
               dplyr::filter(religion == "Bouddhisme") |>
               dplyr::pull(value),
             c(25, 35, 45, 55, 65, 75, 85)
-          ), palette_bouddhisme
+          ),
+          palette_bouddhisme
         ),
         showInLegend = FALSE
       ),
@@ -606,7 +679,8 @@ oc_russie_carte_hc_religion <- function() {
               dplyr::filter(religion == "Athee") |>
               dplyr::pull(value),
             c(25, 35, 45, 55, 65, 75, 85)
-          ), palette_athee
+          ),
+          palette_athee
         ),
         showInLegend = FALSE
       )
@@ -636,7 +710,8 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
     dplyr::mutate(
       gwcode = countrycode::countrycode(
         iso3,
-        origin = "iso3c", destination = "cown",
+        origin = "iso3c",
+        destination = "cown",
         custom_match = c("DDR" = 265, "DEU" = 260)
       )
     ) |>
@@ -646,7 +721,8 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
     dplyr::mutate(
       pays = countrycode::countrycode(
         iso3,
-        origin = "iso3c", destination = "country.name.fr",
+        origin = "iso3c",
+        destination = "country.name.fr",
         custom_match = c(
           "DDR" = "Allemagne de l'Est",
           "DEU" = "Allemagne"
@@ -691,7 +767,8 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::ggplot() +
     ggplot2::geom_sf(
       ggplot2::aes(fill = extension),
-      color = "black", linewidth = .1
+      color = "black",
+      linewidth = .1
     ) +
     ggplot2::geom_sf(
       data = map_data |> dplyr::filter(gwcode == 365),
@@ -737,7 +814,8 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
     ) +
     ggplot2::scale_fill_manual(
       values = paletteer::paletteer_c(
-        "pals::ocean.deep", 12
+        "pals::ocean.deep",
+        12
       ),
       breaks = ~ .x[!is.na(.x)],
       na.value = "#CCCCCC"
@@ -750,13 +828,15 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(
-        nrows = 4, ncol = 3,
+        nrows = 4,
+        ncol = 3,
       )
     ) +
     ggplot2::labs(
       title = "Extension de l'OTAN",
       fill = "",
-      x = "", y = "",
+      x = "",
+      y = "",
       caption = "Source: OTAN (2024)"
     )
 }
@@ -774,7 +854,8 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
     dplyr::mutate(
       gwcode = countrycode::countrycode(
         iso3,
-        origin = "iso3c", destination = "cown",
+        origin = "iso3c",
+        destination = "cown",
         custom_match = c("DDR" = 265, "DEU" = 260)
       )
     ) |>
@@ -784,7 +865,8 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
     dplyr::mutate(
       pays = countrycode::countrycode(
         iso3,
-        origin = "iso3c", destination = "country.name.fr",
+        origin = "iso3c",
+        destination = "country.name.fr",
         custom_match = c(
           "DDR" = "Allemagne de l'Est",
           "DEU" = "Allemagne"
@@ -825,7 +907,8 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
     dplyr::mutate(
       continent = countrycode::countrycode(
         gwcode,
-        origin = "cown", destination = "continent",
+        origin = "cown",
+        destination = "continent",
         custom_match = c(
           "260" = "Europe",
           "265" = "Europe",
@@ -881,7 +964,7 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
       ),
       showInLegend = TRUE
     ) |>
-    highcharter::hc_mapView(
+    geotools::gtl_hc_map_view(
       projection = list(
         name = "Orthographic",
         rotation = c(0, -20)
@@ -896,9 +979,11 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
       text = "Source: OTAN (2024)"
     ) |>
     highcharter::hc_tooltip(
-      formatter = shinyjqui::JS(glue::glue("function () {{
+      formatter = shinyjqui::JS(glue::glue(
+        "function () {{
           return '<b>' + this.point.pays + '</b>: ' +
-          this.point.extension }}"))
+          this.point.extension }}"
+      ))
     )
 }
 
@@ -986,7 +1071,8 @@ oc_russie_carte_hc_elections_ukraine_2010 <- function() {
               dplyr::filter(CANDIDATE == "Y. Tymoshenko") |>
               dplyr::pull(value),
             c(50, 60, 70, 80, 90, 100)
-          ), palette_timo
+          ),
+          palette_timo
         ),
         showInLegend = FALSE
       ),
@@ -997,7 +1083,8 @@ oc_russie_carte_hc_elections_ukraine_2010 <- function() {
               dplyr::filter(CANDIDATE == "V. Yanukovych") |>
               dplyr::pull(value),
             c(50, 60, 70, 80, 90, 100)
-          ), palette_yanu
+          ),
+          palette_yanu
         ),
         showInLegend = FALSE
       )
@@ -1049,7 +1136,8 @@ oc_russie_carte_hc_elections_ukraine_2014 <- function() {
           vote_data |>
             dplyr::pull(value),
           c(30, 40, 50, 60, 70, 80, 90, 100)
-        ), palette_poro
+        ),
+        palette_poro
       ),
       showInLegend = FALSE
     )
@@ -1063,7 +1151,6 @@ oc_russie_carte_hc_elections_ukraine_2019 <- function() {
       adm1_code = CODE,
       value = PERCENT
     ) -> vote_data
-
 
   palette_poro <- function(...) {
     paletteer::paletteer_c("ggthemes::Red", ...)
@@ -1125,7 +1212,8 @@ oc_russie_carte_hc_elections_ukraine_2019 <- function() {
               dplyr::filter(CANDIDATE == "V. Zelensky") |>
               dplyr::pull(value),
             c(50, 60, 70, 80, 90, 100)
-          ), palette_zele
+          ),
+          palette_zele
         ),
         showInLegend = FALSE
       ),
@@ -1136,7 +1224,8 @@ oc_russie_carte_hc_elections_ukraine_2019 <- function() {
               dplyr::filter(CANDIDATE == "P. Poroshenko") |>
               dplyr::pull(value),
             c(50, 60, 70, 80, 90, 100)
-          ), palette_poro
+          ),
+          palette_poro
         ),
         showInLegend = FALSE
       )

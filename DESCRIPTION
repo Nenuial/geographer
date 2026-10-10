@@ -11,10 +11,11 @@ License: MIT + file LICENSE
 URL: https://geographer.nenuial.org
 BugReports: http://github.com/nenuial/geographer/issues/
 Depends: 
-    R (>= 3.5)
+    R (>= 4.2)
 Imports: 
     almanac,
     countrycode,
+    crul,
     cshapes,
     dplyr,
     eurostat,
@@ -67,18 +68,18 @@ Imports:
     withr
 Remotes:
     hollylkirk/ochRe,
-    jbkunst/highcharter,
     lambdamoses/IslamicArt,
     Nenuial/geodata,
     Nenuial/geotools,
     Nenuial/ggeo,
     Nenuial/themakart,
     politanch/swissdd,
-    r-tmap/tmap,
     ropensci/rnaturalearthhires,
-    ropensci/rrricanes
+    ropensci/rrricanes,
+    hughjonesd/santoku,
+    davisvaughan/almanac
 Config/Needs/website: nenuial/geopkg
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.1.0

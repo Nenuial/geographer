@@ -15,7 +15,7 @@ A ggplot2 graph
 \description{
 Graphique de l'évolution démographique de la Russie
 entre 1980 et 2020. Graphique destiné à l'examen de
-maturité2022.
+maturité 2022.
 }
 \examples{
 oc_russie_graph_demo_exa()

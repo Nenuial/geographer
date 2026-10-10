@@ -20,7 +20,7 @@ A ggplot graph
 Create relative population pyramid (5 year cohorts)
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: needs a valid IDB API key
 gph_pyramid_relative("Switzerland", 2020)
 \dontshow{\}) # examplesIf}
