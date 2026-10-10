@@ -763,11 +763,7 @@ oc_geo_au_feminin_carte_hc_wbl <- function() {
     viridis::viridis(direction = -1, ...)
   }
 
-  data <- wbstats::wb_data(
-    indicator = c("value" = "SG.LAW.INDX"),
-    start_date = 2022,
-    end_date = 2022
-  )
+  data <- geodata::oc_geo_au_feminin_wbl_2022
   map <- geodata::gdt_world_topojson()
 
   highcharter::highchart(type = "map") |>
