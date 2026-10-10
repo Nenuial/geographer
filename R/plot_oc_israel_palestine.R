@@ -151,11 +151,11 @@ oc_israel_palestine_graph_gaza_victimes <- function(
 ) {
   tibble::tribble(
     # nolint start: commas_linter
-    ~Lieu                      , ~Morts , ~Blesses ,
-    "Bande de Gaza"            ,  67183 ,   169841 ,
-    "Cisjordanie"              ,    984 ,     9916 ,
-    "Isra\u00ebl"             ,   1200 ,     5431 ,
-    "Soldats isra\u00e9liens" ,    466 ,     2956
+    ~Lieu, ~Morts, ~Blesses,
+    "Bande de Gaza", 67183, 169841,
+    "Cisjordanie", 984, 9916,
+    "Isra\u00ebl", 1200, 5431,
+    "Soldats isra\u00e9liens", 466, 2956
     # nolint end
   ) |>
     dplyr::rename("Bless\u00e9s" = "Blesses") |>
@@ -192,11 +192,11 @@ oc_israel_palestine_graph_gaza_victimes <- function(
 oc_israel_palestine_hc_gaza_victimes <- function() {
   tibble::tribble(
     # nolint start: commas_linter
-    ~Lieu                      , ~Morts , ~Blesses ,
-    "Bande de Gaza"            ,  67183 ,   169841 ,
-    "Cisjordanie"              ,    984 ,     9916 ,
-    "Isra\u00ebl"             ,   1200 ,     5431 ,
-    "Soldats isra\u00e9liens" ,    466 ,     2956
+    ~Lieu, ~Morts, ~Blesses,
+    "Bande de Gaza", 67183, 169841,
+    "Cisjordanie", 984, 9916,
+    "Isra\u00ebl", 1200, 5431,
+    "Soldats isra\u00e9liens", 466, 2956
     # nolint end
   ) |>
     dplyr::rename("Bless\u00e9s" = "Blesses") |>
