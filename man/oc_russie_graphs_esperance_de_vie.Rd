@@ -29,7 +29,7 @@ de la Russie.
 \examples{
 oc_russie_graph_esperance_europe()
 oc_russie_hc_esperance_europe()
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 # Not run: needs credentials for HMD database
 oc_russie_graph_esperance_65_femmes()
 oc_russie_graph_esperance_65_hommes()

@@ -67,18 +67,17 @@ Imports:
     withr
 Remotes:
     hollylkirk/ochRe,
-    jbkunst/highcharter,
     lambdamoses/IslamicArt,
     Nenuial/geodata,
     Nenuial/geotools,
     Nenuial/ggeo,
     Nenuial/themakart,
     politanch/swissdd,
-    r-tmap/tmap,
     ropensci/rnaturalearthhires,
-    ropensci/rrricanes
+    ropensci/rrricanes,
+    hughjonesd/santoku
 Config/Needs/website: nenuial/geopkg
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.1.0

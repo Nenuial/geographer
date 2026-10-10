@@ -9,7 +9,12 @@
 #' @export
 #' @examples
 #' gph_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
-gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
+gph_map_swiss_votes <- function(
+  geolevel = c("canton", "district", "municipality"),
+  votedates,
+  id,
+  language = "FR"
+) {
   # Check input
   geolevel <- match.arg(geolevel)
 
@@ -24,18 +29,29 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 
   geo_data |>
     dplyr::left_join(plot_data$vote_data, by = plot_data$join_id) |>
-    dplyr::mutate(value = santoku::chop(jaStimmenInProzent, c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))) |>
+    dplyr::mutate(
+      value = santoku::chop(
+        jaStimmenInProzent,
+        c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+      )
+    ) |>
     ggplot2::ggplot() +
     ggplot2::geom_raster(
-      data = themakart::thema_relief() |> dplyr::mutate(x = x - 2000000, y = y - 1000000),
+      data = themakart::thema_relief() |>
+        dplyr::mutate(x = x - 2000000, y = y - 1000000),
       ggplot2::aes_string(
-        x = "x", y = "y",
+        x = "x",
+        y = "y",
         fill = NULL,
         alpha = "value"
       )
     ) +
     ggplot2::scale_alpha(name = "", range = c(0.6, 0), guide = "none") +
-    ggplot2::geom_sf(ggplot2::aes(fill = value), color = "white", linewidth = .1) +
+    ggplot2::geom_sf(
+      ggplot2::aes(fill = value),
+      color = "white",
+      linewidth = .1
+    ) +
     gph_map_swiss_lakes(source = swissdd::get_geodata("lakes")) +
     ggplot2::coord_sf(datum = NA) +
     ggplot2::scale_fill_manual(
@@ -44,17 +60,34 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
         alpha = .8
       ),
       breaks = c(
-        "[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-        "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"
+        "[0, 10)",
+        "[10, 20)",
+        "[20, 30)",
+        "[30, 40)",
+        "[40, 50)",
+        "[50, 60)",
+        "[60, 70)",
+        "[70, 80)",
+        "[80, 90)",
+        "[90, 100)"
       ),
       limits = c(
-        "[0, 10)", "[10, 20)", "[20, 30)", "[30, 40)", "[40, 50)",
-        "[50, 60)", "[60, 70)", "[70, 80)", "[80, 90)", "[90, 100)"
+        "[0, 10)",
+        "[10, 20)",
+        "[20, 30)",
+        "[30, 40)",
+        "[40, 50)",
+        "[50, 60)",
+        "[60, 70)",
+        "[70, 80)",
+        "[80, 90)",
+        "[90, 100)"
       )
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_coloursteps(
-        even.steps = TRUE, title.position = "top",
+        even.steps = TRUE,
+        title.position = "top",
         barwidth = ggplot2::unit(150, units = "mm"),
         keyheight = ggplot2::unit(5, units = "mm")
       )
@@ -62,15 +95,24 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
     ggplot2::labs(
       title = plot_data$pretty_title,
       subtitle = plot_data$pretty_subtitle,
-      fill = "Pourcentage de oui", x = "", y = "",
+      fill = "Pourcentage de oui",
+      x = "",
+      y = "",
       caption = "Donn\u00e9es : OFS, Fond de carte : Themakart"
     ) +
     ggeo::ggeotheme(
       theme = geotools::gtl_options("theme"),
       mode = geotools::gtl_options("mode"),
-      plot.title = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
-      plot.subtitle = ggplot2::element_text(hjust = 0.5, margin = ggplot2::margin(b = 0, unit = "cm")),
-      plot.title.position = "plot", legend.position = "bottom",
+      plot.title = ggplot2::element_text(
+        hjust = 0.5,
+        margin = ggplot2::margin(b = 0, unit = "cm")
+      ),
+      plot.subtitle = ggplot2::element_text(
+        hjust = 0.5,
+        margin = ggplot2::margin(b = 0, unit = "cm")
+      ),
+      plot.title.position = "plot",
+      legend.position = "bottom",
       plot.margin = ggplot2::margin(t = 1, r = 1.5, unit = "cm")
     )
 }
@@ -78,9 +120,17 @@ gph_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality
 #' `r lifecycle::badge("deprecated")`
 #' @export
 #' @keywords internal
-gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"),
-                                            votedates, id, language = "FR") {
-  lifecycle::deprecate_warn("1.0.0", "gph_highcharter_map_swiss_votes()", "gph_hc_demogram()")
+gph_highcharter_map_swiss_votes <- function(
+  geolevel = c("canton", "district", "municipality"),
+  votedates,
+  id,
+  language = "FR"
+) {
+  lifecycle::deprecate_warn(
+    "1.0.0",
+    "gph_highcharter_map_swiss_votes()",
+    "gph_hc_map_swiss_votes()"
+  )
   gph_hc_map_swiss_votes(geolevel, votedates, id, language)
 }
 
@@ -92,7 +142,12 @@ gph_highcharter_map_swiss_votes <- function(geolevel = c("canton", "district", "
 #' @export
 #' @examples
 #' gph_hc_map_swiss_votes("canton", votedates = "2024-03-03", id = 6650)
-gph_hc_map_swiss_votes <- function(geolevel = c("canton", "district", "municipality"), votedates, id, language = "FR") {
+gph_hc_map_swiss_votes <- function(
+  geolevel = c("canton", "district", "municipality"),
+  votedates,
+  id,
+  language = "FR"
+) {
   # Check input
   geolevel <- match.arg(geolevel)
 
@@ -125,9 +180,11 @@ gph_hc_map_swiss_votes <- function(geolevel = c("canton", "district", "municipal
       showInLegend = FALSE
     ) |>
     highcharter::hc_tooltip(
-      formatter = shinyjqui::JS(glue::glue("function () {{
+      formatter = shinyjqui::JS(glue::glue(
+        "function () {{
           return '<b>' + this.point.{plot_data$name_field} + '</b><br/>' +
-          'Oui (%): ' + this.point.value }}"))
+          'Oui (%): ' + this.point.value }}"
+      ))
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = list(
@@ -151,9 +208,17 @@ gph_hc_map_swiss_votes <- function(geolevel = c("canton", "district", "municipal
 #' @inherit gph_map_swiss_votes
 #'
 #' @keywords internal
-gph_swiss_votes_data <- function(geolevel = c("canton", "district", "municipality"),
-                                 votedates, filter_id, language = "FR") {
-  vote_data <- swissdd::get_nationalvotes(geolevel = geolevel, votedates = votedates, language = language) |>
+gph_swiss_votes_data <- function(
+  geolevel = c("canton", "district", "municipality"),
+  votedates,
+  filter_id,
+  language = "FR"
+) {
+  vote_data <- swissdd::get_nationalvotes(
+    geolevel = geolevel,
+    votedates = votedates,
+    language = language
+  ) |>
     dplyr::filter(id == filter_id) |>
     dplyr::mutate(value = round(jaStimmenInProzent, 2))
 
@@ -198,12 +263,14 @@ gph_map_swiss_relief <- function() {
   list(
     ggplot2::geom_sf(
       data = themakart::thema_map("inst", "suis", 1848, "gf"),
-      fill = "white", linewidth = .1
+      fill = "white",
+      linewidth = .1
     ),
     ggplot2::geom_raster(
       data = themakart::thema_relief(),
       ggplot2::aes_string(
-        x = "x", y = "y",
+        x = "x",
+        y = "y",
         fill = NULL,
         alpha = "value"
       )
@@ -223,6 +290,9 @@ gph_map_swiss_relief <- function() {
 #' ggplot2::ggplot() +
 #'   gph_map_swiss_relief() +
 #'   gph_map_swiss_lakes()
-gph_map_swiss_lakes <- function(fill_color = "skyblue", source = themakart::thema_topo("seen")) {
+gph_map_swiss_lakes <- function(
+  fill_color = "skyblue",
+  source = themakart::thema_topo("seen")
+) {
   ggplot2::geom_sf(data = source, fill = fill_color, color = NA)
 }

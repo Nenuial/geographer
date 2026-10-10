@@ -21,5 +21,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Pascal Burkhard \email{pascal.burkhard@gmail.com} (\href{https://orcid.org/0009-0001-5504-5084}{ORCID})
 
+Authors:
+\itemize{
+  \item Pascal Burkhard \email{pascal.burkhard@gmail.com} (\href{https://orcid.org/0009-0001-5504-5084}{ORCID})
+}
+
 }
 \keyword{internal}

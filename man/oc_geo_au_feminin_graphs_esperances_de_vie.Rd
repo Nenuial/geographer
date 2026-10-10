@@ -23,7 +23,7 @@ Graphiques sur l'évolution de l'espérence de vie.
 }
 \examples{
 oc_geo_au_feminin_graph_esperances_de_vie()
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: need credentials for HMD database
 oc_geo_au_feminin_graph_difference_esperance_de_vie()
 \dontshow{\}) # examplesIf}

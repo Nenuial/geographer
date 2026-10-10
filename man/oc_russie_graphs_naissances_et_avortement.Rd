@@ -25,7 +25,7 @@ jusqu'en 2017.
 \examples{
 oc_russie_graph_naissances()
 oc_russie_graph_avortements()
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: needs patchwork to assemble the plot and only
 # works if the package is loaded
 oc_russie_graph_naissance_et_avortements()

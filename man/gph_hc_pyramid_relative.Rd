@@ -18,7 +18,7 @@ A highcharter graph
 Create highcharter population pyramid with relative values
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 # Not run: need a valid IDB API key
 gph_hc_pyramid_relative("Switzerland", 2020)
 \dontshow{\}) # examplesIf}
