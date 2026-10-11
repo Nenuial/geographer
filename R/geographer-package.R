@@ -31,6 +31,7 @@ utils::globalVariables(c(
   "CENTROID",
   "CODE",
   "cohort",
+  "color",
   "Color",
   "Commune",
   "continent",
