@@ -8,10 +8,11 @@
 oc_russie_carte_accroissement(
   theme = ggplot2::theme_minimal(),
   barwidth = 40,
-  greyscale = FALSE
+  greyscale = FALSE,
+  year = 2024
 )
 
-oc_russie_carte_hc_accroissement()
+oc_russie_carte_hc_accroissement(year = 2024)
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
@@ -19,12 +20,14 @@ oc_russie_carte_hc_accroissement()
 \item{barwidth}{Width of legend bar}
 
 \item{greyscale}{Boolean: whether to create a grey scale map}
+
+\item{year}{Year of the data (2017 to 2024)}
 }
 \value{
 A map
 }
 \description{
-Une carte de l'accroissement naturel en 2023
+Une carte de l'accroissement naturel (2017 à 2024)
 au niveau régional en Russie.
 }
 \examples{

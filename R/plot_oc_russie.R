@@ -39,7 +39,7 @@ oc_russie_graph_mariages_et_divorces <- function(
 #' Naissances et avortements en Russie
 #'
 #' Graphique des naissances et des avortements en Russie
-#' jusqu'en 2017.
+#' de 1999 à 2024.
 #'
 #' @param theme A ggplot2 theme
 #'
@@ -49,27 +49,28 @@ oc_russie_graph_mariages_et_divorces <- function(
 #' @examples
 #' oc_russie_graph_naissances()
 #' oc_russie_graph_avortements()
+#' oc_russie_hc_naissances_et_avortements()
 #' @examplesIf interactive()
 #' # Not run: needs patchwork to assemble the plot and only
 #' # works if the package is loaded
 #' oc_russie_graph_naissance_et_avortements()
 oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_naissances_national |>
-    dplyr::filter(year <= 2017) |>
+    dplyr::filter(year >= 1999) |>
     ggplot2::ggplot(ggplot2::aes(x = year, y = births)) +
     ggplot2::geom_col(fill = "#3ea298") +
-    ggplot2::scale_x_continuous(breaks = seq(2000, 2015, 5), expand = c(0, 0)) +
+    ggplot2::scale_x_continuous(breaks = seq(2000, 2020, 5), expand = c(0, 0)) +
     ggplot2::scale_y_continuous(
       breaks = seq(5e5, 2e6, 5e5),
       labels = ggeo::ggeo_label_sci_10
     ) +
-    ggplot2::coord_cartesian(xlim = c(1998, 2018)) +
+    ggplot2::coord_cartesian(xlim = c(1998, 2025)) +
     theme +
     ggplot2::labs(
       subtitle = "Naissances (total)",
       x = "",
       y = "",
-      caption = "Source: Rosstat (2021)"
+      caption = "Source: Rosstat (2026)"
     )
 }
 
@@ -78,7 +79,7 @@ oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
 oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
   geodata::oc_russie_avortements_national |>
     dplyr::mutate(
-      fill = dplyr::case_when(
+      color = dplyr::case_when(
         abortions >= 100 ~ "neg",
         TRUE ~ "pos"
       )
@@ -91,24 +92,25 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
       yend = abortions
     )) +
     ggplot2::geom_point(
-      ggplot2::aes(color = fill),
+      ggplot2::aes(color = color),
       size = 2,
       show.legend = FALSE
     ) +
-    ggplot2::geom_segment(
-      ggplot2::aes(x = 1995, y = 100, xend = 2020, yend = 100),
+    ggplot2::annotate(
+      "segment",
+      x = 1995, y = 100, xend = 2030, yend = 100,
       color = "black"
     ) +
-    ggplot2::scale_fill_manual(values = c("#3ea298", "#d26d84")) +
-    ggplot2::scale_x_continuous(breaks = seq(2000, 2015, 5), expand = c(0, 0)) +
+    ggplot2::scale_color_manual(values = c(neg = "#d26d84", pos = "#3ea298")) +
+    ggplot2::scale_x_continuous(breaks = seq(2000, 2020, 5), expand = c(0, 0)) +
     ggplot2::scale_y_continuous(breaks = seq(50, 200, 50)) +
-    ggplot2::coord_cartesian(xlim = c(1998, 2018)) +
+    ggplot2::coord_cartesian(xlim = c(1998, 2025)) +
     theme +
     ggplot2::labs(
       subtitle = "Avortements (pour 100 naissances)",
       x = "",
       y = "",
-      caption = "Source: Rosstat (2021)"
+      caption = "Source: Rosstat (2026)"
     )
 }
 
@@ -126,6 +128,74 @@ oc_russie_graph_naissance_et_avortements <- function(
     avortements +
     patchwork::plot_annotation(title = "Naissances et avortements") %&% theme +
     ggplot2::theme(plot.title.position = "plot")
+}
+
+#' @rdname oc_russie_graphs_naissances_et_avortement
+#' @return A highcharts graph
+#' @export
+oc_russie_hc_naissances_et_avortements <- function() {
+  geodata::oc_russie_naissances_national |>
+    dplyr::filter(year >= 1999) -> births
+  geodata::oc_russie_avortements_national |>
+    dplyr::filter(year >= 1999) -> abortions
+
+  highcharter::highchart() |>
+    highcharter::hc_title(text = "Naissances et avortements") |>
+    highcharter::hc_subtitle(text = "en Russie depuis 1999") |>
+    highcharter::hc_caption(
+      text = "Source: Rosstat (2026). Avortements: pour 100 accouchements jusqu'en 2017, pour 100 naissances ensuite."
+    ) |>
+    highcharter::hc_legend(enabled = FALSE) |>
+    highcharter::hc_xAxis(title = list(text = "")) |>
+    highcharter::hc_yAxis_multiples(
+      list(
+        title = list(text = "Naissances"),
+        top = "0%",
+        height = "47%",
+        min = 0,
+        offset = 0
+      ),
+      list(
+        title = list(text = "Avortements pour 100 naissances"),
+        top = "53%",
+        height = "47%",
+        min = 0,
+        offset = 0,
+        plotLines = list(list(value = 100, color = "#4c566a", width = 1.5, zIndex = 3))
+      )
+    ) |>
+    highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
+    highcharter::hc_add_series(
+      data = births,
+      "column",
+      name = "Naissances",
+      color = "#3ea298",
+      yAxis = 0,
+      tooltip = list(valueDecimals = 0),
+      highcharter::hcaes(x = year, y = births)
+    ) |>
+    highcharter::hc_add_series(
+      data = abortions,
+      "column",
+      name = "Avortements (barre)",
+      color = "#4c566a",
+      yAxis = 1,
+      threshold = 100,
+      pointWidth = 2,
+      enableMouseTracking = FALSE,
+      highcharter::hcaes(x = year, y = abortions)
+    ) |>
+    highcharter::hc_add_series(
+      data = abortions,
+      "scatter",
+      name = "Avortements pour 100 naissances",
+      yAxis = 1,
+      color = "#3ea298",
+      zones = list(list(value = 100, color = "#3ea298"), list(color = "#d26d84")),
+      marker = list(symbol = "circle", radius = 5),
+      tooltip = list(pointFormat = "Avortements: <b>{point.y}</b> pour 100 naissances"),
+      highcharter::hcaes(x = year, y = abortions)
+    )
 }
 
 #' Solde migratoire
