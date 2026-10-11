@@ -161,7 +161,7 @@ oc_russie_hc_naissances_et_avortements <- function() {
         height = "47%",
         min = 0,
         offset = 0,
-        plotLines = list(list(value = 100, color = "#4c566a", width = 1.5, zIndex = 3))
+        plotLines = list(list(value = 100, color = "#73819B", width = 1.5, zIndex = 3))
       )
     ) |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
@@ -178,7 +178,7 @@ oc_russie_hc_naissances_et_avortements <- function() {
       data = abortions,
       "column",
       name = "Avortements (barre)",
-      color = "#4c566a",
+      color = "#73819B",
       yAxis = 1,
       threshold = 100,
       pointWidth = 2,
@@ -344,6 +344,8 @@ oc_russie_hc_fertilite_europe <- function() {
 #' de la Russie.
 #'
 #' @param theme A ggplot2 theme
+#' @param others_color Color of the other European countries (highcharts)
+#' @param russia_color Color of Russia (highcharts)
 #'
 #' @name oc_russie_graphs_esperance_de_vie
 #' @return A ggplot2 graph
@@ -396,7 +398,7 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
 
 #' @rdname oc_russie_graphs_esperance_de_vie
 #' @export
-oc_russie_hc_esperance_europe <- function() {
+oc_russie_hc_esperance_europe <- function(others_color = "#d7d7d7", russia_color = "#41afeb") {
   wbstats::wb_countries() |>
     dplyr::filter(region_iso3c == "ECS") |>
     dplyr::pull(iso3c) |>
@@ -423,7 +425,7 @@ oc_russie_hc_esperance_europe <- function() {
         dplyr::filter(iso3c != "RUS"),
       type = "line",
       name = "Esp\u00e9rance de vie",
-      color = "#d7d7d7",
+      color = others_color,
       enableMouseTracking = FALSE,
       showInLegend = FALSE,
       highcharter::hcaes(x = date, y = lex, group = iso3c)
@@ -433,7 +435,7 @@ oc_russie_hc_esperance_europe <- function() {
         dplyr::filter(iso3c == "RUS"),
       type = "line",
       name = "Esp\u00e9rance de vie",
-      color = "#41afeb",
+      color = russia_color,
       showInLegend = FALSE,
       highcharter::hcaes(x = date, y = lex)
     ) |>
@@ -444,7 +446,9 @@ oc_russie_hc_esperance_europe <- function() {
     ) |>
     highcharter::hc_title(text = "Esp\u00e9rance de vie") |>
     highcharter::hc_subtitle(
-      text = "en <span style='color:#41afeb; font-weight:bold;'>Russie</span>, compar\u00e9 au reste de l'Europe"
+      text = glue::glue(
+        "en <span style='color:{russia_color}; font-weight:bold;'>Russie</span>, compar\u00e9 au reste de l'Europe"
+      )
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_yAxis(title = list(text = "")) |>

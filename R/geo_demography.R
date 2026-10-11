@@ -75,12 +75,17 @@ gph_highcharter_demogram <- function(country) {
 #' }
 #'
 #' @param country A string with the country name
+#' @param population_color Color of the population curve
+#' @param birth_color Color of the birth rate curve
+#' @param death_color Color of the death rate curve
 #'
 #' @return A highcharter graph
 #' @export
 #' @examples
 #' gph_hc_demogram("Switzerland")
-gph_hc_demogram <- function(country) {
+#' # for a dark background
+#' gph_hc_demogram("Switzerland", "#6ea8fe", "#8f99a8", "#dee2e6")
+gph_hc_demogram <- function(country, population_color = "blue", birth_color = "grey", death_color = "black") {
   data <- geodata::gdt_wb_demo(country)
 
   highcharter::highchart() |>
@@ -92,7 +97,7 @@ gph_hc_demogram <- function(country) {
 
   list(
     list(min = 0, title = list(text = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)"))),
-    list(min = 0, title = list(text = "Population", style = list(color = "blue")), opposite = TRUE)
+    list(min = 0, title = list(text = "Population", style = list(color = population_color)), opposite = TRUE)
   ) -> hc$x$hc_opts$yAxis
 
   hc |>
@@ -103,7 +108,7 @@ gph_hc_demogram <- function(country) {
       "line",
       yAxis = 1,
       name = "population",
-      color = "blue",
+      color = population_color,
       dashStyle = "solid",
       tooltip = list(valueSuffix = ""),
       highcharter::hcaes(x = date, y = population)
@@ -113,7 +118,7 @@ gph_hc_demogram <- function(country) {
       "line",
       yAxis = 0,
       name = geotools::gtl_translate_enfr("crude birth rate", "taux de natalit\u00e9"),
-      color = "grey",
+      color = birth_color,
       dashStyle = "solid",
       tooltip = list(valueSuffix = " \u2030"),
       highcharter::hcaes(x = date, y = birth_rate)
@@ -123,7 +128,7 @@ gph_hc_demogram <- function(country) {
       "line",
       yAxis = 0,
       name = geotools::gtl_translate_enfr("crude death rate", "taux de mortalit\u00e9"),
-      color = "black",
+      color = death_color,
       dashStyle = "solid",
       tooltip = list(valueSuffix = " \u2030"),
       highcharter::hcaes(x = date, y = death_rate)

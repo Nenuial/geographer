@@ -3,6 +3,7 @@
 * Fixes for the NATO membership visualization
 * Add relative dynamic population pyramids
 * OC Russie: births, abortions, fertility and natural increase maps until 2024 (`year` argument for the maps), highcharts version of births and abortions (`oc_russie_hc_naissances_et_avortements()`)
+* Colour arguments for `gph_hc_demogram()` and `oc_russie_hc_esperance_europe()` (dark backgrounds)
 
 # geographer 1.2.0
 
