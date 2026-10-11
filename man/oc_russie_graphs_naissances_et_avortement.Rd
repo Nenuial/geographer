@@ -4,6 +4,7 @@
 \alias{oc_russie_graph_naissances}
 \alias{oc_russie_graph_avortements}
 \alias{oc_russie_graph_naissance_et_avortements}
+\alias{oc_russie_hc_naissances_et_avortements}
 \title{Naissances et avortements en Russie}
 \usage{
 oc_russie_graph_naissances(theme = ggplot2::theme_minimal())
@@ -11,20 +12,25 @@ oc_russie_graph_naissances(theme = ggplot2::theme_minimal())
 oc_russie_graph_avortements(theme = ggplot2::theme_minimal())
 
 oc_russie_graph_naissance_et_avortements(theme = ggplot2::theme_minimal())
+
+oc_russie_hc_naissances_et_avortements()
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
 }
 \value{
 A ggplot2 graph
+
+A highcharts graph
 }
 \description{
 Graphique des naissances et des avortements en Russie
-jusqu'en 2017.
+de 1999 à 2024.
 }
 \examples{
 oc_russie_graph_naissances()
 oc_russie_graph_avortements()
+oc_russie_hc_naissances_et_avortements()
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: needs patchwork to assemble the plot and only
 # works if the package is loaded

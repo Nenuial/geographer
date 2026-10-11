@@ -4,10 +4,21 @@
 \alias{gph_hc_demogram}
 \title{Create demogram for country}
 \usage{
-gph_hc_demogram(country)
+gph_hc_demogram(
+  country,
+  population_color = "blue",
+  birth_color = "grey",
+  death_color = "black"
+)
 }
 \arguments{
 \item{country}{A string with the country name}
+
+\item{population_color}{Color of the population curve}
+
+\item{birth_color}{Color of the birth rate curve}
+
+\item{death_color}{Color of the death rate curve}
 }
 \value{
 A highcharter graph
@@ -22,4 +33,6 @@ Provides basic ggplot2 graph with the following data on it :
 }
 \examples{
 gph_hc_demogram("Switzerland")
+# for a dark background
+gph_hc_demogram("Switzerland", "#6ea8fe", "#8f99a8", "#dee2e6")
 }

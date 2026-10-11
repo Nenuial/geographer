@@ -2,12 +2,13 @@
 
 #' Indice de fécondité en Russie
 #'
-#' Une carte de l'indice de fécondité en 2023
+#' Une carte de l'indice de fécondité (2012 à 2024)
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
 #' @param barwidth Width of legend bar
 #' @param greyscale Boolean: whether to create a grey scale map
+#' @param year Year of the data (2012 to 2024)
 #'
 #' @return A map
 #' @concept oc russie fertilité
@@ -19,8 +20,11 @@
 oc_russie_carte_fecondite <- function(
   theme = ggplot2::theme_minimal(),
   barwidth = 40,
-  greyscale = FALSE
+  greyscale = FALSE,
+  year = 2024
 ) {
+  selected_year <- as.character(year)
+
   if (greyscale) {
     fill_scale <- ggplot2::scale_fill_stepsn(
       n.breaks = 7,
@@ -39,8 +43,8 @@ oc_russie_carte_fecondite <- function(
 
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2023_fecondite |>
-        dplyr::filter(year == 2023),
+      geodata::oc_russie_2024_fecondite |>
+        dplyr::filter(year == selected_year),
       by = "adm1_code"
     ) |>
     ggplot2::ggplot() +
@@ -62,17 +66,18 @@ oc_russie_carte_fecondite <- function(
     ) +
     ggplot2::labs(
       title = "Indice de f\u00e9condit\u00e9",
-      subtitle = "par r\u00e9gions en 2023",
+      subtitle = glue::glue("par r\u00e9gions en {year}"),
       fill = "",
-      caption = "Source: Rosstat (2024)"
+      caption = "Source: Rosstat (2026)"
     )
 }
 
 #' @rdname oc_russie_carte_fecondite
 #' @export
-oc_russie_carte_hc_fecondite <- function() {
-  geodata::oc_russie_2023_fecondite |>
-    dplyr::filter(year == 2023) |>
+oc_russie_carte_hc_fecondite <- function(year = 2024) {
+  selected_year <- as.character(year)
+  geodata::oc_russie_2024_fecondite |>
+    dplyr::filter(year == selected_year) |>
     dplyr::rename(value = tfr) -> data
 
   palette_fecondite <- function(...) {
@@ -91,8 +96,12 @@ oc_russie_carte_hc_fecondite <- function() {
       joinBy = "adm1_code",
       value = "value",
       nullColor = "#838a8f",
+      tooltip = list(valueDecimals = 2),
       data = data
     ) |>
+    highcharter::hc_title(text = "Indice de f\u00e9condit\u00e9") |>
+    highcharter::hc_subtitle(text = glue::glue("par r\u00e9gions en {year}")) |>
+    highcharter::hc_caption(text = "Source: Rosstat (2026)") |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
@@ -216,12 +225,13 @@ oc_russie_carte_mortalite <- function(
 
 #' Accroissement naturel en Russie
 #'
-#' Une carte de l'accroissement naturel en 2023
+#' Une carte de l'accroissement naturel (2017 à 2024)
 #' au niveau régional en Russie.
 #'
 #' @param theme A ggplot2 theme
 #' @param barwidth Width of legend bar
 #' @param greyscale Boolean: whether to create a grey scale map
+#' @param year Year of the data (2017 to 2024)
 #'
 #' @return A map
 #' @concept oc russie mortalité
@@ -233,12 +243,14 @@ oc_russie_carte_mortalite <- function(
 oc_russie_carte_accroissement <- function(
   theme = ggplot2::theme_minimal(),
   barwidth = 40,
-  greyscale = FALSE
+  greyscale = FALSE,
+  year = 2024
 ) {
+  selected_year <- as.character(year)
   rnaturalearth::ne_states(country = "Russia", returnclass = "sf") |>
     dplyr::left_join(
-      geodata::oc_russie_2023_accroissement |>
-        dplyr::filter(year == 2023),
+      geodata::oc_russie_2024_accroissement |>
+        dplyr::filter(year == selected_year),
       by = "adm1_code"
     ) |>
     dplyr::mutate(
@@ -298,17 +310,18 @@ oc_russie_carte_accroissement <- function(
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       title = "Taux d'accroissement naturel",
-      subtitle = "par r\u00e9gions en 2023",
+      subtitle = glue::glue("par r\u00e9gions en {year}"),
       fill = "",
-      caption = "Source: Rosstat (2024)"
+      caption = "Source: Rosstat (2026)"
     )
 }
 
 #' @rdname oc_russie_carte_accroissement
 #' @export
-oc_russie_carte_hc_accroissement <- function() {
-  geodata::oc_russie_2023_accroissement |>
-    dplyr::filter(year == 2023) |>
+oc_russie_carte_hc_accroissement <- function(year = 2024) {
+  selected_year <- as.character(year)
+  geodata::oc_russie_2024_accroissement |>
+    dplyr::filter(year == selected_year) |>
     dplyr::rename(value = rni) -> data
 
   palette_accroissement <- function(...) {
@@ -327,8 +340,12 @@ oc_russie_carte_hc_accroissement <- function() {
       joinBy = "adm1_code",
       value = "value",
       nullColor = "#838a8f",
+      tooltip = list(valueDecimals = 1, valueSuffix = " \u2030"),
       data = data
     ) |>
+    highcharter::hc_title(text = "Taux d'accroissement naturel") |>
+    highcharter::hc_subtitle(text = glue::glue("par r\u00e9gions en {year} (\u2030)")) |>
+    highcharter::hc_caption(text = "Source: Rosstat (2026)") |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(

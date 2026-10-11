@@ -10,7 +10,10 @@
 \usage{
 oc_russie_graph_esperance_europe(theme = ggplot2::theme_minimal())
 
-oc_russie_hc_esperance_europe()
+oc_russie_hc_esperance_europe(
+  others_color = "#d7d7d7",
+  russia_color = "#41afeb"
+)
 
 oc_russie_graph_esperance_65_femmes(theme = ggplot2::theme_minimal())
 
@@ -18,6 +21,10 @@ oc_russie_graph_esperance_65_hommes(theme = ggplot2::theme_minimal())
 }
 \arguments{
 \item{theme}{A ggplot2 theme}
+
+\item{others_color}{Color of the other European countries (highcharts)}
+
+\item{russia_color}{Color of Russia (highcharts)}
 }
 \value{
 A ggplot2 graph
