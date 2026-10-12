@@ -4,6 +4,7 @@
 * Add relative dynamic population pyramids
 * OC Russie: births, abortions, fertility and natural increase maps until 2024 (`year` argument for the maps), highcharts version of births and abortions (`oc_russie_hc_naissances_et_avortements()`)
 * Colour arguments for `gph_hc_demogram()` and `oc_russie_hc_esperance_europe()` (dark backgrounds)
+* Colour arguments for `oc_russie_hc_pib_vs_suisse()`, `oc_russie_hc_ethnies()` and `oc_suisse_hc_2023_nationalite()` (dark backgrounds)
 
 # geographer 1.2.0
 

@@ -4,7 +4,10 @@
 \alias{oc_russie_hc_ethnies}
 \title{Ethnies en Russie}
 \usage{
-oc_russie_hc_ethnies()
+oc_russie_hc_ethnies(colors = palettetown::ichooseyou("salamence", 9))
+}
+\arguments{
+\item{colors}{Colours of the columns}
 }
 \value{
 A highcharts graph
@@ -14,4 +17,9 @@ Graphique des 10 ethnies les plus fréquentes (hors Russes)
 }
 \examples{
 oc_russie_hc_ethnies()
+# for a dark background
+oc_russie_hc_ethnies(colors = c(
+  "#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc",
+  "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"
+))
 }
