@@ -553,3 +553,161 @@ gph_hc_pyramid_relative <- function(country, year) {
           'Pop relative: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + ' %'; }}"))
     )
 }
+
+#' A dashed vertical line with a label, for the events on a time axis
+#'
+#' @param year The year of the event
+#' @param label The label of the event
+#' @param y The vertical offset of the label (px)
+#'
+#' @return A list for `highcharter::hc_xAxis(plotLines = ...)`
+#' @keywords internal
+#' @noRd
+hc_event_line <- function(year, label, y = 20) {
+  list(
+    value = year, color = "#3a3e3f88", dashStyle = "Dash", width = 1, zIndex = 3,
+    label = list(text = label, rotation = 0, y = y, style = list(fontSize = "15px", color = "#3a3e3f"))
+  )
+}
+
+#' Event lines from a named vector of years
+#'
+#' @param events A named numeric vector: names are the labels, values the years
+#'
+#' @return A list of plotLines, the labels staggered in height
+#' @keywords internal
+#' @noRd
+hc_event_lines <- function(events) {
+  if (is.null(events) || length(events) == 0) {
+    return(list())
+  }
+  purrr::imap(unname(as.list(events)), \(year, i) {
+    hc_event_line(year, names(events)[i], y = if (i %% 2 == 1) 40 else 70)
+  })
+}
+
+#' Total fertility rate chart
+#'
+#' The total fertility rate (children per woman) of one or more countries since 1960,
+#' with the replacement level (2.1). One country is drawn as an area, several as lines.
+#'
+#' @param countries A character vector of country names or iso codes
+#' @param events A named numeric vector of years to mark with a dashed line,
+#'   e.g. `c("one child" = 1980)`
+#' @param periods A named list of year ranges to shade, e.g. `list(famine = c(1959, 1961))`
+#' @param highlight Countries (as in `countries`) drawn with a thicker line
+#' @param colors Colours of the countries, in the order of `countries`
+#'
+#' @return A highcharter graph
+#' @export
+#' @examplesIf interactive()
+#' gph_hc_tfr("China", events = c("one child" = 1980), periods = list(famine = c(1959, 1961)))
+#' gph_hc_tfr(c("France", "Germany", "Italy"), highlight = "France")
+gph_hc_tfr <- function(countries, events = NULL, periods = NULL, highlight = NULL,
+                       colors = c("#c03728", "#8a93a3", "#d9a441", "#919c4c", "#5b7fa6", "#6b452b", "#2b323f")) {
+  to_iso3 <- function(x) {
+    codes <- countrycode::countrycode(x, "country.name", "iso3c", warn = FALSE)
+    ifelse(is.na(codes), toupper(x), codes)
+  }
+  codes <- to_iso3(countries)
+  highlight <- if (is.null(highlight)) character(0) else to_iso3(highlight)
+  data <- geodata::gdt_wb_tfr(codes) |>
+    dplyr::filter(!is.na(tfr)) |>
+    dplyr::mutate(tfr = round(tfr, 2))
+  lang <- geotools::gtl_opt_short_language(valid = c("en", "fr"))
+  names <- countrycode::countrycode(codes, "iso3c", paste0("cldr.name.", lang))
+
+  bands <- purrr::imap(unname(periods), \(range, i) {
+    list(
+      from = range[1], to = range[2], color = "#c0372822",
+      label = list(text = names(periods)[i], style = list(fontSize = "14px"))
+    )
+  })
+
+  hc <- highcharter::highchart()
+  for (i in seq_along(codes)) {
+    country_data <- dplyr::filter(data, iso3c == codes[i])
+    hc <- if (length(codes) == 1) {
+      highcharter::hc_add_series(hc, country_data, "area", highcharter::hcaes(x = date, y = tfr),
+        name = geotools::gtl_translate_enfr("Children per woman (TFR)", "Enfants par femme (ISF)"),
+        color = colors[i], fillOpacity = .25, lineWidth = 3
+      )
+    } else {
+      highcharter::hc_add_series(hc, country_data, "line", highcharter::hcaes(x = date, y = tfr),
+        name = names[i], color = colors[i], lineWidth = if (codes[i] %in% highlight) 5 else 2.5
+      )
+    }
+  }
+
+  hc |>
+    highcharter::hc_xAxis(title = list(text = NULL), plotBands = bands, plotLines = hc_event_lines(events)) |>
+    highcharter::hc_yAxis(
+      title = list(text = geotools::gtl_translate_enfr("children per woman", "enfants par femme")),
+      min = 0,
+      plotLines = list(list(
+        value = 2.1, color = "#c03728", dashStyle = "ShortDot", width = 2, zIndex = 3,
+        label = list(
+          text = geotools::gtl_translate_enfr("replacement level: 2.1", "seuil de remplacement : 2,1"),
+          align = "right", x = -10, style = list(fontSize = "14px", color = "#c03728")
+        )
+      ))
+    ) |>
+    highcharter::hc_tooltip(shared = TRUE) |>
+    highcharter::hc_legend(enabled = length(codes) > 1) |>
+    highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
+    highcharter::hc_caption(text = paste0(
+      "Data: <a target='_blank' href='https://data.worldbank.org/indicator/SP.DYN.TFRT.IN'>",
+      "World Bank</a>"
+    ))
+}
+
+#' Working-age population chart
+#'
+#' The population aged 15 to 64 of a country since 1990, in millions, with its peak.
+#'
+#' @param country A string with the country name or iso code
+#' @param start The first year
+#' @param color Colour of the curve
+#' @param peak_color Colour of the peak and its label
+#'
+#' @return A highcharter graph
+#' @export
+#' @examplesIf interactive()
+#' gph_hc_working_age("China")
+gph_hc_working_age <- function(country, start = 1990, color = "#5b7fa6", peak_color = "#c03728") {
+  code <- countrycode::countrycode(country, "country.name", "iso3c", warn = FALSE)
+  data <- geodata::gdt_wb_working_age(if (is.na(code)) country else code, start = start) |>
+    dplyr::filter(!is.na(working_age)) |>
+    dplyr::mutate(millions = round(working_age / 1e6))
+  peak <- data[which.max(data$working_age), ]
+  lang <- geotools::gtl_opt_short_language(valid = c("en", "fr"))
+  name <- countrycode::countrycode(peak$iso3c, "iso3c", paste0("cldr.name.", lang))
+
+  highcharter::highchart() |>
+    highcharter::hc_add_series(data, "area", highcharter::hcaes(x = date, y = millions),
+      name = geotools::gtl_translate_enfr("People aged 15\u201364", "Personnes de 15 \u00e0 64 ans"),
+      color = color, fillOpacity = .25, lineWidth = 3, marker = list(enabled = FALSE)
+    ) |>
+    highcharter::hc_add_series(peak, "scatter", highcharter::hcaes(x = date, y = millions),
+      name = "peak", color = peak_color, marker = list(radius = 6, symbol = "circle"),
+      enableMouseTracking = FALSE,
+      dataLabels = list(
+        enabled = TRUE,
+        format = geotools::gtl_translate_enfr(
+          "peak {point.x}: {point.y} million", "pic {point.x} : {point.y} millions"
+        ),
+        style = list(fontSize = "14px", color = peak_color), y = -8
+      )
+    ) |>
+    highcharter::hc_title(text = glue::glue(geotools::gtl_translate_enfr(
+      "People aged 15\u201364 in {name}", "Personnes de 15 \u00e0 64 ans : {name}"
+    ), name = name), style = list(fontSize = "16px")) |>
+    highcharter::hc_xAxis(title = list(text = NULL)) |>
+    highcharter::hc_yAxis(title = list(text = "millions"), min = floor(min(data$millions) * .8 / 100) * 100) |>
+    highcharter::hc_tooltip(
+      valueSuffix = geotools::gtl_translate_enfr(" million", " millions"),
+      headerFormat = "<b>{point.x}</b><br>"
+    ) |>
+    highcharter::hc_legend(enabled = FALSE) |>
+    highcharter::hc_credits(enabled = TRUE, text = "Data: World Bank")
+}
