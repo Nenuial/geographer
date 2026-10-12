@@ -658,12 +658,16 @@ oc_russie_graph_demo_exa_2025 <- function(theme = ggplot2::theme_minimal()) {
 #'
 #' Graphique des 10 ethnies les plus fréquentes (hors Russes)
 #'
+#' @param colors Colours of the columns
+#'
 #' @returns A highcharts graph
 #' @export
 #'
 #' @examples
 #' oc_russie_hc_ethnies()
-oc_russie_hc_ethnies <- function() {
+#' # for a dark background
+#' oc_russie_hc_ethnies(colors = c("#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc", "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"))
+oc_russie_hc_ethnies <- function(colors = palettetown::ichooseyou("salamence", 9)) {
   geodata::oc_russie_2020_population_composition |>
     dplyr::filter(
       type_pop == "Population urbaine et rurale",
@@ -698,7 +702,7 @@ oc_russie_hc_ethnies <- function() {
     highcharter::hc_plotOptions(
       column = list(colorByPoint = TRUE)
     ) |>
-    highcharter::hc_colors(palettetown::ichooseyou("salamence", 9)) |>
+    highcharter::hc_colors(colors) |>
     highcharter::hc_title(text = "Ethnies principales") |>
     highcharter::hc_subtitle(text = "en Russie en 2020 (hors Russes)") |>
     highcharter::hc_caption(text = "Source: Rosstat (2020)") |>
@@ -951,12 +955,17 @@ oc_russie_hc_religion <- function() {
 
 #' PIB par habitant comparé entre la Russie et la Suisse
 #'
+#' @param russia_color Colour of the Russian curve
+#' @param switzerland_color Colour of the Swiss curve
+#'
 #' @returns A highcharts graph
 #' @export
 #'
 #' @examples
 #' oc_russie_hc_pib_vs_suisse()
-oc_russie_hc_pib_vs_suisse <- function() {
+#' # for a dark background
+#' oc_russie_hc_pib_vs_suisse(russia_color = "#9fd3ff", switzerland_color = "#ff8a7a")
+oc_russie_hc_pib_vs_suisse <- function(russia_color = "#657062", switzerland_color = "#d14e3e") {
   wbstats::wb_data(
     indicator = c("value" = "NY.GDP.PCAP.CD"),
     start_date = 1990,
@@ -972,7 +981,7 @@ oc_russie_hc_pib_vs_suisse <- function() {
       data = data |>
         dplyr::filter(country == "Russian Federation") |>
         dplyr::select(x = date, y = value),
-      color = "#657062",
+      color = russia_color,
       value = "value"
     ) |>
     highcharter::hc_add_series(
@@ -980,7 +989,7 @@ oc_russie_hc_pib_vs_suisse <- function() {
       data = data |>
         dplyr::filter(country == "Switzerland") |>
         dplyr::select(x = date, y = value),
-      color = "#d14e3e"
+      color = switzerland_color
     ) |>
     highcharter::hc_title(text = "PIB par habitant") |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>

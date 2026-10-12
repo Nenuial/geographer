@@ -4,7 +4,15 @@
 \alias{oc_russie_hc_pib_vs_suisse}
 \title{PIB par habitant comparé entre la Russie et la Suisse}
 \usage{
-oc_russie_hc_pib_vs_suisse()
+oc_russie_hc_pib_vs_suisse(
+  russia_color = "#657062",
+  switzerland_color = "#d14e3e"
+)
+}
+\arguments{
+\item{russia_color}{Colour of the Russian curve}
+
+\item{switzerland_color}{Colour of the Swiss curve}
 }
 \value{
 A highcharts graph
@@ -14,4 +22,6 @@ PIB par habitant comparé entre la Russie et la Suisse
 }
 \examples{
 oc_russie_hc_pib_vs_suisse()
+# for a dark background
+oc_russie_hc_pib_vs_suisse(russia_color = "#9fd3ff", switzerland_color = "#ff8a7a")
 }
