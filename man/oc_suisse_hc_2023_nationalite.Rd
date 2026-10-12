@@ -19,5 +19,8 @@ hors Suisses.
 \examples{
 oc_suisse_hc_2023_nationalite()
 # for a dark background
-oc_suisse_hc_2023_nationalite(colors = c("#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc", "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"))
+oc_suisse_hc_2023_nationalite(colors = c(
+  "#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc",
+  "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"
+))
 }

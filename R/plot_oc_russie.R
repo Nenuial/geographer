@@ -666,7 +666,10 @@ oc_russie_graph_demo_exa_2025 <- function(theme = ggplot2::theme_minimal()) {
 #' @examples
 #' oc_russie_hc_ethnies()
 #' # for a dark background
-#' oc_russie_hc_ethnies(colors = c("#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc", "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"))
+#' oc_russie_hc_ethnies(colors = c(
+#'   "#f2c46d", "#7fd1a7", "#6ea8fe", "#ff8a7a", "#c9a0dc",
+#'   "#9fd3ff", "#ffd27a", "#e8a65d", "#b8e08c", "#f4a6c6"
+#' ))
 oc_russie_hc_ethnies <- function(colors = palettetown::ichooseyou("salamence", 9)) {
   geodata::oc_russie_2020_population_composition |>
     dplyr::filter(
