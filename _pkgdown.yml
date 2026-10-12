@@ -39,6 +39,8 @@ reference:
   - gph_hc_demogram
   - gph_lexgram
   - gph_hc_lexgram
+  - gph_hc_tfr
+  - gph_hc_working_age
   - gph_pyramid
   - gph_pyramid_relative
   - gph_hc_pyramid

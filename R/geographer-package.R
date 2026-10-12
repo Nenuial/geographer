@@ -8,6 +8,15 @@ NULL
 # Globals
 utils::globalVariables(c(
   ".",
+  "billions",
+  "CBR",
+  "food",
+  "millions",
+  "CDR",
+  "Code",
+  "high",
+  "low",
+  "working_age",
   "abortion",
   "abortion_rate",
   "abortions",
