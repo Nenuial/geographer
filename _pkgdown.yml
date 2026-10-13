@@ -62,6 +62,14 @@ reference:
   contents:
   - starts_with("df_demography")
 
+- title: DF Geology
+- subtitle: Maps
+  contents:
+  - starts_with("df_geology_map")
+- subtitle: Plots
+  contents:
+  - starts_with("df_geology_graph")
+  - starts_with("df_geology_hc")
 - title: DF Cartography
   description: |
     These functions provide visualizations for the *DF Cartography* chapter.
