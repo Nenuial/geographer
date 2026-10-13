@@ -691,7 +691,10 @@ oc_geo_au_feminin_graph_proportion_parlements <- function(
     start_date = 1997,
     end_date = 2022,
     country = "regions_only"
-  ) -> data
+  ) |>
+    # the seven World Bank regions: Namibia (iso2c "NA", read as missing)
+    # slips through the regions_only filter
+    dplyr::filter(iso3c %in% c("EAS", "ECS", "LCN", "MEA", "NAC", "SAS", "SSF")) -> data
 
   data |>
     dplyr::rename(
