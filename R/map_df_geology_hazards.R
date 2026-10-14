@@ -159,7 +159,7 @@ df_geology_map_epicentre <- function(
       x = NULL,
       y = NULL,
       caption = glue::glue(
-        "Scale 1:{format(scale, big.mark = '\u2009', scientific = FALSE)} when printed at 100 %. ",
+        "Scale 1:{format(scale, big.mark = ' ', scientific = FALSE)} when printed at 100 %. ",
         "Swiss projection LV95. Data: Natural Earth"
       )
     ) +
@@ -402,7 +402,7 @@ df_geology_map_vesuvius <- function(
       dplyr::between(y, window[["ymin"]], window[["ymax"]])
     ) |>
     dplyr::mutate(
-      label = paste0(name, "\n", format(population, big.mark = "\u2009")),
+      label = paste0(name, "\n", format(population, big.mark = " ")),
       face = ifelse(population >= 40000, "bold", "plain"),
       size = ifelse(population >= 40000, 2.4, 1.8)
     ) |>
@@ -414,7 +414,7 @@ df_geology_map_vesuvius <- function(
     )
 
   ring_lines <- sf::st_buffer(crater[rep(1, length(rings)), ], rings * 1000) |>
-    dplyr::mutate(label = paste0("\u2248 ", rings, " km (", names(rings), ")"))
+    dplyr::mutate(label = paste0("~", rings, " km (", names(rings), ")"))
   # ring labels south-west of the crater, over the gulf
   ring_labels <- tibble::tibble(
     x = sf::st_coordinates(crater)[1, 1] - rings * 1000 * cos(pi / 4),

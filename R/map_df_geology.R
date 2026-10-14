@@ -142,7 +142,7 @@ df_geology_map_plate_detective <- function(
       title = geology_title(title, bbox),
       x = NULL,
       y = NULL,
-      caption = "Data: USGS (M \u2265 5, 1975\u20132025), Smithsonian Global Volcanism Program"
+      caption = "Data: USGS (M 5+, 1975\u20132025), Smithsonian Global Volcanism Program"
     ) +
     theme +
     ggplot2::theme(
@@ -429,7 +429,7 @@ df_geology_graph_cross_section <- function(
         "Earthquakes within {half_width}\u00b0 of the line, from ",
         "{geology_degrees(line$from, 'E', 'W')} to {geology_degrees(line$to, 'E', 'W')}"
       ),
-      caption = "Data: USGS (M \u2265 5, 1975\u20132025), Smithsonian Global Volcanism Program"
+      caption = "Data: USGS (M 5+, 1975\u20132025), Smithsonian Global Volcanism Program"
     ) +
     theme
 }
