@@ -21,9 +21,9 @@ geopolitics_sea_zones_island <- function(x, y, r, n = 9, seed = 1) {
 geopolitics_sea_zones_coast_a <- rbind(
   c(60, 420), c(56, 365), c(61, 345), c(59, 322), c(64, 300), c(61, 275),
   c(66, 252), c(73, 233), c(70, 212), c(64, 192),
-  c(68, 172),                                     # north headland of the bay
+  c(68, 172), # north headland of the bay
   c(50, 176), c(37, 172), c(31, 164), c(34, 155), c(44, 150), c(55, 147),
-  c(66, 150),                                     # south headland of the bay
+  c(66, 150), # south headland of the bay
   c(61, 125), c(64, 102), c(58, 80), c(56, 55), c(50, 30), c(46, 0), c(42, -40)
 )
 geopolitics_sea_zones_coast_b <- rbind(
@@ -151,7 +151,9 @@ geopolitics_sea_zones_limits <- function(base, side, land, dists = c(12, 24, 200
     ring <- sf::st_boundary(sf::st_buffer(base, d, nQuadSegs = 60))
     l <- suppressWarnings(sf::st_difference(sf::st_intersection(ring, side), land))
     g <- geopolitics_sea_zones_clip(sf::st_union(l))
-    if (length(g) == 0) return(NULL)
+    if (length(g) == 0) {
+      return(NULL)
+    }
     sf::st_sf(limit = d, geometry = g)
   })
   do.call(rbind, Filter(Negate(is.null), out))
