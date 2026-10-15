@@ -57,6 +57,7 @@ Imports:
     scales,
     sf,
     shinyjqui,
+    stats,
     stringr,
     swissdd,
     themakart,

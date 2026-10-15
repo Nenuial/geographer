@@ -66,6 +66,10 @@ reference:
 - subtitle: Maps
   contents:
   - starts_with("df_geopolitics_map")
+- subtitle: Plots
+  contents:
+  - starts_with("df_geopolitics_graph")
+  - starts_with("df_geopolitics_hc")
 - title: DF Geology
 - subtitle: Maps
   contents:
