@@ -35,6 +35,7 @@ Imports:
     glue,
     highcharter,
     IslamicArt,
+    isoband,
     leaflet,
     lifecycle,
     lubridate,

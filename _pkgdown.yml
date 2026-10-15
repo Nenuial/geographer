@@ -62,6 +62,10 @@ reference:
   contents:
   - starts_with("df_demography")
 
+- title: DF Geopolitics
+- subtitle: Maps
+  contents:
+  - starts_with("df_geopolitics_map")
 - title: DF Geology
 - subtitle: Maps
   contents:
