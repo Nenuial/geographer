@@ -13,15 +13,16 @@ geology_xy <- function(data) {
     dplyr::mutate(x = coordinates[, 1], y = coordinates[, 2])
 }
 
-# Scale bar in map units (metres): alternating black and white segments
-geology_scale_bar <- function(x, y, length_km, segments, height, size = 2.8) {
-  step <- length_km * 1000 / segments
+# Scale bar in map units (metres by default, or unit_km km per map unit):
+# alternating black and white segments
+geology_scale_bar <- function(x, y, length_km, segments, height, size = 2.8, unit_km = 0.001) {
+  step <- length_km / unit_km / segments
   bars <- tibble::tibble(
     xmin = x + (seq_len(segments) - 1) * step,
     xmax = x + seq_len(segments) * step,
     fill = rep(c("black", "white"), length.out = segments)
   )
-  ticks <- tibble::tibble(x = x + (0:segments) * step, label = (0:segments) * step / 1000)
+  ticks <- tibble::tibble(x = x + (0:segments) * step, label = (0:segments) * length_km / segments)
 
   list(
     ggplot2::geom_rect(
@@ -40,7 +41,7 @@ geology_scale_bar <- function(x, y, length_km, segments, height, size = 2.8) {
     ),
     ggplot2::annotate(
       "text",
-      x = x + length_km * 1000 + step * 0.4, y = y + height / 2,
+      x = x + length_km / unit_km + step * 0.4, y = y + height / 2,
       label = "km", hjust = 0, size = size
     )
   )
