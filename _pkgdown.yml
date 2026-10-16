@@ -55,6 +55,10 @@ reference:
   - gph_map_swiss_relief
   - gph_map_swiss_lakes
 
+- title: DF Cosmology
+- subtitle: Plots
+  contents:
+  - starts_with("df_cosmology_graph")
 - title: DF Demography
   description: |
     These functions provide visualizations for the *DF Demography* chapter.
