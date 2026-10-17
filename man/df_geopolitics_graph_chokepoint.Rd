@@ -21,7 +21,10 @@ df_geopolitics_hc_chokepoint(
   to = NULL,
   key = FALSE,
   label = NULL,
-  events = NULL
+  events = NULL,
+  daily_color = "#cfd8e3",
+  total_color = "#1f3a5f",
+  tanker_color = "#d95f02"
 )
 }
 \arguments{
@@ -40,6 +43,10 @@ for none}
 shown as vertical lines in the key version}
 
 \item{theme}{A ggplot2 theme}
+
+\item{daily_color, total_color, tanker_color}{Colours of the daily bars and
+of the 7-day means of all ships and of tankers (highcharts version, e.g.
+for a dark theme)}
 }
 \value{
 A ggplot2 graph (\code{df_geopolitics_graph_chokepoint()}) or a
@@ -51,7 +58,9 @@ Daily number of ships passing a maritime chokepoint (IMF PortWatch, AIS
 estimates) over a period: daily total, 7-day centred mean of all ships and
 7-day centred mean of tankers. The student version shows only \code{label} as
 title; the key version (\code{key = TRUE}) shows the name of the chokepoint and
-the period, and marks the \code{events}.
+the period, and marks the \code{events}. Texts are in English or French,
+following \code{\link[geotools:gtl_opt_set_i18n]{geotools::gtl_opt_set_i18n()}} (\code{label} and \code{events} are passed
+as they are).
 }
 \examples{
 df_geopolitics_graph_chokepoint(
