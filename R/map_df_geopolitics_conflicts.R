@@ -35,6 +35,8 @@ geopolitics_countries <- function(window, codes = NULL) {
 #'
 #' Coordinates of the sites from Wikidata, borders from Natural Earth, relief
 #' from the Copernicus DEM. Both maps are drawn for a figure about 17 cm wide.
+#' Names, legends and sources are in English or French, following
+#' [geotools::gtl_opt_set_i18n()].
 #'
 #' @param theme A ggplot2 theme
 #'
@@ -68,8 +70,8 @@ df_geopolitics_map_preah_vihear <- function(theme = ggplot2::theme_minimal()) {
 
   country_labels <- tibble::tribble(
     ~x,    ~y,    ~label,
-    103.2, 15.3,  "THAILAND",
-    103.9, 13.65, "CAMBODIA",
+    103.2, 15.3,  tr("THAILAND", "THA\u00cfLANDE"),
+    103.9, 13.65, tr("CAMBODIA", "CAMBODGE"),
     105.3, 15.3,  "LAOS"
   )
 
@@ -89,7 +91,7 @@ df_geopolitics_map_preah_vihear <- function(theme = ggplot2::theme_minimal()) {
       colours = c("#eef3e2", "#dfe8c6", "#e9d9a8", "#d7b27e", "#b98a5e"),
       limits = c(0, 750),
       breaks = c(0, 250, 500, 750),
-      name = "Elevation (m)"
+      name = tr("Elevation (m)", "Altitude (m)")
     ) +
     ggplot2::geom_sf(data = provinces, fill = NA, color = "#7a7a7a", linewidth = 0.25, linetype = "22") +
     ggplot2::geom_sf(data = countries, fill = NA, color = ink, linewidth = 0.9) +
@@ -124,7 +126,10 @@ df_geopolitics_map_preah_vihear <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       x = NULL,
       y = NULL,
-      caption = "Borders: Natural Earth. Relief: Copernicus DEM GLO-90 (ESA). Sites: Wikidata"
+      caption = tr(
+        "Borders: Natural Earth. Relief: Copernicus DEM GLO-90 (ESA). Sites: Wikidata",
+        "Fronti\u00e8res : Natural Earth. Relief : Copernicus DEM GLO-90 (ESA). Sites : Wikidata"
+      )
     ) +
     theme +
     ggplot2::theme(
@@ -169,7 +174,9 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
   country_labels <- countries |>
     sf::st_drop_geometry() |>
     dplyr::filter(ADM0_A3 %in% labelled) |>
-    dplyr::select(name = NAME_EN, lon = LABEL_X, lat = LABEL_Y, rank = LABELRANK) |>
+    dplyr::transmute(
+      code = ADM0_A3, name = tr(NAME_EN, NAME_FR), lon = LABEL_X, lat = LABEL_Y, rank = LABELRANK
+    ) |>
     geology_points(crs) |>
     geology_xy() |>
     dplyr::filter(
@@ -180,13 +187,18 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
       x, y,
       label = toupper(name),
       face = "bold",
-      size = ifelse(name == "Iran", 4, ifelse(rank <= 4, 2.9, 2.3)),
+      size = ifelse(code == "IRN", 4, ifelse(rank <= 4, 2.9, 2.3)),
       color = ink
     )
 
+  site_names <- c(
+    "Tehran" = "T\u00e9h\u00e9ran", "Fordow" = "Fordo", "Natanz" = "Natanz", "Isfahan" = "Ispahan",
+    "Al Udeid air base" = "Base a\u00e9rienne d'Al-Udeid", "Doha" = "Doha", "Islamabad" = "Islamabad",
+    "Muscat" = "Mascate"
+  )
   site_labels <- sites |>
     dplyr::filter(type != "strait") |>
-    dplyr::transmute(x, y, label = name, face = "plain", size = 2.7, color = "#7a0b0b")
+    dplyr::transmute(x, y, label = tr(name, site_names[name]), face = "plain", size = 2.7, color = "#7a0b0b")
 
   ggplot2::ggplot() +
     ggplot2::geom_sf(
@@ -206,6 +218,11 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
     ) +
     ggplot2::scale_fill_manual(
       values = c(capital = "white", "nuclear site" = "#ffd84a", "air base" = "#4f7cac"),
+      labels = c(
+        capital = tr("capital", "capitale"),
+        "nuclear site" = tr("nuclear site", "site nucl\u00e9aire"),
+        "air base" = tr("air base", "base a\u00e9rienne")
+      ),
       name = NULL
     ) +
     # one legend: the fill legend with the shapes of the symbols
@@ -215,7 +232,7 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
     ) +
     ggplot2::geom_text(
       data = dplyr::filter(sites, type == "strait"),
-      ggplot2::aes(x, y, label = "Strait of\nHormuz"),
+      ggplot2::aes(x, y, label = tr("Strait of\nHormuz", "D\u00e9troit\nd'Ormuz")),
       size = 2.6, fontface = "italic", color = "#2a5d8f", lineheight = 0.85, nudge_y = -120000
     ) +
     # one layer for all names, so that they avoid each other
@@ -236,7 +253,11 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
       expand = FALSE,
       datum = NA
     ) +
-    ggplot2::labs(x = NULL, y = NULL, caption = "Borders: Natural Earth. Sites: Wikidata") +
+    ggplot2::labs(
+      x = NULL,
+      y = NULL,
+      caption = tr("Borders: Natural Earth. Sites: Wikidata", "Fronti\u00e8res : Natural Earth. Sites : Wikidata")
+    ) +
     theme +
     ggplot2::theme(
       legend.position = "bottom",

@@ -30,6 +30,8 @@ and Isfahan, the Al Udeid air base and the Strait of Hormuz.
 
 Coordinates of the sites from Wikidata, borders from Natural Earth, relief
 from the Copernicus DEM. Both maps are drawn for a figure about 17 cm wide.
+Names, legends and sources are in English or French, following
+\code{\link[geotools:gtl_opt_set_i18n]{geotools::gtl_opt_set_i18n()}}.
 }
 \examples{
 df_geopolitics_map_preah_vihear()
