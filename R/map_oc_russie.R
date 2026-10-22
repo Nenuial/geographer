@@ -703,7 +703,7 @@ oc_russie_carte_hc_religion <- function() {
       )
     ) |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://sreda.org/arena' target='_blank'>SREDA (2012)</a>"
+      text = "Source\u00a0: <a href='https://sreda.org/arena' target='_blank'>SREDA (2012)</a>"
     )
 }
 

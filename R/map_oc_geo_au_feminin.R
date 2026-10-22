@@ -38,7 +38,7 @@ oc_geo_au_feminin_carte_hc_abortion_rights <- function() {
       text = "Les l\u00e9gislations sur l'avortement dans le monde"
     ) |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://reproductiverights.org/maps/worlds-abortion-laws/'
+      text = "Source\u00a0: <a href='https://reproductiverights.org/maps/worlds-abortion-laws/'
       target='_blank'>Center for reproduction rights (2023)</a>"
     ) |>
     geotools::gtl_hc_map_view(
@@ -162,7 +162,7 @@ oc_geo_au_feminin_carte_abortion_rights <- function(
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       title = "Les l\u00e9gislations sur l'avortement dans le monde",
-      caption = "Source : Center for reproduction rights (2023)"
+      caption = "Source\u00a0: Center for reproduction rights (2023)"
     )
 }
 
@@ -184,7 +184,7 @@ oc_geo_au_feminin_carte_hc_taux_avortement <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Taux d'avortement") |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://www.guttmacher.org' target='_blank'>Guttmacher Institute (2015-2019)</a>"
+      text = "Source\u00a0: <a href='https://www.guttmacher.org' target='_blank'>Guttmacher Institute (2015-2019)</a>"
     ) |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
@@ -250,7 +250,7 @@ oc_geo_au_feminin_carte_taux_avortement <- function(
     ggplot2::labs(
       title = "Taux d'avortement",
       fill = "",
-      caption = "Source : Guttmacher Institute (2015-2019)"
+      caption = "Source\u00a0: Guttmacher Institute (2015-2019)"
     )
 }
 
@@ -286,7 +286,7 @@ oc_geo_au_feminin_carte_hc_contraception <- function() {
       text = "% des femmes \u00e2g\u00e9es de 15 \u00e0 49 ans"
     ) |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://donnees.banquemondiale.org/indicateur/SP.DYN.CONU.ZS'
+      text = "Source\u00a0: <a href='https://donnees.banquemondiale.org/indicateur/SP.DYN.CONU.ZS'
       target='_blank'>Banque Mondiale</a>"
     ) |>
     geotools::gtl_hc_map_view(
@@ -418,7 +418,7 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2012_2005_a_2010 <- function(
     ggplot2::labs(
       title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2005-2010)",
-      caption = "Donn\u00e9es : WPP2012",
+      caption = "Donn\u00e9es\u00a0: WPP2012",
       fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
@@ -438,7 +438,7 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2005_a_2010 <- function(
     ggplot2::labs(
       title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2005-2010)",
-      caption = "Donn\u00e9es : WPP2019",
+      caption = "Donn\u00e9es\u00a0: WPP2019",
       fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
@@ -461,7 +461,7 @@ oc_geo_au_feminin_carte_esperance_de_vie_wpp2019_2015_a_2020 <- function(
     ggplot2::labs(
       title = "Diff\u00e9rence d'esp\u00e9rance de vie",
       subtitle = "Entre les femmes et les hommes (estimations 2015-2020)",
-      caption = "Donn\u00e9es : WPP2019",
+      caption = "Donn\u00e9es\u00a0: WPP2019",
       fill = "Diff\u00e9rence (ann\u00e9es)"
     )
 }
@@ -649,7 +649,7 @@ oc_geo_au_feminin_carte_sigi_2023 <- function(
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       title = "L'indice Institutions sociales et \u00e9galit\u00e9 des genres",
-      subtitle = "0 = pas de discrimination ; 100 = discrimination absolue, 2023",
+      subtitle = "0 = pas de discrimination\u00a0; 100 = discrimination absolue, 2023",
       fill = "",
       caption = "Source OCDE (2023), SIGI"
     )
@@ -668,10 +668,10 @@ oc_geo_au_feminin_carte_hc_sigi_2023 <- function() {
       text = "L'indice Institutions sociales et \u00e9galit\u00e9 des genres"
     ) |>
     highcharter::hc_subtitle(
-      text = "0 = pas de discrimination ; 100 = discrimination absolue, 2023"
+      text = "0 = pas de discrimination\u00a0; 100 = discrimination absolue, 2023"
     ) |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://www.oecd.org/stories/gender/social-norms-and-gender-discrimination/sigi'
+      text = "Source\u00a0: <a href='https://www.oecd.org/stories/gender/social-norms-and-gender-discrimination/sigi'
       target='_blank'>OCDE (2023)</a>,
       <a href='https://www.oecd.org/stories/gender/social-norms-and-gender-discrimination/sigi'
       target='_blank'>SIGI</a>"
@@ -719,7 +719,7 @@ oc_geo_au_feminin_carte_hc_gii_2021 <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Indice d'in\u00e9galit\u00e9 de genre") |>
     highcharter::hc_caption(
-      text = "Source :
+      text = "Source\u00a0:
       <a href='https://hdr.undp.org/data-center/thematic-composite-indices/gender-inequality-index#/indicies/GII'
       target='_blank'>UN HDR (2021)</a>"
     ) |>
@@ -769,7 +769,7 @@ oc_geo_au_feminin_carte_hc_wbl <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Women, Business and the Law") |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://databank.worldbank.org/source/wdi-database-archives'
+      text = "Source\u00a0: <a href='https://databank.worldbank.org/source/wdi-database-archives'
                             target='_blank'>Banque Mondiale (2022)</a>"
     ) |>
     geotools::gtl_hc_map_view(
@@ -833,7 +833,7 @@ oc_geo_au_feminin_carte_hc_femmes_parlement <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Taux de femmes dans les parlements") |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://donnees.banquemondiale.org/indicateur/SG.GEN.PARL.ZS'
+      text = "Source\u00a0: <a href='https://donnees.banquemondiale.org/indicateur/SG.GEN.PARL.ZS'
       target='_blank'>Banque Mondiale (2022)</a>"
     ) |>
     geotools::gtl_hc_map_view(
@@ -936,7 +936,7 @@ oc_geo_au_feminin_carte_sex_ratio <- function(
       title = "Sex ratio \u00e0 la naissance",
       subtitle = glue::glue("Ann\u00e9e {year}"),
       fill = "Naissances gar\u00e7ons/filles",
-      caption = "Donn\u00e9es : Banque Mondiale"
+      caption = "Donn\u00e9es\u00a0: Banque Mondiale"
     )
 }
 
@@ -959,7 +959,7 @@ oc_geo_au_feminin_carte_hc_sex_ratio <- function() {
   highcharter::highchart(type = "map") |>
     highcharter::hc_title(text = "Sex-ratio \u00e0 la naissance") |>
     highcharter::hc_caption(
-      text = "Source : <a href='https://population.un.org/wpp/' target='_blank'>UN WPP (2022)</a>"
+      text = "Source\u00a0: <a href='https://population.un.org/wpp/' target='_blank'>UN WPP (2022)</a>"
     ) |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
@@ -1197,7 +1197,7 @@ oc_geo_au_feminin_carte_hc_viol_europe <- function() {
     ) |>
     highcharter::hc_subtitle(text = "Pour 100'000 habitants") |>
     highcharter::hc_caption(
-      text = "Source : <a href='' target='_blank'>Eurostat (2021)</a>"
+      text = "Source\u00a0: <a href='' target='_blank'>Eurostat (2021)</a>"
     ) |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,

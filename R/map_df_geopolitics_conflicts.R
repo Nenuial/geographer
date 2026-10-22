@@ -128,7 +128,7 @@ df_geopolitics_map_preah_vihear <- function(theme = ggplot2::theme_minimal()) {
       y = NULL,
       caption = tr(
         "Borders: Natural Earth. Relief: Copernicus DEM GLO-90 (ESA). Sites: Wikidata",
-        "Fronti\u00e8res : Natural Earth. Relief : Copernicus DEM GLO-90 (ESA). Sites : Wikidata"
+        "Fronti\u00e8res\u00a0: Natural Earth. Relief\u00a0: Copernicus DEM GLO-90 (ESA). Sites\u00a0: Wikidata"
       )
     ) +
     theme +
@@ -256,7 +256,10 @@ df_geopolitics_map_iran_war <- function(theme = ggplot2::theme_minimal()) {
     ggplot2::labs(
       x = NULL,
       y = NULL,
-      caption = tr("Borders: Natural Earth. Sites: Wikidata", "Fronti\u00e8res : Natural Earth. Sites : Wikidata")
+      caption = tr(
+        "Borders: Natural Earth. Sites: Wikidata",
+        "Fronti\u00e8res\u00a0: Natural Earth. Sites\u00a0: Wikidata"
+      )
     ) +
     theme +
     ggplot2::theme(

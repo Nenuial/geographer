@@ -270,9 +270,9 @@ df_demography_hc_world_population <- function(from = 0) {
         "since 1960; milestones: United Nations"
       ),
       paste0(
-        "Donn\u00e9es : estimations historiques (US Census Bureau), ",
+        "Donn\u00e9es\u00a0: estimations historiques (US Census Bureau), ",
         "<a target='_blank' href='https://data.worldbank.org/indicator/SP.POP.TOTL'>Banque mondiale</a> ",
-        "depuis 1960 ; caps : Nations unies"
+        "depuis 1960\u00a0; caps\u00a0: Nations unies"
       )
     ))
 }
@@ -315,7 +315,7 @@ df_demography_hc_transition <- function(code, events = NULL) {
     highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE), lineWidth = 2.5)) |>
     highcharter::hc_caption(text = geotools::gtl_translate_enfr(
       "Data: <a target='_blank' href='https://www.mortality.org'>Human Mortality Database</a>",
-      "Donn\u00e9es : <a target='_blank' href='https://www.mortality.org'>Human Mortality Database</a>"
+      "Donn\u00e9es\u00a0: <a target='_blank' href='https://www.mortality.org'>Human Mortality Database</a>"
     ))
 }
 
@@ -333,11 +333,11 @@ df_demography_hc_malthus <- function() {
 
   highcharter::highchart() |>
     highcharter::hc_add_series(data, "line", highcharter::hcaes(x = year, y = population),
-      name = geotools::gtl_translate_enfr("Population: doubles", "Population : double"),
+      name = geotools::gtl_translate_enfr("Population: doubles", "Population\u00a0: double"),
       color = "#c03728", lineWidth = 4
     ) |>
     highcharter::hc_add_series(data, "line", highcharter::hcaes(x = year, y = food),
-      name = geotools::gtl_translate_enfr("Food: + 1", "Nourriture : + 1"),
+      name = geotools::gtl_translate_enfr("Food: + 1", "Nourriture\u00a0: + 1"),
       color = "#919c4c", lineWidth = 4
     ) |>
     highcharter::hc_xAxis(title = list(text = NULL), tickInterval = 25) |>
@@ -346,6 +346,9 @@ df_demography_hc_malthus <- function() {
     highcharter::hc_plotOptions(series = list(marker = list(enabled = TRUE, radius = 5))) |>
     highcharter::hc_caption(text = geotools::gtl_translate_enfr(
       "Malthus's own example, one step every 25 years: population 1, 2, 4, 8\u2026 256; food 1, 2, 3\u2026 9",
-      "L'exemple de Malthus, un pas tous les 25 ans : population 1, 2, 4, 8\u2026 256 ; nourriture 1, 2, 3\u2026 9"
+      paste0(
+        "L'exemple de Malthus, un pas tous les 25 ans\u00a0: ",
+        "population 1, 2, 4, 8\u2026 256\u00a0; nourriture 1, 2, 3\u2026 9"
+      )
     ))
 }

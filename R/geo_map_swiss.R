@@ -98,7 +98,7 @@ gph_map_swiss_votes <- function(
       fill = "Pourcentage de oui",
       x = "",
       y = "",
-      caption = "Donn\u00e9es : OFS, Fond de carte : Themakart"
+      caption = "Donn\u00e9es\u00a0: OFS, Fond de carte\u00a0: Themakart"
     ) +
     ggeo::ggeotheme(
       theme = geotools::gtl_options("theme"),

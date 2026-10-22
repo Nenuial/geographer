@@ -71,7 +71,7 @@ oc_suisse_hc_2023_nationalite <- function(colors = palettetown::ichooseyou("sala
       highcharter::hcaes(x = Nationalite, y = percent),
       name = "Population"
     ) |>
-    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text} %")) |>
+    highcharter::hc_yAxis(title = list(text = ""), labels = list(format = "{text}\u00a0%")) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_plotOptions(
       column = list(colorByPoint = TRUE)
