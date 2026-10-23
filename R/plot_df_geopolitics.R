@@ -7,7 +7,7 @@ tr <- function(english, french) geotools::gtl_translate_enfr(english, french)
 geopolitics_chokepoint_credit <- function() {
   tr(
     "Sources: UN Global Platform; IMF PortWatch (portwatch.imf.org)",
-    "Sources : UN Global Platform ; IMF PortWatch (portwatch.imf.org)"
+    "Sources\u00a0: UN Global Platform\u00a0; IMF PortWatch (portwatch.imf.org)"
   )
 }
 

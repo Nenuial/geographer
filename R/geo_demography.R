@@ -541,7 +541,7 @@ gph_hc_pyramid_relative <- function(country, year) {
       min = pop_max * -1,
       labels = list(
         formatter = shinyjqui::JS("function () { this.value = Math.abs(this.value)
-                                                   return this.axis.defaultLabelFormatter.call(this) + ' %' }")
+                                                   return this.axis.defaultLabelFormatter.call(this) + '\u00a0%' }")
       )
     ) |>
     highcharter::hc_tooltip(
@@ -550,7 +550,7 @@ gph_hc_pyramid_relative <- function(country, year) {
           'Population: ' + Highcharts.numberFormat(Math.abs(
             this.point[this.series.name.toLowerCase()]
           ), 0) + '<br/>' +
-          'Pop relative: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + ' %'; }}"))
+          'Pop relative: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + '\u00a0%'; }}"))
     )
 }
 
@@ -647,7 +647,7 @@ gph_hc_tfr <- function(countries, events = NULL, periods = NULL, highlight = NUL
       plotLines = list(list(
         value = 2.1, color = "#c03728", dashStyle = "ShortDot", width = 2, zIndex = 3,
         label = list(
-          text = geotools::gtl_translate_enfr("replacement level: 2.1", "seuil de remplacement : 2,1"),
+          text = geotools::gtl_translate_enfr("replacement level: 2.1", "seuil de remplacement\u00a0: 2,1"),
           align = "right", x = -10, style = list(fontSize = "14px", color = "#c03728")
         )
       ))
@@ -694,13 +694,13 @@ gph_hc_working_age <- function(country, start = 1990, color = "#5b7fa6", peak_co
       dataLabels = list(
         enabled = TRUE,
         format = geotools::gtl_translate_enfr(
-          "peak {point.x}: {point.y} million", "pic {point.x} : {point.y} millions"
+          "peak {point.x}: {point.y} million", "pic {point.x}\u00a0: {point.y} millions"
         ),
         style = list(fontSize = "14px", color = peak_color), y = -8
       )
     ) |>
     highcharter::hc_title(text = glue::glue(geotools::gtl_translate_enfr(
-      "People aged 15\u201364 in {name}", "Personnes de 15 \u00e0 64 ans : {name}"
+      "People aged 15\u201364 in {name}", "Personnes de 15 \u00e0 64 ans\u00a0: {name}"
     ), name = name), style = list(fontSize = "16px")) |>
     highcharter::hc_xAxis(title = list(text = NULL)) |>
     highcharter::hc_yAxis(title = list(text = "millions"), min = floor(min(data$millions) * .8 / 100) * 100) |>

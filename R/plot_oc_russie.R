@@ -699,7 +699,7 @@ oc_russie_hc_ethnies <- function(colors = palettetown::ichooseyou("salamence", 9
     ) |>
     highcharter::hc_yAxis(
       title = list(text = ""),
-      labels = list(format = "{text} %")
+      labels = list(format = "{text}\u00a0%")
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_plotOptions(
@@ -917,10 +917,10 @@ oc_russie_hc_religion <- function() {
   highcharter::highchart() |>
     highcharter::hc_chart(type = "bar") |>
     highcharter::hc_title(
-      text = "Quel r\u00F4le joue la religion dans votre vie ?"
+      text = "Quel r\u00F4le joue la religion dans votre vie\u00a0?"
     ) |>
     highcharter::hc_subtitle(
-      text = "En % de r\u00E9pondants par cat\u00E9gorie, avril 2023."
+      text = "En\u00a0% de r\u00E9pondants par cat\u00E9gorie, avril 2023."
     ) |>
     highcharter::hc_xAxis(categories = categories) |>
     highcharter::hc_yAxis(min = 0, title = list(text = "Pourcentage")) |>

@@ -45,6 +45,6 @@ oc_chine_carte_2018_sex_ratio_par_region <- function(theme = ggplot2::theme_mini
       title = "Sex ratio de la population",
       subtitle = glue::glue("Chine 2018"),
       fill = "Rapport hommes/femmes",
-      caption = "Donn\u00e9es : Bureau national des statistiques de Chine"
+      caption = "Donn\u00e9es\u00a0: Bureau national des statistiques de Chine"
     )
 }

@@ -53,7 +53,7 @@ oc_chine_hc_sex_ratio <- function() {
       )
     ) |>
     highcharter::hc_tooltip(
-      pointFormat = "<b>{point.country} :</b> {point.y}"
+      pointFormat = "<b>{point.country}\u00a0:</b> {point.y}"
     ) |>
     highcharter::hc_title(text = "Sex-ratio \u00e0 la naissance") |>
     highcharter::hc_xAxis(title = list(text = "")) |>

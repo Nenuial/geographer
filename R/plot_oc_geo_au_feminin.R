@@ -253,7 +253,7 @@ oc_geo_au_feminin_hc_suisse_avortements_par_ages <- function() {
     ) |>
     highcharter::hc_yAxis(
       title = list(text = ""),
-      labels = list(format = "{text} %")
+      labels = list(format = "{text}\u00a0%")
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_plotOptions(
@@ -420,7 +420,7 @@ oc_geo_au_feminin_hc_suisse_votations_avortement <- function() {
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue(
         "function () {{
-          return '<b>' + this.point.Vote + '</b> :' + this.point.Pourcent + ' %' }}"
+          return '<b>' + this.point.Vote + '</b>\u00a0:' + this.point.Pourcent + '\u00a0%' }}"
       ))
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>

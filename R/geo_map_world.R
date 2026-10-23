@@ -195,7 +195,7 @@ gph_map_world <- function(df, title, year, unit, palette, caption) {
       subtitle = year,
       fill = "",
       caption = glue::glue(
-        "{geotools::gtl_translate_enfr('Data:', 'Donn\u00e9es :')} {caption}"
+        "{geotools::gtl_translate_enfr('Data:', 'Donn\u00e9es\u00a0:')} {caption}"
       )
     )
 }
