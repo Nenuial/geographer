@@ -33,7 +33,7 @@ oc_suisse_graph_2021_immigration_italienne <- function(theme = ggplot2::theme_mi
     ) +
     ggplot2::labs(
       title = "Population et immigration italienne en Suisse",
-      caption = "Donn\u00e9es: OFS (2021)",
+      caption = "Donn\u00e9es\u00a0: OFS (2021)",
       x = ""
     )
 }
@@ -79,6 +79,6 @@ oc_suisse_hc_2023_nationalite <- function(colors = palettetown::ichooseyou("sala
     highcharter::hc_colors(colors) |>
     highcharter::hc_title(text = "Ethnies principales") |>
     highcharter::hc_subtitle(text = "en Suisse en 2023 (hors Suisses)") |>
-    highcharter::hc_caption(text = "Source: OFS (2023)") |>
+    highcharter::hc_caption(text = "Source\u00a0: OFS (2023)") |>
     highcharter::hc_tooltip(valueSuffix = "%")
 }

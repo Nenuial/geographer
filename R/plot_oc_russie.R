@@ -32,7 +32,7 @@ oc_russie_graph_mariages_et_divorces <- function(
       color = "",
       x = "",
       y = "",
-      caption = "Source: Rosstat (2021)"
+      caption = "Source\u00a0: Rosstat (2021)"
     )
 }
 
@@ -70,7 +70,7 @@ oc_russie_graph_naissances <- function(theme = ggplot2::theme_minimal()) {
       subtitle = "Naissances (total)",
       x = "",
       y = "",
-      caption = "Source: Rosstat (2026)"
+      caption = "Source\u00a0: Rosstat (2026)"
     )
 }
 
@@ -110,7 +110,7 @@ oc_russie_graph_avortements <- function(theme = ggplot2::theme_minimal()) {
       subtitle = "Avortements (pour 100 naissances)",
       x = "",
       y = "",
-      caption = "Source: Rosstat (2026)"
+      caption = "Source\u00a0: Rosstat (2026)"
     )
 }
 
@@ -143,7 +143,10 @@ oc_russie_hc_naissances_et_avortements <- function() {
     highcharter::hc_title(text = "Naissances et avortements") |>
     highcharter::hc_subtitle(text = "en Russie depuis 1999") |>
     highcharter::hc_caption(
-      text = "Source: Rosstat (2026). Avortements: pour 100 accouchements jusqu'en 2017, pour 100 naissances ensuite."
+      text = paste(
+        "Source\u00a0: Rosstat (2026).",
+        "Avortements\u00a0: pour 100 accouchements jusqu'en 2017, pour 100 naissances ensuite."
+      )
     ) |>
     highcharter::hc_legend(enabled = FALSE) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
@@ -193,7 +196,7 @@ oc_russie_hc_naissances_et_avortements <- function() {
       color = "#3ea298",
       zones = list(list(value = 100, color = "#3ea298"), list(color = "#d26d84")),
       marker = list(symbol = "circle", radius = 5),
-      tooltip = list(pointFormat = "Avortements: <b>{point.y}</b> pour 100 naissances"),
+      tooltip = list(pointFormat = "Avortements\u00a0: <b>{point.y}</b> pour 100 naissances"),
       highcharter::hcaes(x = year, y = abortions)
     )
 }
@@ -224,7 +227,7 @@ oc_russie_graph_solde_migratoire <- function(theme = ggplot2::theme_minimal()) {
       subtitle = "en Russie",
       x = "",
       y = "",
-      caption = "Source: UN WPP (2019)"
+      caption = "Source\u00a0: UN WPP (2019)"
     )
 }
 
@@ -275,7 +278,7 @@ oc_russie_graph_fertilite_europe <- function(theme = ggplot2::theme_minimal()) {
       subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie<b></span>, compar\u00e9 au reste de l'Europe",
       x = "",
       y = "",
-      caption = "Source: Banque Mondiale (2021)"
+      caption = "Source\u00a0: Banque Mondiale (2021)"
     )
 }
 
@@ -335,7 +338,7 @@ oc_russie_hc_fertilite_europe <- function() {
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_yAxis(title = list(text = "")) |>
-    highcharter::hc_caption(text = "Source: World Bank (2024)")
+    highcharter::hc_caption(text = "Source\u00a0: World Bank (2024)")
 }
 
 #' Espérance de vie russe
@@ -392,7 +395,7 @@ oc_russie_graph_esperance_europe <- function(theme = ggplot2::theme_minimal()) {
       subtitle = "en <span style='color:#4C9AC4FF;'><b>Russie</b></span>, compar\u00e9 au reste de l'Europe",
       x = "",
       y = "",
-      caption = "Source: Banque Mondiale (2021)"
+      caption = "Source\u00a0: Banque Mondiale (2021)"
     )
 }
 
@@ -452,7 +455,7 @@ oc_russie_hc_esperance_europe <- function(others_color = "#d7d7d7", russia_color
     ) |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_yAxis(title = list(text = "")) |>
-    highcharter::hc_caption(text = "Source: World Bank (2024)")
+    highcharter::hc_caption(text = "Source\u00a0: World Bank (2024)")
 }
 
 #' @rdname oc_russie_graphs_esperance_de_vie
@@ -478,7 +481,7 @@ oc_russie_graph_esperance_65_femmes <- function(
       x = "",
       y = "",
       color = "",
-      caption = "Source: HMD (2021)"
+      caption = "Source\u00a0: HMD (2021)"
     )
 }
 
@@ -505,7 +508,7 @@ oc_russie_graph_esperance_65_hommes <- function(
       x = "",
       y = "",
       color = "",
-      caption = "Source: HMD (2021)"
+      caption = "Source\u00a0: HMD (2021)"
     )
 }
 
@@ -708,7 +711,7 @@ oc_russie_hc_ethnies <- function(colors = palettetown::ichooseyou("salamence", 9
     highcharter::hc_colors(colors) |>
     highcharter::hc_title(text = "Ethnies principales") |>
     highcharter::hc_subtitle(text = "en Russie en 2020 (hors Russes)") |>
-    highcharter::hc_caption(text = "Source: Rosstat (2020)") |>
+    highcharter::hc_caption(text = "Source\u00a0: Rosstat (2020)") |>
     highcharter::hc_tooltip(valueSuffix = "%")
 }
 
@@ -755,7 +758,7 @@ oc_russie_graph_attitude_us <- function(theme = ggplot2::theme_minimal()) {
       **<span style='color:#e66b0f'>n\u00e9gative</span>** vis-\u00e0-vis des USA en Russie",
       x = "",
       y = "",
-      caption = "Source: sondages de l'institut Levada (1990-2023)",
+      caption = "Source\u00a0: sondages de l'institut Levada (1990-2023)",
       color = ""
     ) +
     ggplot2::theme(
@@ -796,7 +799,7 @@ oc_russie_graph_attitude_eu <- function(theme = ggplot2::theme_minimal()) {
       **<span style='color:#e66b0f'>n\u00e9gative</span>** vis-\u00e0-vis de l'UE en Russie",
       x = "",
       y = "",
-      caption = "Source: sondages de l'institut Levada (2003-2023)",
+      caption = "Source\u00a0: sondages de l'institut Levada (2003-2023)",
       color = ""
     ) +
     ggplot2::theme(
@@ -861,7 +864,7 @@ oc_russie_graph_depense_militaire <- function(
     ) +
     ggplot2::labs(x = "D\u00e9penses militaires (mia)") +
     ggplot2::labs(y = "") +
-    ggplot2::labs(caption = "Source: SIPRI") +
+    ggplot2::labs(caption = "Source\u00a0: SIPRI") +
     ggeo::ggeotheme("islamic_samarquand") +
     ggplot2::theme(axis.text.y = ggplot2::element_blank()) +
     ggplot2::theme(axis.ticks.y = ggplot2::element_blank()) +
@@ -997,6 +1000,6 @@ oc_russie_hc_pib_vs_suisse <- function(russia_color = "#657062", switzerland_col
     highcharter::hc_title(text = "PIB par habitant") |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
     highcharter::hc_caption(
-      text = "Source: <a href='https://data.worldbank.org/indicator/NY.GDP.PCAP.CD'>World Bank</a>"
+      text = "Source\u00a0: <a href='https://data.worldbank.org/indicator/NY.GDP.PCAP.CD'>World Bank</a>"
     )
 }

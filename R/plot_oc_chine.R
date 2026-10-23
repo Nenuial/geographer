@@ -58,5 +58,5 @@ oc_chine_hc_sex_ratio <- function() {
     highcharter::hc_title(text = "Sex-ratio \u00e0 la naissance") |>
     highcharter::hc_xAxis(title = list(text = "")) |>
     highcharter::hc_yAxis(title = list(text = "")) |>
-    highcharter::hc_caption(text = "Source: World Bank (2024)")
+    highcharter::hc_caption(text = "Source\u00a0: World Bank (2024)")
 }

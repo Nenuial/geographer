@@ -53,7 +53,7 @@ gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_c
       x = "",
       y = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)"),
       color = "",
-      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
+      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es\u00a0: Banque Mondiale")
     )
 }
 
@@ -164,7 +164,7 @@ gph_lexgram <- function(country, theme = ggplot2::theme_minimal(), men = "blue",
     ggplot2::labs(
       x = "",
       y = geotools::gtl_translate_enfr("Life expectancy", "Esp\u00e9rance de vie"),
-      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es: Banque Mondiale")
+      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es\u00a0: Banque Mondiale")
     ) +
     theme
 }
@@ -206,7 +206,7 @@ gph_hc_lexgram <- function(country, men = "blue", women = "red", all = "black") 
     ))) |>
     highcharter::hc_caption(text = geotools::gtl_translate_enfr(
       "Data: World Bank",
-      "Donn\u00e9es: Banque Mondiale"
+      "Donn\u00e9es\u00a0: Banque Mondiale"
     )) |>
     highcharter::hc_tooltip(shared = TRUE, crosshairs = TRUE) |>
     highcharter::hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
@@ -293,7 +293,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       title = country_name,
       subtitle = year,
       x = "", y = "",
-      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
+      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau")
     )
 }
 
@@ -347,7 +347,7 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
     theme +
     ggplot2::labs(
       x = "", y = "",
-      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es: US Census Bureau")
+      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau")
     )
 }
 
