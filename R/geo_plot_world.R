@@ -37,7 +37,7 @@ gph_country_area_tree <- function() {
       highcharter::hcaes(name = country, value = data, color = as.integer(continent))
     ) |>
     highcharter::hc_caption(
-      text = "Source\u00a0: Banque Mondiale (2022)"
+      text = geotools::gtl_translate_enfr("Source: World Bank (2022)", "Source\u00a0: Banque Mondiale (2022)")
     ) |>
     highcharter::hc_tooltip(
       valueSuffix = " km\u00b2"
@@ -90,7 +90,7 @@ gph_country_population_tree <- function() {
       highcharter::hcaes(name = country, value = data, color = as.integer(continent))
     ) |>
     highcharter::hc_caption(
-      text = "Source\u00a0: Banque Mondiale (2022)"
+      text = geotools::gtl_translate_enfr("Source: World Bank (2022)", "Source\u00a0: Banque Mondiale (2022)")
     ) |>
     highcharter::hc_colorAxis(
       dataClasses = geotools::gtl_hc_discrete_color_axis(
