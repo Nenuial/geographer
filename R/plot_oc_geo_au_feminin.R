@@ -55,7 +55,7 @@ oc_geo_au_feminin_graph_scolarisation_filles_afghanistan <- function(
       subtitle = "Pourcentage de filles allant \u00e0 l'\u00e9cole primaire",
       x = "",
       y = "",
-      caption = "Source: John Burn-Murdoch (FT), Donn\u00e9es: Banque Mondiale"
+      caption = "Source\u00a0: John Burn-Murdoch (FT), Donn\u00e9es\u00a0: Banque Mondiale"
     ) +
     theme
 }
@@ -77,7 +77,7 @@ oc_geo_au_feminin_hc_scolarisation_filles_afghanistan <- function() {
       text = "Pourcentage de filles allant \u00e0 l'\u00e9cole primaire"
     ) |>
     highcharter::hc_caption(
-      text = "Source: John Burn-Murdoch (FT), Donn\u00e9es: Banque Mondiale"
+      text = "Source\u00a0: John Burn-Murdoch (FT), Donn\u00e9es\u00a0: Banque Mondiale"
     ) |>
     highcharter::hc_xAxis(
       title = list(text = ""),
@@ -158,7 +158,7 @@ oc_geo_au_feminin_graph_situation_eco_afghanistan <- function(
       title = "Une \u00e9conomie qui ralentit",
       y = "PIB par hab.",
       x = "",
-      caption = "Donn\u00e9es: Banque Mondiale"
+      caption = "Donn\u00e9es\u00a0: Banque Mondiale"
     ) +
     theme
 }
@@ -264,7 +264,7 @@ oc_geo_au_feminin_hc_suisse_avortements_par_ages <- function() {
       text = "Interruptions de grossesse par classe d'\u00e2ge"
     ) |>
     highcharter::hc_subtitle(text = "sur 11 143 en Suisse en 2022") |>
-    highcharter::hc_caption(text = "Source: OFS (2022)")
+    highcharter::hc_caption(text = "Source\u00a0: OFS (2022)")
 }
 
 #' @rdname oc_geo_au_feminin_graphs_suisse_avortements
@@ -289,7 +289,7 @@ oc_geo_au_feminin_graph_suisse_avortements_par_ages <- function(
       subtitle = "sur 11 143 en Suisse en 2022",
       x = "",
       y = "",
-      caption = "Source: OFS (2022)"
+      caption = "Source\u00a0: OFS (2022)"
     )
 }
 
@@ -318,7 +318,7 @@ oc_geo_au_feminin_hc_suisse_avortements_par_regions <- function() {
     highcharter::hc_subtitle(
       text = "Taux d'interruptions de grossesse pour 1000 femmes de 15\u201344 ans"
     ) |>
-    highcharter::hc_caption(text = "Source: OFS")
+    highcharter::hc_caption(text = "Source\u00a0: OFS")
 }
 
 
@@ -387,7 +387,7 @@ oc_geo_au_feminin_graph_suisse_avortements_par_regions <- function(
       subtitle = "Taux d'interruptions de grossesse pour 1000 femmes de 15\u201344 ans",
       x = "",
       y = "",
-      caption = "Source: OFS"
+      caption = "Source\u00a0: OFS"
     )
 }
 
@@ -769,7 +769,7 @@ oc_geo_au_feminin_graph_difference_salariale_brut_par_formation <- function(
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       color = "",
-      caption = "Source: OFS (2016)"
+      caption = "Source\u00a0: OFS (2016)"
     ) +
     theme
 }
@@ -797,7 +797,7 @@ oc_geo_au_feminin_graph_difference_salariale_pourcent_par_formation <- function(
     ggplot2::ggplot(ggplot2::aes(y = Formation, x = Pourcent)) +
     ggplot2::geom_col(fill = "#2e9093") +
     ggplot2::theme(legend.position = "bottom") +
-    ggplot2::labs(caption = "Source: OFS (2016)") +
+    ggplot2::labs(caption = "Source\u00a0: OFS (2016)") +
     theme
 }
 
@@ -823,7 +823,7 @@ oc_geo_au_feminin_graph_difference_salariale_brut_par_position <- function(
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(
       color = "",
-      caption = "Source: OFS (2016)"
+      caption = "Source\u00a0: OFS (2016)"
     ) +
     theme
 }
@@ -846,7 +846,7 @@ oc_geo_au_feminin_graph_difference_salariale_pourcent_par_position <- function(
     dplyr::mutate(Formation = forcats::fct_inorder(Formation)) |>
     ggplot2::ggplot(ggplot2::aes(y = Formation, x = Pourcent)) +
     ggplot2::geom_col(fill = "#2e9093") +
-    ggplot2::labs(caption = "Source: OFS (2016)") +
+    ggplot2::labs(caption = "Source\u00a0: OFS (2016)") +
     theme
 }
 
@@ -895,7 +895,7 @@ oc_geo_au_feminin_graph_programmation_16_24_ans <- function(
       color = "",
       x = "",
       y = "",
-      caption = "Source: OCDE (2021), OECD Going Digital Toolkit"
+      caption = "Source\u00a0: OCDE (2021), OECD Going Digital Toolkit"
     )
 }
 
@@ -920,7 +920,7 @@ oc_geo_au_feminin_hc_programmation_16_24_ans <- function() {
       text = "Jeunes de 16 \u00e0 24 ans apprenant \u00e0 coder, 2019"
     ) |>
     highcharter::hc_caption(
-      text = "Source: OCDE (2021), <a href='https://goingdigital.oecd.org/indicator/54'
+      text = "Source\u00a0: OCDE (2021), <a href='https://goingdigital.oecd.org/indicator/54'
       target='_blank'>OECD Going Digital Toolkit</a>"
     ) |>
     highcharter::hc_add_series(

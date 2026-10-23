@@ -45,7 +45,7 @@ oc_suisse_carte_suffrage_feminin <- function(theme = ggplot2::theme_minimal()) {
       x = "",
       y = "",
       fill = "",
-      caption = "Fond: OFS ThemaKart (2020), Donn\u00e9es: Wikip\u00e9dia"
+      caption = "Fond\u00a0: OFS ThemaKart (2020), Donn\u00e9es\u00a0: Wikip\u00e9dia"
     ) +
     theme +
     ggplot2::theme(legend.position = "bottom")
@@ -106,7 +106,7 @@ oc_suisse_carte_1970_suffrage_feminin_valais <- function(theme = ggplot2::theme_
       fill = "",
       x = "",
       y = "",
-      caption = "Fond: OFS ThemaKart (2020), Donn\u00e9es: Gazette de Lausanne (1970)"
+      caption = "Fond\u00a0: OFS ThemaKart (2020), Donn\u00e9es\u00a0: Gazette de Lausanne (1970)"
     ) +
     theme
 }

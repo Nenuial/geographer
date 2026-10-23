@@ -27,7 +27,7 @@ oc_israel_palestine_graph_migration_israel <- function(
       title = "Immigration en Isra\u00ebl depuis 1948",
       x = "",
       y = "",
-      caption = "Source: CBS, Isra\u00ebl"
+      caption = "Source\u00a0: CBS, Isra\u00ebl"
     ) +
     theme
 }
@@ -39,7 +39,7 @@ oc_israel_palestine_hc_migration_israel <- function() {
 
   highcharter::highchart() |>
     highcharter::hc_title(text = "Immigration en Isra\u00ebl depuis 1948") |>
-    highcharter::hc_caption(text = "Source: CBS, Isra\u00ebl") |>
+    highcharter::hc_caption(text = "Source\u00a0: CBS, Isra\u00ebl") |>
     highcharter::hc_legend(enabled = FALSE) |>
     highcharter::hc_plotOptions(
       line = list(
@@ -105,7 +105,7 @@ oc_israel_palestine_graph_population_nae <- function(
       x = "",
       y = "Population",
       fill = "",
-      caption = "Donn\u00e9es: CBS Isra\u00ebl (2008)"
+      caption = "Donn\u00e9es\u00a0: CBS Isra\u00ebl (2008)"
     )
 }
 
@@ -118,7 +118,7 @@ oc_israel_palestine_hc_immigration_sioniste <- function() {
     highcharter::hc_title(text = "Immigration juive avant 1948") |>
     highcharter::hc_subtitle(text = "chiffres approximatifs") |>
     highcharter::hc_caption(
-      text = "Source:
+      text = "Source\u00a0:
       <a href='https://www.bpb.de/themen/migration-integration/laenderprofile/
       english-version-country-profiles/58400/historical-development-of-jewish-immigration/'>BPD, 2008</a>"
     ) |>
@@ -182,7 +182,7 @@ oc_israel_palestine_graph_gaza_victimes <- function(
       subtitle = "du 7 octobre 2023 au 25 septembre 2025",
       x = "",
       y = "",
-      caption = "Source: UN OCHA"
+      caption = "Source\u00a0: UN OCHA"
     ) +
     theme
 }
@@ -213,7 +213,7 @@ oc_israel_palestine_hc_gaza_victimes <- function() {
     highcharter::hc_subtitle(
       text = "du 7 octobre 2023 au 25 septembre 2025"
     ) |>
-    highcharter::hc_caption(text = "Source: UN OCHA") |>
+    highcharter::hc_caption(text = "Source\u00a0: UN OCHA") |>
     highcharter::hc_xAxis(type = "category") |>
     highcharter::hc_add_series(
       data = data,

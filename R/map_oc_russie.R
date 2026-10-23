@@ -68,7 +68,7 @@ oc_russie_carte_fecondite <- function(
       title = "Indice de f\u00e9condit\u00e9",
       subtitle = glue::glue("par r\u00e9gions en {year}"),
       fill = "",
-      caption = "Source: Rosstat (2026)"
+      caption = "Source\u00a0: Rosstat (2026)"
     )
 }
 
@@ -101,7 +101,7 @@ oc_russie_carte_hc_fecondite <- function(year = 2024) {
     ) |>
     highcharter::hc_title(text = "Indice de f\u00e9condit\u00e9") |>
     highcharter::hc_subtitle(text = glue::glue("par r\u00e9gions en {year}")) |>
-    highcharter::hc_caption(text = "Source: Rosstat (2026)") |>
+    highcharter::hc_caption(text = "Source\u00a0: Rosstat (2026)") |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
@@ -166,7 +166,7 @@ oc_russie_carte_natalite <- function(
       title = "Taux de natalit\u00e9",
       subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Source: Rosstat (2020)"
+      caption = "Source\u00a0: Rosstat (2020)"
     )
 }
 
@@ -219,7 +219,7 @@ oc_russie_carte_mortalite <- function(
       title = "Taux de mortalit\u00e9",
       subtitle = "par r\u00e9gions en 2019",
       fill = "",
-      caption = "Source: Rosstat (2020)"
+      caption = "Source\u00a0: Rosstat (2020)"
     )
 }
 
@@ -312,7 +312,7 @@ oc_russie_carte_accroissement <- function(
       title = "Taux d'accroissement naturel",
       subtitle = glue::glue("par r\u00e9gions en {year}"),
       fill = "",
-      caption = "Source: Rosstat (2026)"
+      caption = "Source\u00a0: Rosstat (2026)"
     )
 }
 
@@ -345,7 +345,7 @@ oc_russie_carte_hc_accroissement <- function(year = 2024) {
     ) |>
     highcharter::hc_title(text = "Taux d'accroissement naturel") |>
     highcharter::hc_subtitle(text = glue::glue("par r\u00e9gions en {year} (\u2030)")) |>
-    highcharter::hc_caption(text = "Source: Rosstat (2026)") |>
+    highcharter::hc_caption(text = "Source\u00a0: Rosstat (2026)") |>
     geotools::gtl_hc_map_view(
       maxZoom = 30,
       projection = list(
@@ -424,7 +424,7 @@ oc_russie_carte_evolution_population <- function(
       title = "\u00c9volution de la population russe",
       subtitle = "de 1990 \u00e0 2020, par r%u009gions",
       fill = "",
-      caption = "Source: Rosstat (2020)"
+      caption = "Source\u00a0: Rosstat (2020)"
     )
 }
 
@@ -459,7 +459,7 @@ oc_russie_carte_mariages <- function(theme = ggplot2::theme_minimal()) {
       title = "Mariages",
       subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Source: Rosstat (2020)"
+      caption = "Source\u00a0: Rosstat (2020)"
     )
 }
 
@@ -498,7 +498,7 @@ oc_russie_carte_divorces <- function(theme = ggplot2::theme_minimal()) {
       title = "Divorces",
       subtitle = "par r\u00e9gions en 2019 pour 1000 habitants",
       fill = "",
-      caption = "Source: Rosstat (2020)"
+      caption = "Source\u00a0: Rosstat (2020)"
     )
 }
 
@@ -854,7 +854,7 @@ oc_russie_carte_adhesion_otan <- function(theme = ggplot2::theme_minimal()) {
       fill = "",
       x = "",
       y = "",
-      caption = "Source: OTAN (2024)"
+      caption = "Source\u00a0: OTAN (2024)"
     )
 }
 
@@ -993,7 +993,7 @@ oc_russie_carte_hc_adhesion_otan <- function(layout = "proximate", zoom = 3.5) {
       align = "right"
     ) |>
     highcharter::hc_caption(
-      text = "Source: OTAN (2024)"
+      text = "Source\u00a0: OTAN (2024)"
     ) |>
     highcharter::hc_tooltip(
       formatter = shinyjqui::JS(glue::glue(
