@@ -4,7 +4,12 @@
 \alias{gph_pyramid_relative}
 \title{Create relative population pyramid (5 year cohorts)}
 \usage{
-gph_pyramid_relative(country, year, theme = ggplot2::theme_minimal())
+gph_pyramid_relative(
+  country,
+  year,
+  theme = ggplot2::theme_minimal(),
+  print = FALSE
+)
 }
 \arguments{
 \item{country}{A string with the country name}
@@ -12,6 +17,9 @@ gph_pyramid_relative(country, year, theme = ggplot2::theme_minimal())
 \item{year}{An integer for the year}
 
 \item{theme}{A ggplot2 theme}
+
+\item{print}{For print: percentages written in the current language and the sexes named at the
+top of each half, so that it reads in black and white}
 }
 \value{
 A ggplot graph

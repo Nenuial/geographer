@@ -7,7 +7,8 @@
 gph_demogram(
   country,
   theme = ggplot2::theme_minimal(),
-  population_color = "blue"
+  population_color = "blue",
+  print = FALSE
 )
 }
 \arguments{
@@ -16,6 +17,9 @@ gph_demogram(
 \item{theme}{A ggplot2 theme}
 
 \item{population_color}{A color value for the population curve}
+
+\item{print}{For print: the population in millions with plain numbers, and the three curves
+told apart by their line type in a legend under the chart, so that it reads in black and white}
 }
 \value{
 A ggplot2 graph
@@ -30,4 +34,5 @@ Provides basic ggplot2 graph with the following data on it :
 }
 \examples{
 gph_demogram("Switzerland")
+gph_demogram("Switzerland", print = TRUE)
 }
