@@ -26,6 +26,7 @@ reference:
   - gph_base_map
   - gph_base_tmap
   - gph_wb_world_map
+  - gph_map_world_indicator
   - gph_historical_world_map
   - gph_mini_globe
   - gph_country_area_tree

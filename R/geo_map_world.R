@@ -136,6 +136,108 @@ gph_wb_world_hc <- function(indicator) {
     )
 }
 
+#' World map of an indicator
+#'
+#' A world map of one indicator for one year, in classes, with a light-to-dark ramp of one hue that
+#' also reads in black and white. The legend, under the map, follows the current language
+#' (see [geotools::gtl_opt_set_i18n()]). The map has no title; the caption gives the source.
+#'
+#' @param indicator A World Bank indicator code (`"SP.DYN.TFRT.IN"`) or a column of the UN World
+#'   Population Prospects 2024 indicators (`"TFR"`, `"PopDensity"`, see [geodata::gdt_wpp_indicators()]).
+#'   World Bank codes are told apart by their dots.
+#' @param year The year
+#' @param breaks The limits between the classes: five classes of about the same size when `NULL`
+#' @param unit The unit, written above the legend
+#' @param palette A sequential ColorBrewer palette: "Blues", "Greens", "Greys", "Oranges", "Purples",
+#'   "Reds"...
+#' @param theme A ggplot2 theme
+#'
+#' @return A ggplot2 graph
+#' @export
+#' @examplesIf interactive()
+#' gph_map_world_indicator(
+#'   "TFR", 2023,
+#'   breaks = c(1.5, 2.1, 3, 4.5),
+#'   unit = geotools::gtl_translate_enfr("children per woman", "enfants par femme", "Kinder pro Frau")
+#' )
+#' gph_map_world_indicator("SP.DYN.IMRT.IN", 2022, unit = "‰", palette = "Reds")
+gph_map_world_indicator <- function(indicator, year, breaks = NULL, unit = NULL, palette = "Blues",
+                                    theme = ggplot2::theme_void()) {
+  if (grepl(".", indicator, fixed = TRUE)) {
+    data <- wbstats::wb_data(indicator = c(value = indicator), start_date = year, end_date = year) |>
+      dplyr::select(iso3c, value)
+    source <- geotools::gtl_translate_enfr(
+      "Data: World Bank", "Donn\u00e9es\u00a0: Banque Mondiale", "Daten: Weltbank"
+    )
+  } else {
+    data <- geodata::gdt_wpp_indicators(years = year)
+    if (!indicator %in% names(data)) {
+      rlang::abort(glue::glue("{indicator} is neither a World Bank code nor a WPP 2024 indicator"))
+    }
+    data <- data |>
+      dplyr::filter(!is.na(ISO3_code)) |> # nolint: object_usage_linter
+      dplyr::select(iso3c = ISO3_code, value = dplyr::all_of(indicator))
+    source <- geotools::gtl_translate_enfr(
+      "Data: UN, World Population Prospects 2024",
+      "Donn\u00e9es\u00a0: ONU, World Population Prospects 2024",
+      "Daten: UNO, World Population Prospects 2024"
+    )
+  }
+  data <- dplyr::filter(data, !is.na(value))
+  if (nrow(data) == 0) {
+    rlang::abort(glue::glue("No data for {indicator} in {year}"))
+  }
+
+  if (is.null(breaks)) {
+    breaks <- unique(signif(stats::quantile(data$value, probs = seq(.2, .8, .2), names = FALSE), 2))
+  }
+  data$bin <- santoku::chop(
+    data$value, breaks,
+    labels = santoku::lbl_dash(
+      symbol = "\u2013", fmt = geotools::gtl_label_number(drop0trailing = TRUE), first = "< {r}", last = "\u2265 {l}"
+    ),
+    extend = TRUE, drop = FALSE
+  )
+  classes <- levels(data$bin)
+  no_data <- geotools::gtl_translate_enfr("No data", "Pas de donn\u00e9es", "Keine Daten")
+
+  # Natural Earth has -99 for the ISO code of France and Norway, and KOS for Kosovo
+  rnaturalearth::ne_countries(returnclass = "sf") |>
+    dplyr::filter(adm0_a3 != "ATA") |>
+    dplyr::mutate(iso3c = dplyr::case_when(
+      adm0_a3 == "KOS" ~ "XKX",
+      iso_a3_eh != "-99" ~ iso_a3_eh,
+      TRUE ~ adm0_a3
+    )) |>
+    dplyr::left_join(data, by = "iso3c") |>
+    ggplot2::ggplot(ggplot2::aes(fill = bin)) + # nolint: object_usage_linter
+    ggplot2::geom_sf(color = "grey40", linewidth = .1) +
+    ggplot2::scale_fill_manual(
+      values = scales::gradient_n_pal(scales::brewer_pal(palette = palette)(9)[3:9])(
+        seq(0, 1, length.out = length(classes))
+      ),
+      breaks = c(classes, NA),
+      labels = c(classes, no_data),
+      na.value = "white",
+      drop = FALSE
+    ) +
+    ggplot2::coord_sf(
+      crs = "+proj=eqearth +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
+      datum = NA
+    ) +
+    theme +
+    ggplot2::theme(
+      legend.position = "bottom",
+      legend.title.position = "top",
+      legend.text.position = "bottom",
+      legend.key.width = ggplot2::unit(1.6, "cm"),
+      legend.key.height = ggplot2::unit(.4, "cm"),
+      legend.key.spacing.x = ggplot2::unit(0, "cm")
+    ) +
+    ggplot2::guides(fill = ggplot2::guide_legend(nrow = 1)) +
+    ggplot2::labs(fill = unit, caption = source)
+}
+
 #' Generate world map
 #'
 #' @param df A dataframe with data breaks in the cut column

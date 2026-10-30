@@ -4,7 +4,7 @@
 \alias{gph_pyramid}
 \title{Create population pyramid}
 \usage{
-gph_pyramid(country, year, theme = ggplot2::theme_minimal())
+gph_pyramid(country, year, theme = ggplot2::theme_minimal(), print = FALSE)
 }
 \arguments{
 \item{country}{A string with the country name}
@@ -12,6 +12,9 @@ gph_pyramid(country, year, theme = ggplot2::theme_minimal())
 \item{year}{An integer for the year}
 
 \item{theme}{A ggplot2 theme}
+
+\item{print}{For print: plain numbers (60'000) instead of scientific notation and the sexes
+named at the top of each half, so that it reads in black and white}
 }
 \value{
 A ggplot graph
@@ -23,5 +26,8 @@ Create population pyramid
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Not run: needs a valid IDB API key
 gph_pyramid("Switzerland", 2020)
+# Without title, subtitle and caption
+gph_pyramid("Switzerland", 2020, print = TRUE) +
+  ggplot2::labs(title = NULL, subtitle = NULL, caption = NULL)
 \dontshow{\}) # examplesIf}
 }

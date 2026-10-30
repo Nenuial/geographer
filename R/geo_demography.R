@@ -10,51 +10,90 @@
 #' @param country A string with the country name
 #' @param theme A ggplot2 theme
 #' @param population_color A color value for the population curve
+#' @param print For print: the population in millions with plain numbers, and the three curves
+#'   told apart by their line type in a legend under the chart, so that it reads in black and white
 #'
 #' @return A ggplot2 graph
 #' @export
 #' @examples
 #' gph_demogram("Switzerland")
-gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_color = "blue") {
+#' gph_demogram("Switzerland", print = TRUE)
+gph_demogram <- function(country, theme = ggplot2::theme_minimal(), population_color = "blue", print = FALSE) {
   data <- geodata::gdt_wb_demo(country)
   coef <- max(data$population, na.rm = TRUE) / max(data$birth_rate, data$death_rate, na.rm = TRUE)
 
-  data |>
+  curves <- c(
+    "pop" = geotools::gtl_translate_enfr("population", "population", "Bev\u00f6lkerung"),
+    "cbr" = geotools::gtl_translate_enfr("birth", "natalit\u00e9", "Geburtenrate"),
+    "cdr" = geotools::gtl_translate_enfr("death", "mortalit\u00e9", "Sterberate")
+  )
+
+  if (print) {
+    breaks <- c("pop", "cbr", "cdr")
+    colors <- c("pop" = population_color, "cbr" = "grey50", "cdr" = "black")
+    linetypes <- c("pop" = "solid", "cbr" = "dashed", "cdr" = "dotted")
+    population_line <- ggplot2::geom_line(
+      ggplot2::aes(date, population / coef, color = "pop", linetype = "pop"),
+      linewidth = .8
+    )
+    population_axis <- ggplot2::sec_axis(
+      transform = ~ . * coef,
+      name = geotools::gtl_translate_enfr(
+        "Population (millions)", "Population (millions)", "Bev\u00f6lkerung (Millionen)"
+      ),
+      labels = geotools::gtl_label_number(scale = 1e-6)
+    )
+  } else {
+    breaks <- c("cbr", "cdr")
+    colors <- c("cbr" = "grey", "cdr" = "black")
+    linetypes <- c("cbr" = "solid", "cdr" = "solid")
+    population_line <- ggplot2::geom_line(
+      ggplot2::aes(date, population / coef),
+      color = population_color, linewidth = .8
+    )
+    population_axis <- ggplot2::sec_axis(
+      transform = ~ . * coef,
+      name = geotools::gtl_translate_enfr("Population", "Population", "Bev\u00f6lkerung"),
+      labels = ggeo::ggeo_label_sci_10
+    )
+  }
+
+  plot <- data |>
     ggplot2::ggplot() +
-    ggplot2::geom_line(ggplot2::aes(date, birth_rate, color = "cbr"), linewidth = .8) +
-    ggplot2::geom_line(ggplot2::aes(date, death_rate, color = "cdr"), linewidth = .8) +
-    ggplot2::geom_line(ggplot2::aes(date, population / coef), color = population_color, linewidth = .8) +
+    ggplot2::geom_line(ggplot2::aes(date, birth_rate, color = "cbr", linetype = "cbr"), linewidth = .8, na.rm = TRUE) +
+    ggplot2::geom_line(ggplot2::aes(date, death_rate, color = "cdr", linetype = "cdr"), linewidth = .8, na.rm = TRUE) +
+    population_line +
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
-    ggplot2::scale_y_continuous(
-      limits = c(0, NA),
-      sec.axis = ggplot2::sec_axis(
-        trans = ~ . * coef,
-        name = "Population",
-        labels = ggeo::ggeo_label_sci_10
-      )
-    ) +
+    ggplot2::scale_y_continuous(limits = c(0, NA), sec.axis = population_axis) +
     ggplot2::scale_color_manual(
-      values = c("grey", "black"),
-      breaks = c("cbr", "cdr"),
-      labels = c(
-        "cbr" = geotools::gtl_translate_enfr("birth", "natalit\u00e9"),
-        "cdr" = geotools::gtl_translate_enfr("death", "mortalit\u00e9")
-      )
+      values = colors,
+      breaks = breaks,
+      labels = unname(curves[breaks])
     ) +
+    ggplot2::scale_linetype_manual(values = linetypes, breaks = breaks, labels = unname(curves[breaks])) +
     theme +
     ggplot2::theme(
       axis.title.y.right = ggplot2::element_text(color = population_color),
-      legend.position = c(.05, .05),
+      legend.position = "inside",
+      legend.position.inside = c(.05, .05),
       legend.justification = c("left", "bottom"),
       legend.box.just = "right",
       legend.margin = ggplot2::margin(6, 6, 6, 6)
     ) +
     ggplot2::labs(
       x = "",
-      y = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)"),
+      y = geotools::gtl_translate_enfr("Rate (\u2030)", "Taux (\u2030)", "Rate (\u2030)"),
       color = "",
-      caption = geotools::gtl_translate_enfr("Data: World Bank", "Donn\u00e9es\u00a0: Banque Mondiale")
+      linetype = "",
+      caption = geotools::gtl_translate_enfr(
+        "Data: World Bank", "Donn\u00e9es\u00a0: Banque Mondiale", "Daten: Weltbank"
+      )
     )
+
+  if (print) {
+    plot <- plot + ggplot2::theme(legend.position = "bottom", legend.key.width = ggplot2::unit(1.5, "cm"))
+  }
+  plot
 }
 
 #' `r lifecycle::badge("deprecated")`
@@ -242,35 +281,74 @@ gph_hc_lexgram <- function(country, men = "blue", women = "red", all = "black") 
     )
 }
 
+#' Country name in the current language
+#'
+#' @param country A string with the country name, in English
+#'
+#' @return The French or German name, the country as given in English
+#' @keywords internal
+#' @noRd
+gph_country_name <- function(country) {
+  switch(geotools::gtl_opt_short_language(valid = c("en", "fr", "de")),
+    fr = countrycode::countrycode(
+      country, "country.name", "un.name.fr",
+      custom_match = c("Kosovo" = "Kosovo", "Gaza" = "Gaza", "West Bank" = "Cisjordanie")
+    ),
+    de = countrycode::countrycode(
+      country, "country.name", "cldr.name.de",
+      custom_match = c("Kosovo" = "Kosovo", "Gaza" = "Gazastreifen", "West Bank" = "Westjordanland")
+    ),
+    country
+  )
+}
+
+#' The sexes named at the top of each half of a pyramid
+#'
+#' @param x The age (or cohort) at the top of the pyramid
+#' @param y The middle of each half
+#' @param vjust The vertical justification of the labels
+#' @param theme The theme of the chart, for the font of the labels
+#'
+#' @return A ggplot2 layer
+#' @keywords internal
+#' @noRd
+gph_pyramid_sexes <- function(x, y, vjust, theme) {
+  text <- tryCatch(theme$text, error = function(e) NULL)
+  ggplot2::annotate(
+    "text",
+    x = x, y = c(-y, y), vjust = vjust,
+    label = c(
+      geotools::gtl_translate_enfr("Men", "Hommes", "M\u00e4nner"),
+      geotools::gtl_translate_enfr("Women", "Femmes", "Frauen")
+    ),
+    family = if (is.null(text$family)) "" else text$family,
+    size = (if (is.null(text$size)) 11 else text$size) / ggplot2::.pt
+  )
+}
+
 #' Create population pyramid
 #'
 #' @param country A string with the country name
 #' @param year An integer for the year
 #' @param theme A ggplot2 theme
+#' @param print For print: plain numbers (60'000) instead of scientific notation and the sexes
+#'   named at the top of each half, so that it reads in black and white
 #'
 #' @return A ggplot graph
 #' @export
 #' @examplesIf interactive()
 #' # Not run: needs a valid IDB API key
 #' gph_pyramid("Switzerland", 2020)
-gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
-  country_name <- country
+#' # Without title, subtitle and caption
+#' gph_pyramid("Switzerland", 2020, print = TRUE) +
+#'   ggplot2::labs(title = NULL, subtitle = NULL, caption = NULL)
+gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal(), print = FALSE) {
+  country_name <- gph_country_name(country)
   pyramid_data <- geodata::gdt_idb_pyramid(country, year)
-
-  if (geotools::gtl_opt_short_language() == "fr") {
-    countrycode::countrycode(
-      country, "country.name", "un.name.fr",
-      custom_match = c(
-        "Kosovo" = "Kosovo",
-        "Gaza" = "Gaza",
-        "West Bank" = "Cisjordanie"
-      )
-    ) -> country_name
-  }
 
   pop_max <- max(abs(c(max(pyramid_data$population), min(pyramid_data$population))))
 
-  pyramid_data |>
+  plot <- pyramid_data |>
     ggplot2::ggplot(ggplot2::aes(x = age, y = population, fill = gender)) +
     ggplot2::geom_col(show.legend = FALSE) +
     ggplot2::coord_flip() +
@@ -281,7 +359,7 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
     ggplot2::scale_y_continuous(
       limits = c(-pop_max, pop_max),
       breaks = ggeo::ggeo_remove_breaks(scales::breaks_pretty(6), list(0)),
-      labels = ggeo::ggeo_label_pyramid
+      labels = if (print) \(x) geotools::gtl_label_number()(abs(x)) else ggeo::ggeo_label_pyramid
     ) +
     ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
     theme +
@@ -293,8 +371,15 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
       title = country_name,
       subtitle = year,
       x = "", y = "",
-      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau")
+      caption = geotools::gtl_translate_enfr(
+        "Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau", "Daten: US Census Bureau"
+      )
     )
+
+  if (print) {
+    plot <- plot + gph_pyramid_sexes(max(pyramid_data$age), pop_max / 2, vjust = 1, theme)
+  }
+  plot
 }
 
 #' Create relative population pyramid (5 year cohorts)
@@ -302,13 +387,15 @@ gph_pyramid <- function(country, year, theme = ggplot2::theme_minimal()) {
 #' @param country A string with the country name
 #' @param year An integer for the year
 #' @param theme A ggplot2 theme
+#' @param print For print: percentages written in the current language and the sexes named at the
+#'   top of each half, so that it reads in black and white
 #'
 #' @return A ggplot graph
 #' @export
 #' @examplesIf interactive()
 #' # Not run: needs a valid IDB API key
 #' gph_pyramid_relative("Switzerland", 2020)
-gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()) {
+gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal(), print = FALSE) {
   geodata::gdt_idb_pyramid_5y(country, year) |>
     dplyr::mutate(population = ifelse(gender == "male", population * -1, population)) |>
     dplyr::mutate(cohort = forcats::fct_inorder(cohort)) -> data
@@ -319,36 +406,46 @@ gph_pyramid_relative <- function(country, year, theme = ggplot2::theme_minimal()
     dplyr::mutate(percent = population / total_population) |>
     dplyr::mutate(align = ifelse(sign(population) == 1, -0.2, 1.2)) -> data_plot
 
-  data_plot |>
+  percent_label <- if (print) geotools::gtl_label_percent(accuracy = 0.1) else \(x) scales::percent(x, accuracy = 0.1)
+
+  plot <- data_plot |>
     ggplot2::ggplot(ggplot2::aes(x = cohort, y = percent, fill = gender)) +
     ggplot2::geom_col(show.legend = FALSE) +
     ggplot2::geom_text(
       ggplot2::aes(
-        label = scales::percent(abs(percent),
-          accuracy = 0.1
-        ),
+        label = percent_label(abs(percent)),
         hjust = align
       ),
       family = "Fira Sans Light", size = 3
     ) +
     ggplot2::annotate(
       "text",
-      label = paste0("Population:\n", scales::number(total_population, big.mark = "'")),
+      label = paste0(
+        geotools::gtl_translate_enfr("Population:", "Population\u00a0:", "Bev\u00f6lkerung:"), "\n",
+        scales::number(total_population, big.mark = "'")
+      ),
       family = "Fira Sans Light",
       hjust = 0, vjust = .8,
       x = "100+", y = min(data_plot$percent)
     ) +
     ggplot2::coord_flip() +
     ggplot2::scale_y_continuous(
-      labels = ggeo::ggeo_label_abs_percent,
+      labels = if (print) \(x) percent_label(abs(x)) else ggeo::ggeo_label_abs_percent,
       expand = c(0.01, 0.01)
     ) +
     ggplot2::scale_fill_manual(values = c("male" = "#7294d4", "female" = "#e69fc4")) +
     theme +
     ggplot2::labs(
       x = "", y = "",
-      caption = geotools::gtl_translate_enfr("Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau")
+      caption = geotools::gtl_translate_enfr(
+        "Data: US Census Bureau", "Donn\u00e9es\u00a0: US Census Bureau", "Daten: US Census Bureau"
+      )
     )
+
+  if (print) {
+    plot <- plot + gph_pyramid_sexes("100+", max(abs(data_plot$percent)) / 2, vjust = .5, theme)
+  }
+  plot
 }
 
 #' `r lifecycle::badge("deprecated")`
@@ -370,7 +467,6 @@ gph_highcharter_pyramid <- function(country, year) {
 #' # Not run: need a valid IDB API key
 #' gph_hc_pyramid("Switzerland", 2020)
 gph_hc_pyramid <- function(country, year) {
-  country -> country_name
   geodata::gdt_idb_pyramid(country, year) |>
     tidyr::pivot_wider(names_from = "gender", values_from = "population") |>
     dplyr::arrange(dplyr::desc(age)) |>
@@ -380,16 +476,7 @@ gph_hc_pyramid <- function(country, year) {
     max(c(max(abs(data$male)), max(data$female))) / 10000
   ) * 10000 -> pop_max
 
-  if (geotools::gtl_opt_short_language() == "fr") {
-    countrycode::countrycode(
-      country, "country.name", "un.name.fr",
-      custom_match = c(
-        "Kosovo" = "Kosovo",
-        "Gaza" = "Gaza",
-        "West Bank" = "Cisjordanie"
-      )
-    ) -> country_name
-  }
+  country_name <- gph_country_name(country)
 
   highcharter::highchart() |>
     highcharter::hc_title(text = glue::glue("{country_name}")) |>
@@ -466,7 +553,6 @@ gph_hc_pyramid <- function(country, year) {
 #' # Not run: need a valid IDB API key
 #' gph_hc_pyramid_relative("Switzerland", 2020)
 gph_hc_pyramid_relative <- function(country, year) {
-  country -> country_name
   geodata::gdt_idb_pyramid_5y(country, year) |>
     dplyr::mutate(population = ifelse(gender == "male", population * -1, population)) |>
     dplyr::mutate(cohort = forcats::fct_inorder(cohort)) -> data
@@ -485,16 +571,7 @@ gph_hc_pyramid_relative <- function(country, year) {
     max(c(max(abs(plot_data$male_percent)), max(plot_data$female_percent))) * 2
   ) / 2 -> pop_max
 
-  if (geotools::gtl_opt_short_language() == "fr") {
-    countrycode::countrycode(
-      country, "country.name", "un.name.fr",
-      custom_match = c(
-        "Kosovo" = "Kosovo",
-        "Gaza" = "Gaza",
-        "West Bank" = "Cisjordanie"
-      )
-    ) -> country_name
-  }
+  country_name <- gph_country_name(country)
 
   highcharter::highchart() |>
     highcharter::hc_title(text = glue::glue("{country_name}")) |>
